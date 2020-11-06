@@ -2,6 +2,9 @@
 package fr.univcotedazur.polytech.si4.fsm.project.defaultsm;
 
 import fr.univcotedazur.polytech.si4.fsm.project.ITimer;
+import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.IDefaultSMStatemachine.SCInterface;
+import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.IDefaultSMStatemachine.SCInterfaceListener;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,10 +37,20 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		private boolean nFC;
 		
+		private String nFCValue;
 		
-		public void raiseNFC() {
+		
+		public void raiseNFC(String value) {
 			synchronized(DefaultSMStatemachine.this) {
+				nFCValue = value;
 				nFC = true;
+			}
+		}
+		protected String getNFCValue() {
+			synchronized(DefaultSMStatemachine.this) {
+				if (! nFC ) 
+					throw new IllegalStateException("Illegal event value access. Event NFC is not raised!");
+				return nFCValue;
 			}
 		}
 		
@@ -204,6 +217,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		private boolean doSaveInformations;
 		
+		private String doSaveInformationsValue;
+		
 		
 		public boolean isRaisedDoSaveInformations() {
 			synchronized(DefaultSMStatemachine.this) {
@@ -211,12 +226,21 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		protected void raiseDoSaveInformations() {
+		protected void raiseDoSaveInformations(String value) {
 			synchronized(DefaultSMStatemachine.this) {
+				doSaveInformationsValue = value;
 				doSaveInformations = true;
 				for (SCInterfaceListener listener : listeners) {
-					listener.onDoSaveInformationsRaised();
+					listener.onDoSaveInformationsRaised(value);
 				}
+			}
+		}
+		
+		public String getDoSaveInformationsValue() {
+			synchronized(DefaultSMStatemachine.this) {
+				if (! doSaveInformations ) 
+					throw new IllegalStateException("Illegal event value access. Event DoSaveInformations is not raised!");
+				return doSaveInformationsValue;
 			}
 		}
 		
@@ -555,8 +579,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseCoinSlot(value);
 	}
 	
-	public synchronized void raiseNFC() {
-		sCInterface.raiseNFC();
+	public synchronized void raiseNFC(String value) {
+		sCInterface.raiseNFC(value);
 	}
 	
 	public synchronized void raiseSelectType(long value) {
@@ -605,6 +629,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized boolean isRaisedDoSaveInformations() {
 		return sCInterface.isRaisedDoSaveInformations();
+	}
+	
+	public synchronized String getDoSaveInformationsValue() {
+		return sCInterface.getDoSaveInformationsValue();
 	}
 	
 	public synchronized boolean isRaisedDoReset() {
@@ -924,7 +952,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				} else {
 					if (sCInterface.nFC) {
 						exitSequence_main_region_Ready();
-						sCInterface.raiseDoSaveInformations();
+						sCInterface.raiseDoSaveInformations(sCInterface.getNFCValue());
 						
 						enterSequence_main_region_Cancellable_Drink_default();
 						enterSequence_main_region_Cancellable_Payment_Payed_default();
@@ -983,12 +1011,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		if (try_transition) {
 			if (sCInterface.nFC) {
 				exitSequence_main_region_Cancellable_Payment_Payment_Selection_();
-				sCInterface.raiseDoSaveInformations();
+				sCInterface.raiseDoSaveInformations(sCInterface.getNFCValue());
 				
 				enterSequence_main_region_Cancellable_Payment_Payed_default();
 			} else {
 				if (sCInterface.coinSlot) {
 					exitSequence_main_region_Cancellable_Payment_Payment_Selection_();
+					sCInterface.raiseDoUpdateAmountMoney(sCInterface.getCoinSlotValue());
+					
 					sCInterface.setBalance(sCInterface.getBalance() + (sCInterface.getCoinSlotValue()));
 					
 					enterSequence_main_region_Cancellable_Payment_Coins_default();
@@ -1020,6 +1050,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		if (try_transition) {
 			if (sCInterface.coinSlot) {
 				exitSequence_main_region_Cancellable_Payment_Coins();
+				sCInterface.raiseDoUpdateAmountMoney(sCInterface.getCoinSlotValue());
+				
 				sCInterface.setBalance(sCInterface.getBalance() + (sCInterface.getCoinSlotValue()));
 				
 				enterSequence_main_region_Cancellable_Payment_Coins_default();

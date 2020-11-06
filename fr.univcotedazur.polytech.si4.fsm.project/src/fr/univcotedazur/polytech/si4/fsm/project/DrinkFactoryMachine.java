@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -58,6 +59,43 @@ public class DrinkFactoryMachine extends JFrame {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * Do methods
+	 */
+	
+	protected void doUpdateAmountMoneyRaised(long value) {
+		theFSM.setBalance(theFSM.getBalance() + value);
+		
+	}
+
+	protected void doTypeSelectionRaised(long value) {
+		theFSM.setPrice(value);
+	}
+
+	protected void doSaveInformationsRaised(String id) {
+		
+	}
+
+	protected void doResetRaised() {
+		
+	}
+
+	protected void doRefoundMoneyRaised() {
+		
+	}
+
+	protected void doStartingPreparationRaised() {
+		
+	}
+
+	protected void doCleanSystemRaised() {
+		
+	}
+
+	protected void doDrinkCollectableRaised() {
+		
 	}
 
 	/**
@@ -305,7 +343,7 @@ public class DrinkFactoryMachine extends JFrame {
 		nfcBiiiipButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseNFC();
+				theFSM.raiseNFC(UUID.randomUUID().toString());
 				// doStop();
 			}
 		});
@@ -368,5 +406,11 @@ public class DrinkFactoryMachine extends JFrame {
 				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
+		theFSM = new DefaultSMStatemachine();
+		TimerService timer = new TimerService(); 
+		theFSM.setTimer(timer);
+		theFSM.init();
+		theFSM.enter();
+		theFSM.getSCInterface().getListeners().add(new DrinkFactoryControlerInterfaceImplementation(this));
 	}
 }
