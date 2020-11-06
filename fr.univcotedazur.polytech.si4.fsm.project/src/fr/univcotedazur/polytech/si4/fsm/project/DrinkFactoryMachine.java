@@ -79,6 +79,9 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	protected void doResetRaised() {
+		theFSM.setPrice(-1); //default price
+		doRefoundMoneyRaised();
+		
 		
 	}
 
