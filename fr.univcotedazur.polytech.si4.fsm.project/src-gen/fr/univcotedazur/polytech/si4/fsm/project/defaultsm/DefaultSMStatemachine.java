@@ -2,30 +2,43 @@
 package fr.univcotedazur.polytech.si4.fsm.project.defaultsm;
 
 import fr.univcotedazur.polytech.si4.fsm.project.ITimer;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	protected class SCInterfaceImpl implements SCInterface {
 	
+		private List<SCInterfaceListener> listeners = new LinkedList<SCInterfaceListener>();
+		
+		public List<SCInterfaceListener> getListeners() {
+			return listeners;
+		}
 		private boolean coinSlot;
 		
 		private long coinSlotValue;
 		
 		
 		public void raiseCoinSlot(long value) {
-			coinSlotValue = value;
-			coinSlot = true;
+			synchronized(DefaultSMStatemachine.this) {
+				coinSlotValue = value;
+				coinSlot = true;
+			}
 		}
 		protected long getCoinSlotValue() {
-			if (! coinSlot ) 
-				throw new IllegalStateException("Illegal event value access. Event CoinSlot is not raised!");
-			return coinSlotValue;
+			synchronized(DefaultSMStatemachine.this) {
+				if (! coinSlot ) 
+					throw new IllegalStateException("Illegal event value access. Event CoinSlot is not raised!");
+				return coinSlotValue;
+			}
 		}
 		
 		private boolean nFC;
 		
 		
 		public void raiseNFC() {
-			nFC = true;
+			synchronized(DefaultSMStatemachine.this) {
+				nFC = true;
+			}
 		}
 		
 		private boolean selectType;
@@ -34,13 +47,17 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		
 		public void raiseSelectType(long value) {
-			selectTypeValue = value;
-			selectType = true;
+			synchronized(DefaultSMStatemachine.this) {
+				selectTypeValue = value;
+				selectType = true;
+			}
 		}
 		protected long getSelectTypeValue() {
-			if (! selectType ) 
-				throw new IllegalStateException("Illegal event value access. Event SelectType is not raised!");
-			return selectTypeValue;
+			synchronized(DefaultSMStatemachine.this) {
+				if (! selectType ) 
+					throw new IllegalStateException("Illegal event value access. Event SelectType is not raised!");
+				return selectTypeValue;
+			}
 		}
 		
 		private boolean sliderSugar;
@@ -49,13 +66,17 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		
 		public void raiseSliderSugar(long value) {
-			sliderSugarValue = value;
-			sliderSugar = true;
+			synchronized(DefaultSMStatemachine.this) {
+				sliderSugarValue = value;
+				sliderSugar = true;
+			}
 		}
 		protected long getSliderSugarValue() {
-			if (! sliderSugar ) 
-				throw new IllegalStateException("Illegal event value access. Event SliderSugar is not raised!");
-			return sliderSugarValue;
+			synchronized(DefaultSMStatemachine.this) {
+				if (! sliderSugar ) 
+					throw new IllegalStateException("Illegal event value access. Event SliderSugar is not raised!");
+				return sliderSugarValue;
+			}
 		}
 		
 		private boolean sliderSize;
@@ -64,13 +85,17 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		
 		public void raiseSliderSize(long value) {
-			sliderSizeValue = value;
-			sliderSize = true;
+			synchronized(DefaultSMStatemachine.this) {
+				sliderSizeValue = value;
+				sliderSize = true;
+			}
 		}
 		protected long getSliderSizeValue() {
-			if (! sliderSize ) 
-				throw new IllegalStateException("Illegal event value access. Event SliderSize is not raised!");
-			return sliderSizeValue;
+			synchronized(DefaultSMStatemachine.this) {
+				if (! sliderSize ) 
+					throw new IllegalStateException("Illegal event value access. Event SliderSize is not raised!");
+				return sliderSizeValue;
+			}
 		}
 		
 		private boolean sliderTemperature;
@@ -79,34 +104,44 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		
 		public void raiseSliderTemperature(long value) {
-			sliderTemperatureValue = value;
-			sliderTemperature = true;
+			synchronized(DefaultSMStatemachine.this) {
+				sliderTemperatureValue = value;
+				sliderTemperature = true;
+			}
 		}
 		protected long getSliderTemperatureValue() {
-			if (! sliderTemperature ) 
-				throw new IllegalStateException("Illegal event value access. Event SliderTemperature is not raised!");
-			return sliderTemperatureValue;
+			synchronized(DefaultSMStatemachine.this) {
+				if (! sliderTemperature ) 
+					throw new IllegalStateException("Illegal event value access. Event SliderTemperature is not raised!");
+				return sliderTemperatureValue;
+			}
 		}
 		
 		private boolean cancelButton;
 		
 		
 		public void raiseCancelButton() {
-			cancelButton = true;
+			synchronized(DefaultSMStatemachine.this) {
+				cancelButton = true;
+			}
 		}
 		
 		private boolean drinkCollected;
 		
 		
 		public void raiseDrinkCollected() {
-			drinkCollected = true;
+			synchronized(DefaultSMStatemachine.this) {
+				drinkCollected = true;
+			}
 		}
 		
 		private boolean preparationFinished;
 		
 		
 		public void raisePreparationFinished() {
-			preparationFinished = true;
+			synchronized(DefaultSMStatemachine.this) {
+				preparationFinished = true;
+			}
 		}
 		
 		private boolean doUpdateAmountMoney;
@@ -115,18 +150,27 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		
 		public boolean isRaisedDoUpdateAmountMoney() {
-			return doUpdateAmountMoney;
+			synchronized(DefaultSMStatemachine.this) {
+				return doUpdateAmountMoney;
+			}
 		}
 		
 		protected void raiseDoUpdateAmountMoney(long value) {
-			doUpdateAmountMoneyValue = value;
-			doUpdateAmountMoney = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doUpdateAmountMoneyValue = value;
+				doUpdateAmountMoney = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoUpdateAmountMoneyRaised(value);
+				}
+			}
 		}
 		
 		public long getDoUpdateAmountMoneyValue() {
-			if (! doUpdateAmountMoney ) 
-				throw new IllegalStateException("Illegal event value access. Event DoUpdateAmountMoney is not raised!");
-			return doUpdateAmountMoneyValue;
+			synchronized(DefaultSMStatemachine.this) {
+				if (! doUpdateAmountMoney ) 
+					throw new IllegalStateException("Illegal event value access. Event DoUpdateAmountMoney is not raised!");
+				return doUpdateAmountMoneyValue;
+			}
 		}
 		
 		private boolean doTypeSelection;
@@ -135,104 +179,163 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		
 		public boolean isRaisedDoTypeSelection() {
-			return doTypeSelection;
+			synchronized(DefaultSMStatemachine.this) {
+				return doTypeSelection;
+			}
 		}
 		
 		protected void raiseDoTypeSelection(long value) {
-			doTypeSelectionValue = value;
-			doTypeSelection = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doTypeSelectionValue = value;
+				doTypeSelection = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoTypeSelectionRaised(value);
+				}
+			}
 		}
 		
 		public long getDoTypeSelectionValue() {
-			if (! doTypeSelection ) 
-				throw new IllegalStateException("Illegal event value access. Event DoTypeSelection is not raised!");
-			return doTypeSelectionValue;
+			synchronized(DefaultSMStatemachine.this) {
+				if (! doTypeSelection ) 
+					throw new IllegalStateException("Illegal event value access. Event DoTypeSelection is not raised!");
+				return doTypeSelectionValue;
+			}
 		}
 		
 		private boolean doSaveInformations;
 		
 		
 		public boolean isRaisedDoSaveInformations() {
-			return doSaveInformations;
+			synchronized(DefaultSMStatemachine.this) {
+				return doSaveInformations;
+			}
 		}
 		
 		protected void raiseDoSaveInformations() {
-			doSaveInformations = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doSaveInformations = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoSaveInformationsRaised();
+				}
+			}
 		}
 		
 		private boolean doReset;
 		
 		
 		public boolean isRaisedDoReset() {
-			return doReset;
+			synchronized(DefaultSMStatemachine.this) {
+				return doReset;
+			}
 		}
 		
 		protected void raiseDoReset() {
-			doReset = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doReset = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoResetRaised();
+				}
+			}
 		}
 		
 		private boolean doRefoundMoney;
 		
 		
 		public boolean isRaisedDoRefoundMoney() {
-			return doRefoundMoney;
+			synchronized(DefaultSMStatemachine.this) {
+				return doRefoundMoney;
+			}
 		}
 		
 		protected void raiseDoRefoundMoney() {
-			doRefoundMoney = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doRefoundMoney = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoRefoundMoneyRaised();
+				}
+			}
 		}
 		
 		private boolean doStartingPreparation;
 		
 		
 		public boolean isRaisedDoStartingPreparation() {
-			return doStartingPreparation;
+			synchronized(DefaultSMStatemachine.this) {
+				return doStartingPreparation;
+			}
 		}
 		
 		protected void raiseDoStartingPreparation() {
-			doStartingPreparation = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doStartingPreparation = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoStartingPreparationRaised();
+				}
+			}
 		}
 		
 		private boolean doCleanSystem;
 		
 		
 		public boolean isRaisedDoCleanSystem() {
-			return doCleanSystem;
+			synchronized(DefaultSMStatemachine.this) {
+				return doCleanSystem;
+			}
 		}
 		
 		protected void raiseDoCleanSystem() {
-			doCleanSystem = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doCleanSystem = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoCleanSystemRaised();
+				}
+			}
 		}
 		
 		private boolean doDrinkCollectable;
 		
 		
 		public boolean isRaisedDoDrinkCollectable() {
-			return doDrinkCollectable;
+			synchronized(DefaultSMStatemachine.this) {
+				return doDrinkCollectable;
+			}
 		}
 		
 		protected void raiseDoDrinkCollectable() {
-			doDrinkCollectable = true;
+			synchronized(DefaultSMStatemachine.this) {
+				doDrinkCollectable = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoDrinkCollectableRaised();
+				}
+			}
 		}
 		
 		private long balance;
 		
-		public long getBalance() {
-			return balance;
+		public synchronized long getBalance() {
+			synchronized(DefaultSMStatemachine.this) {
+				return balance;
+			}
 		}
 		
 		public void setBalance(long value) {
-			this.balance = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.balance = value;
+			}
 		}
 		
 		private long price;
 		
-		public long getPrice() {
-			return price;
+		public synchronized long getPrice() {
+			synchronized(DefaultSMStatemachine.this) {
+				return price;
+			}
 		}
 		
 		public void setPrice(long value) {
-			this.price = value;
+			synchronized(DefaultSMStatemachine.this) {
+				this.price = value;
+			}
 		}
 		
 		protected void clearEvents() {
@@ -290,7 +393,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface = new SCInterfaceImpl();
 	}
 	
-	public void init() {
+	public synchronized void init() {
 		this.initialized = true;
 		if (timer == null) {
 			throw new IllegalStateException("timer not set.");
@@ -305,7 +408,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setPrice(-1);
 	}
 	
-	public void enter() {
+	public synchronized void enter() {
 		if (!initialized) {
 			throw new IllegalStateException(
 				"The state machine needs to be initialized first by calling the init() function."
@@ -317,7 +420,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		enterSequence_main_region_default();
 	}
 	
-	public void runCycle() {
+	public synchronized void runCycle() {
 		if (!initialized)
 			throw new IllegalStateException(
 					"The state machine needs to be initialized first by calling the init() function.");
@@ -354,14 +457,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		}
 		clearEvents();
 	}
-	public void exit() {
+	public synchronized void exit() {
 		exitSequence_main_region();
 	}
 	
 	/**
 	 * @see IStatemachine#isActive()
 	 */
-	public boolean isActive() {
+	public synchronized boolean isActive() {
 		return stateVector[0] != State.$NullState$||stateVector[1] != State.$NullState$||stateVector[2] != State.$NullState$;
 	}
 	
@@ -370,7 +473,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	*
 	* @see IStatemachine#isFinal()
 	*/
-	public boolean isFinal() {
+	public synchronized boolean isFinal() {
 		return false;
 	}
 	/**
@@ -393,7 +496,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/**
 	* Returns true if the given state is currently active otherwise false.
 	*/
-	public boolean isStateActive(State state) {
+	public synchronized boolean isStateActive(State state) {
 	
 		switch (state) {
 		case main_region_Ready:
@@ -427,7 +530,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	* 
 	* @param timer
 	*/
-	public void setTimer(ITimer timer) {
+	public synchronized void setTimer(ITimer timer) {
 		this.timer = timer;
 	}
 	
@@ -440,7 +543,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return timer;
 	}
 	
-	public void timeElapsed(int eventID) {
+	public synchronized void timeElapsed(int eventID) {
 		timeEvents[eventID] = true;
 	}
 	
@@ -448,95 +551,95 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface;
 	}
 	
-	public void raiseCoinSlot(long value) {
+	public synchronized void raiseCoinSlot(long value) {
 		sCInterface.raiseCoinSlot(value);
 	}
 	
-	public void raiseNFC() {
+	public synchronized void raiseNFC() {
 		sCInterface.raiseNFC();
 	}
 	
-	public void raiseSelectType(long value) {
+	public synchronized void raiseSelectType(long value) {
 		sCInterface.raiseSelectType(value);
 	}
 	
-	public void raiseSliderSugar(long value) {
+	public synchronized void raiseSliderSugar(long value) {
 		sCInterface.raiseSliderSugar(value);
 	}
 	
-	public void raiseSliderSize(long value) {
+	public synchronized void raiseSliderSize(long value) {
 		sCInterface.raiseSliderSize(value);
 	}
 	
-	public void raiseSliderTemperature(long value) {
+	public synchronized void raiseSliderTemperature(long value) {
 		sCInterface.raiseSliderTemperature(value);
 	}
 	
-	public void raiseCancelButton() {
+	public synchronized void raiseCancelButton() {
 		sCInterface.raiseCancelButton();
 	}
 	
-	public void raiseDrinkCollected() {
+	public synchronized void raiseDrinkCollected() {
 		sCInterface.raiseDrinkCollected();
 	}
 	
-	public void raisePreparationFinished() {
+	public synchronized void raisePreparationFinished() {
 		sCInterface.raisePreparationFinished();
 	}
 	
-	public boolean isRaisedDoUpdateAmountMoney() {
+	public synchronized boolean isRaisedDoUpdateAmountMoney() {
 		return sCInterface.isRaisedDoUpdateAmountMoney();
 	}
 	
-	public long getDoUpdateAmountMoneyValue() {
+	public synchronized long getDoUpdateAmountMoneyValue() {
 		return sCInterface.getDoUpdateAmountMoneyValue();
 	}
 	
-	public boolean isRaisedDoTypeSelection() {
+	public synchronized boolean isRaisedDoTypeSelection() {
 		return sCInterface.isRaisedDoTypeSelection();
 	}
 	
-	public long getDoTypeSelectionValue() {
+	public synchronized long getDoTypeSelectionValue() {
 		return sCInterface.getDoTypeSelectionValue();
 	}
 	
-	public boolean isRaisedDoSaveInformations() {
+	public synchronized boolean isRaisedDoSaveInformations() {
 		return sCInterface.isRaisedDoSaveInformations();
 	}
 	
-	public boolean isRaisedDoReset() {
+	public synchronized boolean isRaisedDoReset() {
 		return sCInterface.isRaisedDoReset();
 	}
 	
-	public boolean isRaisedDoRefoundMoney() {
+	public synchronized boolean isRaisedDoRefoundMoney() {
 		return sCInterface.isRaisedDoRefoundMoney();
 	}
 	
-	public boolean isRaisedDoStartingPreparation() {
+	public synchronized boolean isRaisedDoStartingPreparation() {
 		return sCInterface.isRaisedDoStartingPreparation();
 	}
 	
-	public boolean isRaisedDoCleanSystem() {
+	public synchronized boolean isRaisedDoCleanSystem() {
 		return sCInterface.isRaisedDoCleanSystem();
 	}
 	
-	public boolean isRaisedDoDrinkCollectable() {
+	public synchronized boolean isRaisedDoDrinkCollectable() {
 		return sCInterface.isRaisedDoDrinkCollectable();
 	}
 	
-	public long getBalance() {
+	public synchronized long getBalance() {
 		return sCInterface.getBalance();
 	}
 	
-	public void setBalance(long value) {
+	public synchronized void setBalance(long value) {
 		sCInterface.setBalance(value);
 	}
 	
-	public long getPrice() {
+	public synchronized long getPrice() {
 		return sCInterface.getPrice();
 	}
 	
-	public void setPrice(long value) {
+	public synchronized void setPrice(long value) {
 		sCInterface.setPrice(value);
 	}
 	

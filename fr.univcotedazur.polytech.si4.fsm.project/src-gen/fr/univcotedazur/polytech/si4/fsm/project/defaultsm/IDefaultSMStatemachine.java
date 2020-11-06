@@ -3,6 +3,7 @@ package fr.univcotedazur.polytech.si4.fsm.project.defaultsm;
 
 import fr.univcotedazur.polytech.si4.fsm.project.IStatemachine;
 import fr.univcotedazur.polytech.si4.fsm.project.ITimerCallback;
+import java.util.List;
 
 public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	public interface SCInterface {
@@ -53,7 +54,20 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void setPrice(long value);
 		
+	public List<SCInterfaceListener> getListeners();
 	}
+	
+	public interface SCInterfaceListener {
+	
+		public void onDoUpdateAmountMoneyRaised(long value);
+		public void onDoTypeSelectionRaised(long value);
+		public void onDoSaveInformationsRaised();
+		public void onDoResetRaised();
+		public void onDoRefoundMoneyRaised();
+		public void onDoStartingPreparationRaised();
+		public void onDoCleanSystemRaised();
+		public void onDoDrinkCollectableRaised();
+		}
 	
 	public SCInterface getSCInterface();
 	
