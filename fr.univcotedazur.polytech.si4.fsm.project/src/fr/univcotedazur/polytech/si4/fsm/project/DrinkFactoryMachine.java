@@ -268,6 +268,6 @@ public class DrinkFactoryMachine extends JFrame {
 				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
-
+		
 	}
 }
