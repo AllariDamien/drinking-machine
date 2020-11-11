@@ -34,16 +34,16 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		private boolean nFC;
 		
-		private String nFCValue;
+		private long nFCValue;
 		
 		
-		public void raiseNFC(String value) {
+		public void raiseNFC(long value) {
 			synchronized(DefaultSMStatemachine.this) {
 				nFCValue = value;
 				nFC = true;
 			}
 		}
-		protected String getNFCValue() {
+		protected long getNFCValue() {
 			synchronized(DefaultSMStatemachine.this) {
 				if (! nFC ) 
 					throw new IllegalStateException("Illegal event value access. Event NFC is not raised!");
@@ -214,7 +214,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		private boolean doSaveInformations;
 		
-		private String doSaveInformationsValue;
+		private long doSaveInformationsValue;
 		
 		
 		public boolean isRaisedDoSaveInformations() {
@@ -223,7 +223,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		protected void raiseDoSaveInformations(String value) {
+		protected void raiseDoSaveInformations(long value) {
 			synchronized(DefaultSMStatemachine.this) {
 				doSaveInformationsValue = value;
 				doSaveInformations = true;
@@ -233,7 +233,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		public String getDoSaveInformationsValue() {
+		public long getDoSaveInformationsValue() {
 			synchronized(DefaultSMStatemachine.this) {
 				if (! doSaveInformations ) 
 					throw new IllegalStateException("Illegal event value access. Event DoSaveInformations is not raised!");
@@ -576,7 +576,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseCoinSlot(value);
 	}
 	
-	public synchronized void raiseNFC(String value) {
+	public synchronized void raiseNFC(long value) {
 		sCInterface.raiseNFC(value);
 	}
 	
@@ -628,7 +628,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoSaveInformations();
 	}
 	
-	public synchronized String getDoSaveInformationsValue() {
+	public synchronized long getDoSaveInformationsValue() {
 		return sCInterface.getDoSaveInformationsValue();
 	}
 	

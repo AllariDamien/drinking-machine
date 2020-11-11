@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.UUID;
 
@@ -27,6 +28,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.SliderUI;
 
 import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.*;
 public class DrinkFactoryMachine extends JFrame {
@@ -37,6 +39,8 @@ public class DrinkFactoryMachine extends JFrame {
 	private static final long serialVersionUID = 2030629304432075314L;
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
+	private HashMap<Long, Long> infosNFC = new HashMap<Long ,Long>();
+	private long temporaryId;
 	/**
 	 * @wbp.nonvisual location=311,475
 	 */
@@ -83,28 +87,43 @@ public class DrinkFactoryMachine extends JFrame {
 		case "Soup":
 			theFSM.setPrice(75);
 			break;
+		default:
+			theFSM.setPrice(-1);
 		}
-		System.out.println(theFSM.getPrice());
+		//System.out.println(theFSM.getPrice());
 			
 	}
 
-	protected void doSaveInformationsRaised(String id) {
-		
+	protected void doSaveInformationsRaised(long id) {
+		temporaryId = id;
 	}
 
 	protected void doResetRaised() {
-		theFSM.setPrice(-1); //default price
-		doRefoundMoneyRaised();
+		doTypeSelectionRaised("");
+		theFSM.setBalance(0);
+		temporaryId = 0;
+		System.out.println(theFSM.getBalance());
+		
+		// doRefoundMoneyRaised();
 		
 		
 	}
 
 	protected void doRefoundMoneyRaised() {
-		
+		System.out.println("coucou");
 	}
 
 	protected void doStartingPreparationRaised() {
-		
+		long value = 1;
+		if(infosNFC.containsKey(temporaryId)) {
+			infosNFC.put(temporaryId, infosNFC.get(temporaryId)+1);
+		}
+		else {
+			infosNFC.put(temporaryId, value);
+		}
+		for (Long i : infosNFC.keySet()) {
+			  System.out.println(i + " " + infosNFC.get(i));
+			}
 	}
 
 	protected void doCleanSystemRaised() {
@@ -220,7 +239,7 @@ public class DrinkFactoryMachine extends JFrame {
 		soupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType("Soup");;
+				theFSM.raiseSelectType("Soup");
 				// doStop();
 			}
 		});
@@ -249,7 +268,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
-				theFSM.raiseSliderSugar(sugarSlider.getValue());;
+				theFSM.raiseSliderSugar(sugarSlider.getValue());
 			}
 		});
 
@@ -264,14 +283,17 @@ public class DrinkFactoryMachine extends JFrame {
 		sizeSlider.setMajorTickSpacing(1);
 		sizeSlider.setBounds(301, 125, 200, 36);
 		contentPane.add(sizeSlider);
+		
 		sizeSlider.addChangeListener(new ChangeListener() {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
-				theFSM.raiseSliderSize(sizeSlider.getValue());;
+				theFSM.raiseSliderSize(sizeSlider.getValue());
+				System.out.println(sizeSlider.getValue());
 			}
 		});
+		
 
 		JSlider temperatureSlider = new JSlider();
 		temperatureSlider.setPaintLabels(true);
@@ -392,7 +414,7 @@ public class DrinkFactoryMachine extends JFrame {
 		nfcBiiiipButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseNFC(UUID.randomUUID().toString());
+				theFSM.raiseNFC(1234);
 				// doStop();
 			}
 		});
@@ -437,7 +459,12 @@ public class DrinkFactoryMachine extends JFrame {
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sugarSlider.setValue(1);
+				sizeSlider.setValue(1);
+				temperatureSlider.setValue(2);
 				theFSM.raiseCancelButton();
+				
+				
 				// doStop();
 			}
 		});

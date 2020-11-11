@@ -33,7 +33,7 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 
 
 	@Override
-	public void onDoSaveInformationsRaised(String value) {
+	public void onDoSaveInformationsRaised(long value) {
 		// TODO Auto-generated method stub
 		machine.doSaveInformationsRaised(value);
 	}

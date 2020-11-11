@@ -10,7 +10,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	
 		public void raiseCoinSlot(long value);
 		
-		public void raiseNFC(String value);
+		public void raiseNFC(long value);
 		
 		public void raiseSelectType(String value);
 		
@@ -36,7 +36,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoSaveInformations();
 		
-		public String getDoSaveInformationsValue();
+		public long getDoSaveInformationsValue();
 		
 		public boolean isRaisedDoReset();
 		
@@ -63,7 +63,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	
 		public void onDoUpdateAmountMoneyRaised(long value);
 		public void onDoTypeSelectionRaised(String value);
-		public void onDoSaveInformationsRaised(String value);
+		public void onDoSaveInformationsRaised(long value);
 		public void onDoResetRaised();
 		public void onDoRefoundMoneyRaised();
 		public void onDoStartingPreparationRaised();
