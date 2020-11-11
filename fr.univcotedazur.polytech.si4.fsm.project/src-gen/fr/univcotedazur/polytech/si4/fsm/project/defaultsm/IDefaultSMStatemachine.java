@@ -12,7 +12,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void raiseNFC(String value);
 		
-		public void raiseSelectType(long value);
+		public void raiseSelectType(String value);
 		
 		public void raiseSliderSugar(long value);
 		
@@ -32,7 +32,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoTypeSelection();
 		
-		public long getDoTypeSelectionValue();
+		public String getDoTypeSelectionValue();
 		
 		public boolean isRaisedDoSaveInformations();
 		
@@ -62,7 +62,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	public interface SCInterfaceListener {
 	
 		public void onDoUpdateAmountMoneyRaised(long value);
-		public void onDoTypeSelectionRaised(long value);
+		public void onDoTypeSelectionRaised(String value);
 		public void onDoSaveInformationsRaised(String value);
 		public void onDoResetRaised();
 		public void onDoRefoundMoneyRaised();

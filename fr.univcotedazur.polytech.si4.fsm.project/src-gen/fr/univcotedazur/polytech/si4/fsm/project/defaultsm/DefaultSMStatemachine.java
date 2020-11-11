@@ -53,16 +53,16 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		private boolean selectType;
 		
-		private long selectTypeValue;
+		private String selectTypeValue;
 		
 		
-		public void raiseSelectType(long value) {
+		public void raiseSelectType(String value) {
 			synchronized(DefaultSMStatemachine.this) {
 				selectTypeValue = value;
 				selectType = true;
 			}
 		}
-		protected long getSelectTypeValue() {
+		protected String getSelectTypeValue() {
 			synchronized(DefaultSMStatemachine.this) {
 				if (! selectType ) 
 					throw new IllegalStateException("Illegal event value access. Event SelectType is not raised!");
@@ -185,7 +185,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		private boolean doTypeSelection;
 		
-		private long doTypeSelectionValue;
+		private String doTypeSelectionValue;
 		
 		
 		public boolean isRaisedDoTypeSelection() {
@@ -194,7 +194,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		protected void raiseDoTypeSelection(long value) {
+		protected void raiseDoTypeSelection(String value) {
 			synchronized(DefaultSMStatemachine.this) {
 				doTypeSelectionValue = value;
 				doTypeSelection = true;
@@ -204,7 +204,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		public long getDoTypeSelectionValue() {
+		public String getDoTypeSelectionValue() {
 			synchronized(DefaultSMStatemachine.this) {
 				if (! doTypeSelection ) 
 					throw new IllegalStateException("Illegal event value access. Event DoTypeSelection is not raised!");
@@ -580,7 +580,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseNFC(value);
 	}
 	
-	public synchronized void raiseSelectType(long value) {
+	public synchronized void raiseSelectType(String value) {
 		sCInterface.raiseSelectType(value);
 	}
 	
@@ -620,7 +620,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoTypeSelection();
 	}
 	
-	public synchronized long getDoTypeSelectionValue() {
+	public synchronized String getDoTypeSelectionValue() {
 		return sCInterface.getDoTypeSelectionValue();
 	}
 	

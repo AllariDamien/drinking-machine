@@ -25,7 +25,7 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 
 
 	@Override
-	public void onDoTypeSelectionRaised(long value) {
+	public void onDoTypeSelectionRaised(String value) {
 		// TODO Auto-generated method stub
 		machine.doTypeSelectionRaised(value);
 	}

@@ -69,8 +69,23 @@ public class DrinkFactoryMachine extends JFrame {
 		System.out.println(theFSM.getBalance());
 	}
 
-	protected void doTypeSelectionRaised(long value) {
-		theFSM.setPrice(value);
+	protected void doTypeSelectionRaised(String value) {
+		switch(value) {
+		case "Coffee":
+			theFSM.setPrice(35);
+			break;
+		case "Expresso":
+			theFSM.setPrice(50);
+			break;
+		case "Tea":
+			theFSM.setPrice(40);
+			break;
+		case "Soup":
+			theFSM.setPrice(75);
+			break;
+		}
+		System.out.println(theFSM.getPrice());
+			
 	}
 
 	protected void doSaveInformationsRaised(String id) {
@@ -166,7 +181,7 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType(35);;
+				theFSM.raiseSelectType("Coffee");;
 				// doStop();
 			}
 		});
@@ -179,7 +194,7 @@ public class DrinkFactoryMachine extends JFrame {
 		expressoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType(50);;
+				theFSM.raiseSelectType("Expresso");;
 				// doStop();
 			}
 		});
@@ -192,7 +207,7 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType(40);;
+				theFSM.raiseSelectType("Tea");;
 				// doStop();
 			}
 		});
@@ -205,7 +220,7 @@ public class DrinkFactoryMachine extends JFrame {
 		soupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType(75);;
+				theFSM.raiseSelectType("Soup");;
 				// doStop();
 			}
 		});
