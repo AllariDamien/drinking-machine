@@ -1,7 +1,6 @@
 package fr.univcotedazur.polytech.si4.fsm.project;
 
 import java.awt.Color;
-
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -29,9 +28,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.DefaultSMStatemachine;
-
-
+import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.*;
 public class DrinkFactoryMachine extends JFrame {
 
 	/**
@@ -43,7 +40,9 @@ public class DrinkFactoryMachine extends JFrame {
 	/**
 	 * @wbp.nonvisual location=311,475
 	 */
+	@SuppressWarnings("unused")
 	private final ImageIcon imageIcon = new ImageIcon();
+	private Thread t;
 
 	/**
 	 * Launch the application.
@@ -67,7 +66,7 @@ public class DrinkFactoryMachine extends JFrame {
 	
 	protected void doUpdateAmountMoneyRaised(long value) {
 		theFSM.setBalance(theFSM.getBalance() + value);
-		
+		System.out.println(theFSM.getBalance());
 	}
 
 	protected void doTypeSelectionRaised(long value) {
@@ -105,6 +104,32 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Create the frame.
 	 */
 	public DrinkFactoryMachine() {
+		
+		theFSM = new DefaultSMStatemachine();
+		TimerService timer = new TimerService(); theFSM.setTimer(timer);
+		theFSM.init();
+		theFSM.enter();
+		theFSM.getSCInterface().getListeners().add(new DrinkFactoryControlerInterfaceImplementation(this));
+		
+		Runnable r = new Runnable() {
+			
+			@Override
+			public void run() {
+				while(true) {
+					theFSM.runCycle();
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		};
+		t = new Thread(r);
+		t.start();
+		
 		setForeground(Color.WHITE);
 		setFont(new Font("Cantarell", Font.BOLD, 22));
 		setBackground(Color.DARK_GRAY);
@@ -304,8 +329,10 @@ public class DrinkFactoryMachine extends JFrame {
 		money50centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseCoinSlot(50);
+				
 				// doStop();
+				theFSM.raiseCoinSlot(50);
+				
 			}
 		});
 		
@@ -317,7 +344,9 @@ public class DrinkFactoryMachine extends JFrame {
 		money25centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				theFSM.raiseCoinSlot(25);
+				
 				// doStop();
 			}
 		});
@@ -329,7 +358,9 @@ public class DrinkFactoryMachine extends JFrame {
 		money10centsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				theFSM.raiseCoinSlot(10);
+				
 				// doStop();
 			}
 		});
@@ -409,11 +440,12 @@ public class DrinkFactoryMachine extends JFrame {
 				labelForPictures.setIcon(new ImageIcon(myPicture));
 			}
 		});
-		theFSM = new DefaultSMStatemachine();
-		TimerService timer = new TimerService(); 
-		theFSM.setTimer(timer);
-		theFSM.init();
-		theFSM.enter();
-		theFSM.getSCInterface().getListeners().add(new DrinkFactoryControlerInterfaceImplementation(this));
+		
+	}
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+		t.stop();
 	}
 }

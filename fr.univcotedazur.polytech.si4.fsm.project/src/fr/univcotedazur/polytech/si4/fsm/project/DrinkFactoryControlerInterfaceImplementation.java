@@ -9,55 +9,74 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	
 	
 	public DrinkFactoryControlerInterfaceImplementation(DrinkFactoryMachine machine) {
-		super();
+		
 		this.machine = machine;
 	}
-	
+
+
+
 	@Override
 	public void onDoUpdateAmountMoneyRaised(long value) {
 		// TODO Auto-generated method stub
+		machine.doUpdateAmountMoneyRaised(value);
+		
 	}
+
+
 
 	@Override
 	public void onDoTypeSelectionRaised(long value) {
 		// TODO Auto-generated method stub
-		
+		machine.doTypeSelectionRaised(value);
 	}
 
+
+
 	@Override
-	public void onDoSaveInformationsRaised(String id) {
+	public void onDoSaveInformationsRaised(String value) {
 		// TODO Auto-generated method stub
-		
+		machine.doSaveInformationsRaised(value);
 	}
+
+
 
 	@Override
 	public void onDoResetRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doResetRaised();
 	}
+
+
 
 	@Override
 	public void onDoRefoundMoneyRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doRefoundMoneyRaised();
 	}
+
+
 
 	@Override
 	public void onDoStartingPreparationRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doStartingPreparationRaised();
 	}
+
+
 
 	@Override
 	public void onDoCleanSystemRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doCleanSystemRaised();
 	}
+
+
 
 	@Override
 	public void onDoDrinkCollectableRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doDrinkCollectableRaised();
 	}
-
+	
+	
 }

@@ -6,14 +6,14 @@
         <outgoingTransitions xmi:id="__as9ZAoOEeu6Lv5zbtu5oA" target="__as9VAoOEeu6Lv5zbtu5oA"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="__as9VAoOEeu6Lv5zbtu5oA" name="Ready" incomingTransitions="__as9ZAoOEeu6Lv5zbtu5oA _3_MJ0AoVEeuRgIFPxjHZ8w _plExwA-IEeuSq4uCBX5wew _VUAaYA-KEeuSq4uCBX5wew">
-        <outgoingTransitions xmi:id="_LhJf0AoREeu6Lv5zbtu5oA" specification="selectType / raise doTypeSelection : &#xD;&#xA;valueof(selectType); price = valueof (selectType)" target="_2kKIgAoQEeu6Lv5zbtu5oA"/>
-        <outgoingTransitions xmi:id="_v1E3kA-FEeuSq4uCBX5wew" specification="coinSlot / &#xD;&#xA;balance = valueof(coinSlot)" target="_Gyi3kBq4EeuGnZ_Et4xlig"/>
+        <outgoingTransitions xmi:id="_LhJf0AoREeu6Lv5zbtu5oA" specification="selectType / raise doTypeSelection : &#xD;&#xA;valueof(selectType)" target="_2kKIgAoQEeu6Lv5zbtu5oA"/>
+        <outgoingTransitions xmi:id="_v1E3kA-FEeuSq4uCBX5wew" specification="coinSlot / raise doUpdateAmountMoney :&#xD;&#xA;valueof(coinSlot)" target="_Gyi3kBq4EeuGnZ_Et4xlig"/>
         <outgoingTransitions xmi:id="_A3GGwBlNEeufvPJS5ggzWg" specification="NFC / raise doSaveInformations:&#xA;valueof(NFC)" target="_IJOIABk2EeuJE5_Qtg2rvg"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_2kKIgAoQEeu6Lv5zbtu5oA" name="Cancellable" incomingTransitions="_LhJf0AoREeu6Lv5zbtu5oA">
         <regions xmi:id="_2kKIgwoQEeu6Lv5zbtu5oA" name="Drink">
           <vertices xsi:type="sgraph:State" xmi:id="_ROo5AAoPEeu6Lv5zbtu5oA" name="Drink Selection" incomingTransitions="_i9e6QA-qEeuSq4uCBX5wew _JFfywBklEeuJE5_Qtg2rvg">
-            <outgoingTransitions xmi:id="_i9e6QA-qEeuSq4uCBX5wew" specification="selectType / raise doTypeSelection : &#xD;&#xA;valueof(selectType);&#xD;&#xA; price = valueof (selectType)" target="_ROo5AAoPEeu6Lv5zbtu5oA"/>
+            <outgoingTransitions xmi:id="_i9e6QA-qEeuSq4uCBX5wew" specification="selectType / raise doTypeSelection : &#xD;&#xA;valueof(selectType)" target="_ROo5AAoPEeu6Lv5zbtu5oA"/>
             <outgoingTransitions xmi:id="_jQFfQA-AEeuSq4uCBX5wew" specification="[price >=0]" target="_1zfjEBnTEeufvPJS5ggzWg"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_HW_pkBklEeuJE5_Qtg2rvg">
@@ -23,7 +23,7 @@
         <regions xmi:id="_d7LqUBUWEeuyQsWoCzfJtA" name="Payment">
           <vertices xsi:type="sgraph:State" xmi:id="_IgAFsBUXEeuyQsWoCzfJtA" name="Payment Selection " incomingTransitions="_G6Td0Bk2EeuJE5_Qtg2rvg">
             <outgoingTransitions xmi:id="_jUyQYBq1EeuGnZ_Et4xlig" specification="NFC / raise&#xD;&#xA; doSaveInformations :&#xD;&#xA; valueof(NFC)" target="_IJOIABk2EeuJE5_Qtg2rvg"/>
-            <outgoingTransitions xmi:id="_OQZJMBq4EeuGnZ_Et4xlig" specification="coinSlot / raise doUpdateAmountMoney :&#xD;&#xA;valueof(coinSlot);&#xD;&#xA;balance += valueof(coinSlot)" target="_Gyi3kBq4EeuGnZ_Et4xlig"/>
+            <outgoingTransitions xmi:id="_OQZJMBq4EeuGnZ_Et4xlig" specification="coinSlot / raise doUpdateAmountMoney :&#xD;&#xA;valueof(coinSlot)" target="_Gyi3kBq4EeuGnZ_Et4xlig"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_Gbpy8Bk2EeuJE5_Qtg2rvg">
             <outgoingTransitions xmi:id="_G6Td0Bk2EeuJE5_Qtg2rvg" specification="" target="_IgAFsBUXEeuyQsWoCzfJtA"/>
@@ -32,7 +32,7 @@
             <outgoingTransitions xmi:id="_0swSkBnVEeufvPJS5ggzWg" specification="" target="_1zfjEBnTEeufvPJS5ggzWg"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_Gyi3kBq4EeuGnZ_Et4xlig" name="Coins" incomingTransitions="_OQZJMBq4EeuGnZ_Et4xlig _PyAs8Bq4EeuGnZ_Et4xlig _v1E3kA-FEeuSq4uCBX5wew">
-            <outgoingTransitions xmi:id="_PyAs8Bq4EeuGnZ_Et4xlig" specification="coinSlot / raise doUpdateAmountMoney :&#xA;valueof(coinSlot);&#xA;balance += valueof(coinSlot)" target="_Gyi3kBq4EeuGnZ_Et4xlig"/>
+            <outgoingTransitions xmi:id="_PyAs8Bq4EeuGnZ_Et4xlig" specification="coinSlot / raise doUpdateAmountMoney :&#xA;valueof(coinSlot)" target="_Gyi3kBq4EeuGnZ_Et4xlig"/>
             <outgoingTransitions xmi:id="_JeX9EBk2EeuJE5_Qtg2rvg" specification="[balance-price >= 0 &amp;&amp; price >=0]" target="_IJOIABk2EeuJE5_Qtg2rvg"/>
           </vertices>
         </regions>

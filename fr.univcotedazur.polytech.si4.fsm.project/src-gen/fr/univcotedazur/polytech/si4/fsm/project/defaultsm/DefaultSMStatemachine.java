@@ -2,9 +2,6 @@
 package fr.univcotedazur.polytech.si4.fsm.project.defaultsm;
 
 import fr.univcotedazur.polytech.si4.fsm.project.ITimer;
-import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.IDefaultSMStatemachine.SCInterface;
-import fr.univcotedazur.polytech.si4.fsm.project.defaultsm.IDefaultSMStatemachine.SCInterfaceListener;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -936,14 +933,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				exitSequence_main_region_Ready();
 				sCInterface.raiseDoTypeSelection(sCInterface.getSelectTypeValue());
 				
-				sCInterface.setPrice(sCInterface.getSelectTypeValue());
-				
 				enterSequence_main_region_Cancellable_default();
 				react();
 			} else {
 				if (sCInterface.coinSlot) {
 					exitSequence_main_region_Ready();
-					sCInterface.setBalance(sCInterface.getCoinSlotValue());
+					sCInterface.raiseDoUpdateAmountMoney(sCInterface.getCoinSlotValue());
 					
 					enterSequence_main_region_Cancellable_Drink_default();
 					enterSequence_main_region_Cancellable_Payment_Coins_default();
@@ -990,8 +985,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				exitSequence_main_region_Cancellable_Drink_Drink_Selection();
 				sCInterface.raiseDoTypeSelection(sCInterface.getSelectTypeValue());
 				
-				sCInterface.setPrice(sCInterface.getSelectTypeValue());
-				
 				enterSequence_main_region_Cancellable_Drink_Drink_Selection_default();
 			} else {
 				if ((sCInterface.getPrice()>=0 && isStateActive(State.main_region_Cancellable_Payment_Payed))) {
@@ -1018,8 +1011,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				if (sCInterface.coinSlot) {
 					exitSequence_main_region_Cancellable_Payment_Payment_Selection_();
 					sCInterface.raiseDoUpdateAmountMoney(sCInterface.getCoinSlotValue());
-					
-					sCInterface.setBalance(sCInterface.getBalance() + (sCInterface.getCoinSlotValue()));
 					
 					enterSequence_main_region_Cancellable_Payment_Coins_default();
 				} else {
@@ -1051,8 +1042,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			if (sCInterface.coinSlot) {
 				exitSequence_main_region_Cancellable_Payment_Coins();
 				sCInterface.raiseDoUpdateAmountMoney(sCInterface.getCoinSlotValue());
-				
-				sCInterface.setBalance(sCInterface.getBalance() + (sCInterface.getCoinSlotValue()));
 				
 				enterSequence_main_region_Cancellable_Payment_Coins_default();
 			} else {
