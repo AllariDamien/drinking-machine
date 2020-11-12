@@ -35,4 +35,8 @@ hs_err_pid*
 
 **/bin
 
+bin/
+
 fr.univcotedazur.polytech.si4.fsm.project/.idea/workspace.xml
+fr.univcotedazur.polytech.si4.fsm.project/bin/fr/univcotedazur/polytech/si4/fsm/project/defaultsm/DefaultSMStatemachine$SCInterfaceImpl.class
+
