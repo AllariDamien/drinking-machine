@@ -77,6 +77,46 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 		// TODO Auto-generated method stub
 		machine.doDrinkCollectableRaised();
 	}
+
+
+
+	@Override
+	public void onDoInitialisationRaised() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void onDoSetTemperatureAndCupRaised() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void onDoPutSugarAndWaterRaised() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void onDoBrewingRaised() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void onDoRemoveTeaBagRaised() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

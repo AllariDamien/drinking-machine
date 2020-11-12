@@ -70,60 +70,60 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		private boolean sliderSugar;
+		private boolean sugarSlider;
 		
-		private long sliderSugarValue;
+		private long sugarSliderValue;
 		
 		
-		public void raiseSliderSugar(long value) {
+		public void raiseSugarSlider(long value) {
 			synchronized(DefaultSMStatemachine.this) {
-				sliderSugarValue = value;
-				sliderSugar = true;
+				sugarSliderValue = value;
+				sugarSlider = true;
 			}
 		}
-		protected long getSliderSugarValue() {
+		protected long getSugarSliderValue() {
 			synchronized(DefaultSMStatemachine.this) {
-				if (! sliderSugar ) 
-					throw new IllegalStateException("Illegal event value access. Event SliderSugar is not raised!");
-				return sliderSugarValue;
-			}
-		}
-		
-		private boolean sliderSize;
-		
-		private long sliderSizeValue;
-		
-		
-		public void raiseSliderSize(long value) {
-			synchronized(DefaultSMStatemachine.this) {
-				sliderSizeValue = value;
-				sliderSize = true;
-			}
-		}
-		protected long getSliderSizeValue() {
-			synchronized(DefaultSMStatemachine.this) {
-				if (! sliderSize ) 
-					throw new IllegalStateException("Illegal event value access. Event SliderSize is not raised!");
-				return sliderSizeValue;
+				if (! sugarSlider ) 
+					throw new IllegalStateException("Illegal event value access. Event SugarSlider is not raised!");
+				return sugarSliderValue;
 			}
 		}
 		
-		private boolean sliderTemperature;
+		private boolean sizeSlider;
 		
-		private long sliderTemperatureValue;
+		private long sizeSliderValue;
 		
 		
-		public void raiseSliderTemperature(long value) {
+		public void raiseSizeSlider(long value) {
 			synchronized(DefaultSMStatemachine.this) {
-				sliderTemperatureValue = value;
-				sliderTemperature = true;
+				sizeSliderValue = value;
+				sizeSlider = true;
 			}
 		}
-		protected long getSliderTemperatureValue() {
+		protected long getSizeSliderValue() {
 			synchronized(DefaultSMStatemachine.this) {
-				if (! sliderTemperature ) 
-					throw new IllegalStateException("Illegal event value access. Event SliderTemperature is not raised!");
-				return sliderTemperatureValue;
+				if (! sizeSlider ) 
+					throw new IllegalStateException("Illegal event value access. Event SizeSlider is not raised!");
+				return sizeSliderValue;
+			}
+		}
+		
+		private boolean temperatureSlider;
+		
+		private long temperatureSliderValue;
+		
+		
+		public void raiseTemperatureSlider(long value) {
+			synchronized(DefaultSMStatemachine.this) {
+				temperatureSliderValue = value;
+				temperatureSlider = true;
+			}
+		}
+		protected long getTemperatureSliderValue() {
+			synchronized(DefaultSMStatemachine.this) {
+				if (! temperatureSlider ) 
+					throw new IllegalStateException("Illegal event value access. Event TemperatureSlider is not raised!");
+				return temperatureSliderValue;
 			}
 		}
 		
@@ -136,21 +136,21 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean goNextStep;
+		
+		
+		public void raiseGoNextStep() {
+			synchronized(DefaultSMStatemachine.this) {
+				goNextStep = true;
+			}
+		}
+		
 		private boolean drinkCollected;
 		
 		
 		public void raiseDrinkCollected() {
 			synchronized(DefaultSMStatemachine.this) {
 				drinkCollected = true;
-			}
-		}
-		
-		private boolean preparationFinished;
-		
-		
-		public void raisePreparationFinished() {
-			synchronized(DefaultSMStatemachine.this) {
-				preparationFinished = true;
 			}
 		}
 		
@@ -313,6 +313,96 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doInitialisation;
+		
+		
+		public boolean isRaisedDoInitialisation() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doInitialisation;
+			}
+		}
+		
+		protected void raiseDoInitialisation() {
+			synchronized(DefaultSMStatemachine.this) {
+				doInitialisation = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoInitialisationRaised();
+				}
+			}
+		}
+		
+		private boolean doSetTemperatureAndCup;
+		
+		
+		public boolean isRaisedDoSetTemperatureAndCup() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doSetTemperatureAndCup;
+			}
+		}
+		
+		protected void raiseDoSetTemperatureAndCup() {
+			synchronized(DefaultSMStatemachine.this) {
+				doSetTemperatureAndCup = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoSetTemperatureAndCupRaised();
+				}
+			}
+		}
+		
+		private boolean doPutSugarAndWater;
+		
+		
+		public boolean isRaisedDoPutSugarAndWater() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doPutSugarAndWater;
+			}
+		}
+		
+		protected void raiseDoPutSugarAndWater() {
+			synchronized(DefaultSMStatemachine.this) {
+				doPutSugarAndWater = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoPutSugarAndWaterRaised();
+				}
+			}
+		}
+		
+		private boolean doBrewing;
+		
+		
+		public boolean isRaisedDoBrewing() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doBrewing;
+			}
+		}
+		
+		protected void raiseDoBrewing() {
+			synchronized(DefaultSMStatemachine.this) {
+				doBrewing = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoBrewingRaised();
+				}
+			}
+		}
+		
+		private boolean doRemoveTeaBag;
+		
+		
+		public boolean isRaisedDoRemoveTeaBag() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doRemoveTeaBag;
+			}
+		}
+		
+		protected void raiseDoRemoveTeaBag() {
+			synchronized(DefaultSMStatemachine.this) {
+				doRemoveTeaBag = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoRemoveTeaBagRaised();
+				}
+			}
+		}
+		
 		private boolean doDrinkCollectable;
 		
 		
@@ -359,16 +449,30 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private String type;
+		
+		public synchronized String getType() {
+			synchronized(DefaultSMStatemachine.this) {
+				return type;
+			}
+		}
+		
+		public void setType(String value) {
+			synchronized(DefaultSMStatemachine.this) {
+				this.type = value;
+			}
+		}
+		
 		protected void clearEvents() {
 			coinSlot = false;
 			nFC = false;
 			selectType = false;
-			sliderSugar = false;
-			sliderSize = false;
-			sliderTemperature = false;
+			sugarSlider = false;
+			sizeSlider = false;
+			temperatureSlider = false;
 			cancelButton = false;
+			goNextStep = false;
 			drinkCollected = false;
-			preparationFinished = false;
 		}
 		protected void clearOutEvents() {
 		
@@ -379,6 +483,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doRefoundMoney = false;
 		doStartingPreparation = false;
 		doCleanSystem = false;
+		doInitialisation = false;
+		doSetTemperatureAndCup = false;
+		doPutSugarAndWater = false;
+		doBrewing = false;
+		doRemoveTeaBag = false;
 		doDrinkCollectable = false;
 		}
 		
@@ -397,8 +506,13 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_Cancellable_Payment_Payed,
 		main_region_Cancellable_Payment_Coins,
 		main_region_Cancellable_Timer_Timer,
-		main_region_Preparation,
-		main_region_Drink_available,
+		main_region_Waiting_for_Preparation,
+		main_region_Step_4_Done___Drink_available,
+		main_region_Step_1_Done,
+		main_region_Step_3_Done,
+		main_region_Step_2_Done,
+		main_region_Step_Bonus_1,
+		main_region_Brewed,
 		$NullState$
 	};
 	
@@ -427,6 +541,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setBalance(0);
 		
 		sCInterface.setPrice(-1);
+		
+		sCInterface.setType("");
 	}
 	
 	public synchronized void enter() {
@@ -466,11 +582,26 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			case main_region_Cancellable_Timer_Timer:
 				main_region_Cancellable_Timer_Timer_react(true);
 				break;
-			case main_region_Preparation:
-				main_region_Preparation_react(true);
+			case main_region_Waiting_for_Preparation:
+				main_region_Waiting_for_Preparation_react(true);
 				break;
-			case main_region_Drink_available:
-				main_region_Drink_available_react(true);
+			case main_region_Step_4_Done___Drink_available:
+				main_region_Step_4_Done___Drink_available_react(true);
+				break;
+			case main_region_Step_1_Done:
+				main_region_Step_1_Done_react(true);
+				break;
+			case main_region_Step_3_Done:
+				main_region_Step_3_Done_react(true);
+				break;
+			case main_region_Step_2_Done:
+				main_region_Step_2_Done_react(true);
+				break;
+			case main_region_Step_Bonus_1:
+				main_region_Step_Bonus_1_react(true);
+				break;
+			case main_region_Brewed:
+				main_region_Brewed_react(true);
 				break;
 			default:
 				// $NullState$
@@ -535,10 +666,20 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[1] == State.main_region_Cancellable_Payment_Coins;
 		case main_region_Cancellable_Timer_Timer:
 			return stateVector[2] == State.main_region_Cancellable_Timer_Timer;
-		case main_region_Preparation:
-			return stateVector[0] == State.main_region_Preparation;
-		case main_region_Drink_available:
-			return stateVector[0] == State.main_region_Drink_available;
+		case main_region_Waiting_for_Preparation:
+			return stateVector[0] == State.main_region_Waiting_for_Preparation;
+		case main_region_Step_4_Done___Drink_available:
+			return stateVector[0] == State.main_region_Step_4_Done___Drink_available;
+		case main_region_Step_1_Done:
+			return stateVector[0] == State.main_region_Step_1_Done;
+		case main_region_Step_3_Done:
+			return stateVector[0] == State.main_region_Step_3_Done;
+		case main_region_Step_2_Done:
+			return stateVector[0] == State.main_region_Step_2_Done;
+		case main_region_Step_Bonus_1:
+			return stateVector[0] == State.main_region_Step_Bonus_1;
+		case main_region_Brewed:
+			return stateVector[0] == State.main_region_Brewed;
 		default:
 			return false;
 		}
@@ -584,28 +725,28 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseSelectType(value);
 	}
 	
-	public synchronized void raiseSliderSugar(long value) {
-		sCInterface.raiseSliderSugar(value);
+	public synchronized void raiseSugarSlider(long value) {
+		sCInterface.raiseSugarSlider(value);
 	}
 	
-	public synchronized void raiseSliderSize(long value) {
-		sCInterface.raiseSliderSize(value);
+	public synchronized void raiseSizeSlider(long value) {
+		sCInterface.raiseSizeSlider(value);
 	}
 	
-	public synchronized void raiseSliderTemperature(long value) {
-		sCInterface.raiseSliderTemperature(value);
+	public synchronized void raiseTemperatureSlider(long value) {
+		sCInterface.raiseTemperatureSlider(value);
 	}
 	
 	public synchronized void raiseCancelButton() {
 		sCInterface.raiseCancelButton();
 	}
 	
-	public synchronized void raiseDrinkCollected() {
-		sCInterface.raiseDrinkCollected();
+	public synchronized void raiseGoNextStep() {
+		sCInterface.raiseGoNextStep();
 	}
 	
-	public synchronized void raisePreparationFinished() {
-		sCInterface.raisePreparationFinished();
+	public synchronized void raiseDrinkCollected() {
+		sCInterface.raiseDrinkCollected();
 	}
 	
 	public synchronized boolean isRaisedDoUpdateAmountMoney() {
@@ -648,6 +789,26 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoCleanSystem();
 	}
 	
+	public synchronized boolean isRaisedDoInitialisation() {
+		return sCInterface.isRaisedDoInitialisation();
+	}
+	
+	public synchronized boolean isRaisedDoSetTemperatureAndCup() {
+		return sCInterface.isRaisedDoSetTemperatureAndCup();
+	}
+	
+	public synchronized boolean isRaisedDoPutSugarAndWater() {
+		return sCInterface.isRaisedDoPutSugarAndWater();
+	}
+	
+	public synchronized boolean isRaisedDoBrewing() {
+		return sCInterface.isRaisedDoBrewing();
+	}
+	
+	public synchronized boolean isRaisedDoRemoveTeaBag() {
+		return sCInterface.isRaisedDoRemoveTeaBag();
+	}
+	
 	public synchronized boolean isRaisedDoDrinkCollectable() {
 		return sCInterface.isRaisedDoDrinkCollectable();
 	}
@@ -666,6 +827,26 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized void setPrice(long value) {
 		sCInterface.setPrice(value);
+	}
+	
+	public synchronized String getType() {
+		return sCInterface.getType();
+	}
+	
+	public synchronized void setType(String value) {
+		sCInterface.setType(value);
+	}
+	
+	private boolean check_main_region__choice_0_tr0_tr0() {
+		return (sCInterface.getType()== null?"Tea" ==null :sCInterface.getType().equals("Tea"));
+	}
+	
+	private void effect_main_region__choice_0_tr0() {
+		enterSequence_main_region_Step_Bonus_1_default();
+	}
+	
+	private void effect_main_region__choice_0_tr1() {
+		enterSequence_main_region_Step_4_Done___Drink_available_default();
 	}
 	
 	/* Entry action for state 'Timer'. */
@@ -722,16 +903,46 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[2] = State.main_region_Cancellable_Timer_Timer;
 	}
 	
-	/* 'default' enter sequence for state Preparation */
-	private void enterSequence_main_region_Preparation_default() {
+	/* 'default' enter sequence for state Waiting for Preparation */
+	private void enterSequence_main_region_Waiting_for_Preparation_default() {
 		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Preparation;
+		stateVector[0] = State.main_region_Waiting_for_Preparation;
 	}
 	
-	/* 'default' enter sequence for state Drink available */
-	private void enterSequence_main_region_Drink_available_default() {
+	/* 'default' enter sequence for state Step 4 Done : Drink available */
+	private void enterSequence_main_region_Step_4_Done___Drink_available_default() {
 		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Drink_available;
+		stateVector[0] = State.main_region_Step_4_Done___Drink_available;
+	}
+	
+	/* 'default' enter sequence for state Step 1 Done */
+	private void enterSequence_main_region_Step_1_Done_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step_1_Done;
+	}
+	
+	/* 'default' enter sequence for state Step 3 Done */
+	private void enterSequence_main_region_Step_3_Done_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step_3_Done;
+	}
+	
+	/* 'default' enter sequence for state Step 2 Done */
+	private void enterSequence_main_region_Step_2_Done_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step_2_Done;
+	}
+	
+	/* 'default' enter sequence for state Step Bonus 1 */
+	private void enterSequence_main_region_Step_Bonus_1_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step_Bonus_1;
+	}
+	
+	/* 'default' enter sequence for state Brewed */
+	private void enterSequence_main_region_Brewed_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Brewed;
 	}
 	
 	/* 'default' enter sequence for region main region */
@@ -799,14 +1010,44 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		exitAction_main_region_Cancellable_Timer_Timer();
 	}
 	
-	/* Default exit sequence for state Preparation */
-	private void exitSequence_main_region_Preparation() {
+	/* Default exit sequence for state Waiting for Preparation */
+	private void exitSequence_main_region_Waiting_for_Preparation() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
 	}
 	
-	/* Default exit sequence for state Drink available */
-	private void exitSequence_main_region_Drink_available() {
+	/* Default exit sequence for state Step 4 Done : Drink available */
+	private void exitSequence_main_region_Step_4_Done___Drink_available() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step 1 Done */
+	private void exitSequence_main_region_Step_1_Done() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step 3 Done */
+	private void exitSequence_main_region_Step_3_Done() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step 2 Done */
+	private void exitSequence_main_region_Step_2_Done() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step Bonus 1 */
+	private void exitSequence_main_region_Step_Bonus_1() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Brewed */
+	private void exitSequence_main_region_Brewed() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
 	}
@@ -820,11 +1061,26 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		case main_region_Cancellable_Drink_Drink_Selection:
 			exitSequence_main_region_Cancellable_Drink_Drink_Selection();
 			break;
-		case main_region_Preparation:
-			exitSequence_main_region_Preparation();
+		case main_region_Waiting_for_Preparation:
+			exitSequence_main_region_Waiting_for_Preparation();
 			break;
-		case main_region_Drink_available:
-			exitSequence_main_region_Drink_available();
+		case main_region_Step_4_Done___Drink_available:
+			exitSequence_main_region_Step_4_Done___Drink_available();
+			break;
+		case main_region_Step_1_Done:
+			exitSequence_main_region_Step_1_Done();
+			break;
+		case main_region_Step_3_Done:
+			exitSequence_main_region_Step_3_Done();
+			break;
+		case main_region_Step_2_Done:
+			exitSequence_main_region_Step_2_Done();
+			break;
+		case main_region_Step_Bonus_1:
+			exitSequence_main_region_Step_Bonus_1();
+			break;
+		case main_region_Brewed:
+			exitSequence_main_region_Brewed();
 			break;
 		default:
 			break;
@@ -892,6 +1148,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		}
 	}
 	
+	/* The reactions of state null. */
+	private void react_main_region__choice_0() {
+		if (check_main_region__choice_0_tr0_tr0()) {
+			effect_main_region__choice_0_tr0();
+		} else {
+			effect_main_region__choice_0_tr1();
+		}
+	}
+	
 	/* Default react sequence for initial entry  */
 	private void react_main_region__entry_Default() {
 		enterSequence_main_region_Ready_default();
@@ -918,7 +1183,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		sCInterface.raiseDoStartingPreparation();
 		
-		enterSequence_main_region_Preparation_default();
+		enterSequence_main_region_Waiting_for_Preparation_default();
 	}
 	
 	private boolean react() {
@@ -1060,7 +1325,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((sCInterface.selectType || (sCInterface.sliderSugar || (sCInterface.sliderSize || (sCInterface.sliderTemperature || (sCInterface.coinSlot || sCInterface.nFC)))))) {
+			if ((sCInterface.selectType || (sCInterface.sugarSlider || (sCInterface.sizeSlider || (sCInterface.temperatureSlider || (sCInterface.coinSlot || sCInterface.nFC)))))) {
 				exitSequence_main_region_Cancellable_Timer_Timer();
 				enterSequence_main_region_Cancellable_Timer_Timer_default();
 				main_region_Cancellable_react(false);
@@ -1090,15 +1355,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return did_transition;
 	}
 	
-	private boolean main_region_Preparation_react(boolean try_transition) {
+	private boolean main_region_Waiting_for_Preparation_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (sCInterface.preparationFinished) {
-				exitSequence_main_region_Preparation();
-				sCInterface.raiseDoDrinkCollectable();
+			if (sCInterface.goNextStep) {
+				exitSequence_main_region_Waiting_for_Preparation();
+				sCInterface.raiseDoInitialisation();
 				
-				enterSequence_main_region_Drink_available_default();
+				enterSequence_main_region_Step_1_Done_default();
 				react();
 			} else {
 				did_transition = false;
@@ -1110,15 +1375,112 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return did_transition;
 	}
 	
-	private boolean main_region_Drink_available_react(boolean try_transition) {
+	private boolean main_region_Step_4_Done___Drink_available_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
 			if (sCInterface.drinkCollected) {
-				exitSequence_main_region_Drink_available();
+				exitSequence_main_region_Step_4_Done___Drink_available();
 				sCInterface.raiseDoCleanSystem();
 				
 				enterSequence_main_region_Ready_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step_1_Done_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.goNextStep) {
+				exitSequence_main_region_Step_1_Done();
+				sCInterface.raiseDoSetTemperatureAndCup();
+				
+				enterSequence_main_region_Step_2_Done_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step_3_Done_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.goNextStep) {
+				exitSequence_main_region_Step_3_Done();
+				react_main_region__choice_0();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step_2_Done_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.goNextStep) {
+				exitSequence_main_region_Step_2_Done();
+				sCInterface.raiseDoPutSugarAndWater();
+				
+				enterSequence_main_region_Step_3_Done_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step_Bonus_1_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.goNextStep) {
+				exitSequence_main_region_Step_Bonus_1();
+				sCInterface.raiseDoBrewing();
+				
+				enterSequence_main_region_Brewed_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Brewed_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.goNextStep) {
+				exitSequence_main_region_Brewed();
+				sCInterface.raiseDoRemoveTeaBag();
+				
+				enterSequence_main_region_Step_4_Done___Drink_available_default();
 				react();
 			} else {
 				did_transition = false;

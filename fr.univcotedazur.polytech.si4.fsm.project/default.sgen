@@ -13,7 +13,7 @@ GeneratorModel for yakindu::java {
 			TimerService = true
 			inEventQueue = true
 			synchronized = true
-			runnable = false
+			runnable = false 
 		}
 	}
 }

@@ -14,17 +14,17 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void raiseSelectType(String value);
 		
-		public void raiseSliderSugar(long value);
+		public void raiseSugarSlider(long value);
 		
-		public void raiseSliderSize(long value);
+		public void raiseSizeSlider(long value);
 		
-		public void raiseSliderTemperature(long value);
+		public void raiseTemperatureSlider(long value);
 		
 		public void raiseCancelButton();
 		
-		public void raiseDrinkCollected();
+		public void raiseGoNextStep();
 		
-		public void raisePreparationFinished();
+		public void raiseDrinkCollected();
 		
 		public boolean isRaisedDoUpdateAmountMoney();
 		
@@ -46,6 +46,16 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoCleanSystem();
 		
+		public boolean isRaisedDoInitialisation();
+		
+		public boolean isRaisedDoSetTemperatureAndCup();
+		
+		public boolean isRaisedDoPutSugarAndWater();
+		
+		public boolean isRaisedDoBrewing();
+		
+		public boolean isRaisedDoRemoveTeaBag();
+		
 		public boolean isRaisedDoDrinkCollectable();
 		
 		public long getBalance();
@@ -55,6 +65,10 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public long getPrice();
 		
 		public void setPrice(long value);
+		
+		public String getType();
+		
+		public void setType(String value);
 		
 	public List<SCInterfaceListener> getListeners();
 	}
@@ -68,6 +82,11 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoRefoundMoneyRaised();
 		public void onDoStartingPreparationRaised();
 		public void onDoCleanSystemRaised();
+		public void onDoInitialisationRaised();
+		public void onDoSetTemperatureAndCupRaised();
+		public void onDoPutSugarAndWaterRaised();
+		public void onDoBrewingRaised();
+		public void onDoRemoveTeaBagRaised();
 		public void onDoDrinkCollectableRaised();
 		}
 	

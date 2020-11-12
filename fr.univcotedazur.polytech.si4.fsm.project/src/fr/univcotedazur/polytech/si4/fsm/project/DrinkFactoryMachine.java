@@ -102,7 +102,7 @@ public class DrinkFactoryMachine extends JFrame {
 		doTypeSelectionRaised("");
 		theFSM.setBalance(0);
 		temporaryId = 0;
-		System.out.println(theFSM.getBalance());
+		//System.out.println(theFSM.getBalance());
 		
 		// doRefoundMoneyRaised();
 		
@@ -268,7 +268,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
-				theFSM.raiseSliderSugar(sugarSlider.getValue());
+				theFSM.raiseSugarSlider(sugarSlider.getValue());
 			}
 		});
 
@@ -289,7 +289,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
-				theFSM.raiseSliderSize(sizeSlider.getValue());
+				theFSM.raiseSizeSlider(sizeSlider.getValue());
 				System.out.println(sizeSlider.getValue());
 			}
 		});
@@ -310,7 +310,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
-				theFSM.raiseSliderTemperature(temperatureSlider.getValue());;
+				theFSM.raiseTemperatureSlider(temperatureSlider.getValue());;
 			}
 		});
 
@@ -384,7 +384,6 @@ public class DrinkFactoryMachine extends JFrame {
 				
 				theFSM.raiseCoinSlot(25);
 				
-				// doStop();
 			}
 		});
 
@@ -398,7 +397,6 @@ public class DrinkFactoryMachine extends JFrame {
 				
 				theFSM.raiseCoinSlot(10);
 				
-				// doStop();
 			}
 		});
 
