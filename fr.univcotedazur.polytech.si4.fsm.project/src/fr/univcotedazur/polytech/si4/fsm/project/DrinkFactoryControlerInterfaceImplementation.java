@@ -83,7 +83,7 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	@Override
 	public void onDoInitialisationRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doInitialisationRaised();
 	}
 
 
@@ -91,7 +91,7 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	@Override
 	public void onDoSetTemperatureAndCupRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doSetTemperatureAndCupRaised();
 	}
 
 
@@ -99,7 +99,7 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	@Override
 	public void onDoPutSugarAndWaterRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doPutSugarAndWaterRaised();
 	}
 
 
@@ -107,7 +107,7 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	@Override
 	public void onDoBrewingRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doBrewingRaised();
 	}
 
 
@@ -115,7 +115,39 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	@Override
 	public void onDoRemoveTeaBagRaised() {
 		// TODO Auto-generated method stub
-		
+		machine.doRemoveTeaBagRaised();
+	}
+
+
+
+	@Override
+	public void onDoAddSplashOfMilkRaised() {
+		// TODO Auto-generated method stub
+		machine.doAddSplashOfMilk();
+	}
+
+
+
+	@Override
+	public void onDoAddMapleSyrupRaised() {
+		// TODO Auto-generated method stub
+		machine.doAddMapleSyrupRaised();
+	}
+
+
+
+	@Override
+	public void onDoAddMixedIceCreamRaised() {
+		// TODO Auto-generated method stub
+		machine.doAddMixedIceCreamRaised();
+	}
+
+
+
+	@Override
+	public void onDoAddCroutonsRaised() {
+		// TODO Auto-generated method stub
+		machine.doAddCroutonsRaised();
 	}
 	
 	

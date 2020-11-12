@@ -13,6 +13,25 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		public List<SCInterfaceListener> getListeners() {
 			return listeners;
 		}
+		private boolean selectType;
+		
+		private String selectTypeValue;
+		
+		
+		public void raiseSelectType(String value) {
+			synchronized(DefaultSMStatemachine.this) {
+				selectTypeValue = value;
+				selectType = true;
+			}
+		}
+		protected String getSelectTypeValue() {
+			synchronized(DefaultSMStatemachine.this) {
+				if (! selectType ) 
+					throw new IllegalStateException("Illegal event value access. Event SelectType is not raised!");
+				return selectTypeValue;
+			}
+		}
+		
 		private boolean coinSlot;
 		
 		private long coinSlotValue;
@@ -48,25 +67,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				if (! nFC ) 
 					throw new IllegalStateException("Illegal event value access. Event NFC is not raised!");
 				return nFCValue;
-			}
-		}
-		
-		private boolean selectType;
-		
-		private String selectTypeValue;
-		
-		
-		public void raiseSelectType(String value) {
-			synchronized(DefaultSMStatemachine.this) {
-				selectTypeValue = value;
-				selectType = true;
-			}
-		}
-		protected String getSelectTypeValue() {
-			synchronized(DefaultSMStatemachine.this) {
-				if (! selectType ) 
-					throw new IllegalStateException("Illegal event value access. Event SelectType is not raised!");
-				return selectTypeValue;
 			}
 		}
 		
@@ -154,35 +154,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		private boolean doUpdateAmountMoney;
-		
-		private long doUpdateAmountMoneyValue;
-		
-		
-		public boolean isRaisedDoUpdateAmountMoney() {
-			synchronized(DefaultSMStatemachine.this) {
-				return doUpdateAmountMoney;
-			}
-		}
-		
-		protected void raiseDoUpdateAmountMoney(long value) {
-			synchronized(DefaultSMStatemachine.this) {
-				doUpdateAmountMoneyValue = value;
-				doUpdateAmountMoney = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onDoUpdateAmountMoneyRaised(value);
-				}
-			}
-		}
-		
-		public long getDoUpdateAmountMoneyValue() {
-			synchronized(DefaultSMStatemachine.this) {
-				if (! doUpdateAmountMoney ) 
-					throw new IllegalStateException("Illegal event value access. Event DoUpdateAmountMoney is not raised!");
-				return doUpdateAmountMoneyValue;
-			}
-		}
-		
 		private boolean doTypeSelection;
 		
 		private String doTypeSelectionValue;
@@ -209,6 +180,35 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				if (! doTypeSelection ) 
 					throw new IllegalStateException("Illegal event value access. Event DoTypeSelection is not raised!");
 				return doTypeSelectionValue;
+			}
+		}
+		
+		private boolean doUpdateAmountMoney;
+		
+		private long doUpdateAmountMoneyValue;
+		
+		
+		public boolean isRaisedDoUpdateAmountMoney() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doUpdateAmountMoney;
+			}
+		}
+		
+		protected void raiseDoUpdateAmountMoney(long value) {
+			synchronized(DefaultSMStatemachine.this) {
+				doUpdateAmountMoneyValue = value;
+				doUpdateAmountMoney = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoUpdateAmountMoneyRaised(value);
+				}
+			}
+		}
+		
+		public long getDoUpdateAmountMoneyValue() {
+			synchronized(DefaultSMStatemachine.this) {
+				if (! doUpdateAmountMoney ) 
+					throw new IllegalStateException("Illegal event value access. Event DoUpdateAmountMoney is not raised!");
+				return doUpdateAmountMoneyValue;
 			}
 		}
 		
@@ -259,6 +259,78 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doAddSplashOfMilk;
+		
+		
+		public boolean isRaisedDoAddSplashOfMilk() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddSplashOfMilk;
+			}
+		}
+		
+		protected void raiseDoAddSplashOfMilk() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddSplashOfMilk = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddSplashOfMilkRaised();
+				}
+			}
+		}
+		
+		private boolean doAddMapleSyrup;
+		
+		
+		public boolean isRaisedDoAddMapleSyrup() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddMapleSyrup;
+			}
+		}
+		
+		protected void raiseDoAddMapleSyrup() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddMapleSyrup = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddMapleSyrupRaised();
+				}
+			}
+		}
+		
+		private boolean doAddMixedIceCream;
+		
+		
+		public boolean isRaisedDoAddMixedIceCream() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddMixedIceCream;
+			}
+		}
+		
+		protected void raiseDoAddMixedIceCream() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddMixedIceCream = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddMixedIceCreamRaised();
+				}
+			}
+		}
+		
+		private boolean doAddCroutons;
+		
+		
+		public boolean isRaisedDoAddCroutons() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddCroutons;
+			}
+		}
+		
+		protected void raiseDoAddCroutons() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddCroutons = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddCroutonsRaised();
+				}
+			}
+		}
+		
 		private boolean doRefoundMoney;
 		
 		
@@ -291,24 +363,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				doStartingPreparation = true;
 				for (SCInterfaceListener listener : listeners) {
 					listener.onDoStartingPreparationRaised();
-				}
-			}
-		}
-		
-		private boolean doCleanSystem;
-		
-		
-		public boolean isRaisedDoCleanSystem() {
-			synchronized(DefaultSMStatemachine.this) {
-				return doCleanSystem;
-			}
-		}
-		
-		protected void raiseDoCleanSystem() {
-			synchronized(DefaultSMStatemachine.this) {
-				doCleanSystem = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onDoCleanSystemRaised();
 				}
 			}
 		}
@@ -421,6 +475,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doCleanSystem;
+		
+		
+		public boolean isRaisedDoCleanSystem() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doCleanSystem;
+			}
+		}
+		
+		protected void raiseDoCleanSystem() {
+			synchronized(DefaultSMStatemachine.this) {
+				doCleanSystem = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoCleanSystemRaised();
+				}
+			}
+		}
+		
 		private long balance;
 		
 		public synchronized long getBalance() {
@@ -464,9 +536,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		}
 		
 		protected void clearEvents() {
+			selectType = false;
 			coinSlot = false;
 			nFC = false;
-			selectType = false;
 			sugarSlider = false;
 			sizeSlider = false;
 			temperatureSlider = false;
@@ -476,19 +548,23 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		}
 		protected void clearOutEvents() {
 		
-		doUpdateAmountMoney = false;
 		doTypeSelection = false;
+		doUpdateAmountMoney = false;
 		doSaveInformations = false;
 		doReset = false;
+		doAddSplashOfMilk = false;
+		doAddMapleSyrup = false;
+		doAddMixedIceCream = false;
+		doAddCroutons = false;
 		doRefoundMoney = false;
 		doStartingPreparation = false;
-		doCleanSystem = false;
 		doInitialisation = false;
 		doSetTemperatureAndCup = false;
 		doPutSugarAndWater = false;
 		doBrewing = false;
 		doRemoveTeaBag = false;
 		doDrinkCollectable = false;
+		doCleanSystem = false;
 		}
 		
 	}
@@ -713,16 +789,16 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface;
 	}
 	
+	public synchronized void raiseSelectType(String value) {
+		sCInterface.raiseSelectType(value);
+	}
+	
 	public synchronized void raiseCoinSlot(long value) {
 		sCInterface.raiseCoinSlot(value);
 	}
 	
 	public synchronized void raiseNFC(long value) {
 		sCInterface.raiseNFC(value);
-	}
-	
-	public synchronized void raiseSelectType(String value) {
-		sCInterface.raiseSelectType(value);
 	}
 	
 	public synchronized void raiseSugarSlider(long value) {
@@ -749,20 +825,20 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseDrinkCollected();
 	}
 	
-	public synchronized boolean isRaisedDoUpdateAmountMoney() {
-		return sCInterface.isRaisedDoUpdateAmountMoney();
-	}
-	
-	public synchronized long getDoUpdateAmountMoneyValue() {
-		return sCInterface.getDoUpdateAmountMoneyValue();
-	}
-	
 	public synchronized boolean isRaisedDoTypeSelection() {
 		return sCInterface.isRaisedDoTypeSelection();
 	}
 	
 	public synchronized String getDoTypeSelectionValue() {
 		return sCInterface.getDoTypeSelectionValue();
+	}
+	
+	public synchronized boolean isRaisedDoUpdateAmountMoney() {
+		return sCInterface.isRaisedDoUpdateAmountMoney();
+	}
+	
+	public synchronized long getDoUpdateAmountMoneyValue() {
+		return sCInterface.getDoUpdateAmountMoneyValue();
 	}
 	
 	public synchronized boolean isRaisedDoSaveInformations() {
@@ -777,16 +853,28 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoReset();
 	}
 	
+	public synchronized boolean isRaisedDoAddSplashOfMilk() {
+		return sCInterface.isRaisedDoAddSplashOfMilk();
+	}
+	
+	public synchronized boolean isRaisedDoAddMapleSyrup() {
+		return sCInterface.isRaisedDoAddMapleSyrup();
+	}
+	
+	public synchronized boolean isRaisedDoAddMixedIceCream() {
+		return sCInterface.isRaisedDoAddMixedIceCream();
+	}
+	
+	public synchronized boolean isRaisedDoAddCroutons() {
+		return sCInterface.isRaisedDoAddCroutons();
+	}
+	
 	public synchronized boolean isRaisedDoRefoundMoney() {
 		return sCInterface.isRaisedDoRefoundMoney();
 	}
 	
 	public synchronized boolean isRaisedDoStartingPreparation() {
 		return sCInterface.isRaisedDoStartingPreparation();
-	}
-	
-	public synchronized boolean isRaisedDoCleanSystem() {
-		return sCInterface.isRaisedDoCleanSystem();
 	}
 	
 	public synchronized boolean isRaisedDoInitialisation() {
@@ -811,6 +899,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized boolean isRaisedDoDrinkCollectable() {
 		return sCInterface.isRaisedDoDrinkCollectable();
+	}
+	
+	public synchronized boolean isRaisedDoCleanSystem() {
+		return sCInterface.isRaisedDoCleanSystem();
 	}
 	
 	public synchronized long getBalance() {

@@ -8,11 +8,11 @@ import java.util.List;
 public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	public interface SCInterface {
 	
+		public void raiseSelectType(String value);
+		
 		public void raiseCoinSlot(long value);
 		
 		public void raiseNFC(long value);
-		
-		public void raiseSelectType(String value);
 		
 		public void raiseSugarSlider(long value);
 		
@@ -26,13 +26,13 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void raiseDrinkCollected();
 		
-		public boolean isRaisedDoUpdateAmountMoney();
-		
-		public long getDoUpdateAmountMoneyValue();
-		
 		public boolean isRaisedDoTypeSelection();
 		
 		public String getDoTypeSelectionValue();
+		
+		public boolean isRaisedDoUpdateAmountMoney();
+		
+		public long getDoUpdateAmountMoneyValue();
 		
 		public boolean isRaisedDoSaveInformations();
 		
@@ -40,11 +40,17 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoReset();
 		
+		public boolean isRaisedDoAddSplashOfMilk();
+		
+		public boolean isRaisedDoAddMapleSyrup();
+		
+		public boolean isRaisedDoAddMixedIceCream();
+		
+		public boolean isRaisedDoAddCroutons();
+		
 		public boolean isRaisedDoRefoundMoney();
 		
 		public boolean isRaisedDoStartingPreparation();
-		
-		public boolean isRaisedDoCleanSystem();
 		
 		public boolean isRaisedDoInitialisation();
 		
@@ -57,6 +63,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public boolean isRaisedDoRemoveTeaBag();
 		
 		public boolean isRaisedDoDrinkCollectable();
+		
+		public boolean isRaisedDoCleanSystem();
 		
 		public long getBalance();
 		
@@ -75,19 +83,23 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 	
 	public interface SCInterfaceListener {
 	
-		public void onDoUpdateAmountMoneyRaised(long value);
 		public void onDoTypeSelectionRaised(String value);
+		public void onDoUpdateAmountMoneyRaised(long value);
 		public void onDoSaveInformationsRaised(long value);
 		public void onDoResetRaised();
+		public void onDoAddSplashOfMilkRaised();
+		public void onDoAddMapleSyrupRaised();
+		public void onDoAddMixedIceCreamRaised();
+		public void onDoAddCroutonsRaised();
 		public void onDoRefoundMoneyRaised();
 		public void onDoStartingPreparationRaised();
-		public void onDoCleanSystemRaised();
 		public void onDoInitialisationRaised();
 		public void onDoSetTemperatureAndCupRaised();
 		public void onDoPutSugarAndWaterRaised();
 		public void onDoBrewingRaised();
 		public void onDoRemoveTeaBagRaised();
 		public void onDoDrinkCollectableRaised();
+		public void onDoCleanSystemRaised();
 		}
 	
 	public SCInterface getSCInterface();

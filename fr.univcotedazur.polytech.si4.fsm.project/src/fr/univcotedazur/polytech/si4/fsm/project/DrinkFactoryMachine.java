@@ -41,6 +41,9 @@ public class DrinkFactoryMachine extends JFrame {
 	private DefaultSMStatemachine theFSM;
 	private HashMap<Long, Long> infosNFC = new HashMap<Long ,Long>();
 	private long temporaryId;
+	
+	JSlider sizeSlider;
+	
 	/**
 	 * @wbp.nonvisual location=311,475
 	 */
@@ -74,6 +77,7 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	protected void doTypeSelectionRaised(String value) {
+		theFSM.setType(value);
 		switch(value) {
 		case "Coffee":
 			theFSM.setPrice(35);
@@ -87,10 +91,14 @@ public class DrinkFactoryMachine extends JFrame {
 		case "Soup":
 			theFSM.setPrice(75);
 			break;
+		case "Iced Tea": 
+			theFSM.setPrice((sizeSlider.getValue()==1) ? 50 : 75); // à changer une fois qu'on aura un MVP qui marche --> enlever l'option short donc sizeSlider = 0
+			break;
 		default:
 			theFSM.setPrice(-1);
 		}
-		//System.out.println(theFSM.getPrice());
+		System.out.println(theFSM.getType());
+		System.out.println(theFSM.getPrice());
 			
 	}
 
@@ -102,7 +110,6 @@ public class DrinkFactoryMachine extends JFrame {
 		doTypeSelectionRaised("");
 		theFSM.setBalance(0);
 		temporaryId = 0;
-		//System.out.println(theFSM.getBalance());
 		
 		// doRefoundMoneyRaised();
 		
@@ -110,7 +117,8 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	protected void doRefoundMoneyRaised() {
-		System.out.println("coucou");
+		long changeToBeReturned = theFSM.getBalance() - theFSM.getPrice();
+		
 	}
 
 	protected void doStartingPreparationRaised() {
@@ -126,13 +134,51 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 	}
 
-	protected void doCleanSystemRaised() {
-		
-	}
-
 	protected void doDrinkCollectableRaised() {
 		
 	}
+	
+	protected void doInitialisationRaised() {
+		
+	}
+	
+	protected void doSetTemperatureAndCupRaised() {
+		
+	}
+	
+	protected void doPutSugarAndWaterRaised() {
+		
+	}
+	
+	protected void doBrewingRaised() {
+		
+	}
+	
+	protected void doRemoveTeaBagRaised() {
+	
+	}
+	
+	protected void doCleanSystemRaised() {
+		
+	}
+	
+	protected void doAddSplashOfMilk() {
+		theFSM.setPrice(theFSM.getPrice()+10);
+	}
+	
+	protected void doAddMapleSyrupRaised() {
+		theFSM.setPrice(theFSM.getPrice()+10);
+	}
+	
+	protected void doAddMixedIceCreamRaised() {
+		theFSM.setPrice(theFSM.getPrice()+60);
+	}
+	
+	protected void doAddCroutonsRaised() {
+		theFSM.setPrice(theFSM.getPrice()+30);
+	}
+
+
 
 	/**
 	 * Create the frame.
@@ -169,7 +215,7 @@ public class DrinkFactoryMachine extends JFrame {
 		setBackground(Color.DARK_GRAY);
 		setTitle("Drinking Factory Machine");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 650);
+		setBounds(100, 100, 650, 650); //x, y, largeur, hauteur
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -182,7 +228,7 @@ public class DrinkFactoryMachine extends JFrame {
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
 		messagesToUser.setToolTipText("message to the user");
 		messagesToUser.setBackground(Color.WHITE);
-		messagesToUser.setBounds(126, 34, 165, 175);
+		messagesToUser.setBounds(126, 34, 165, 70);
 		contentPane.add(messagesToUser);
 
 		JLabel lblCoins = new JLabel("Coins");
@@ -240,9 +286,45 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.raiseSelectType("Soup");
-				// doStop();
 			}
 		});
+		
+		JButton icedTeaButton = new JButton("Iced Tea");
+		icedTeaButton.setForeground(Color.WHITE);
+		icedTeaButton.setBackground(Color.DARK_GRAY);
+		icedTeaButton.setBounds(12, 182, 96, 25);
+		contentPane.add(icedTeaButton);		
+		icedTeaButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				theFSM.raiseSelectType("Iced Tea");
+			}
+		});
+		
+		JLabel lblOptions = new JLabel("Options");
+		lblOptions.setForeground(Color.WHITE);
+		lblOptions.setBackground(Color.DARK_GRAY);
+		lblOptions.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOptions.setBounds(115, 85, 120, 25);
+		contentPane.add(lblOptions);
+		
+		JButton option1 = new JButton("option 1");
+		option1.setForeground(Color.WHITE);
+		option1.setBackground(Color.DARK_GRAY);
+		option1.setBounds(115, 108, 120, 25);
+		contentPane.add(option1);
+		
+		JButton option2 = new JButton("option 2");
+		option2.setForeground(Color.WHITE);
+		option2.setBackground(Color.DARK_GRAY);
+		option2.setBounds(115, 145, 120, 25);
+		contentPane.add(option2);
+		
+		JButton option3 = new JButton("option 3");
+		option3.setForeground(Color.WHITE);
+		option3.setBackground(Color.DARK_GRAY);
+		option3.setBounds(115, 182, 120, 25);
+		contentPane.add(option3);
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
@@ -272,7 +354,7 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 
-		JSlider sizeSlider = new JSlider();
+		sizeSlider = new JSlider();
 		sizeSlider.setPaintTicks(true);
 		sizeSlider.setValue(1);
 		sizeSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -325,12 +407,6 @@ public class DrinkFactoryMachine extends JFrame {
 		temperatureSlider.setLabelTable(temperatureTable);
 
 		contentPane.add(temperatureSlider);
-
-		JButton icedTeaButton = new JButton("Iced Tea");
-		icedTeaButton.setForeground(Color.WHITE);
-		icedTeaButton.setBackground(Color.DARK_GRAY);
-		icedTeaButton.setBounds(12, 182, 96, 25);
-		contentPane.add(icedTeaButton);
 
 		JLabel lblSugar = new JLabel("Sugar");
 		lblSugar.setForeground(Color.WHITE);
@@ -461,9 +537,6 @@ public class DrinkFactoryMachine extends JFrame {
 				sizeSlider.setValue(1);
 				temperatureSlider.setValue(2);
 				theFSM.raiseCancelButton();
-				
-				
-				// doStop();
 			}
 		});
 
