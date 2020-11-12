@@ -42,6 +42,9 @@ public class DrinkFactoryMachine extends JFrame {
 	private HashMap<Long, Long> infosNFC = new HashMap<Long ,Long>();
 	private long temporaryId;
 	
+	JButton option1;
+	JButton option2;
+	JButton option3;
 	JSlider sizeSlider;
 	
 	/**
@@ -99,6 +102,44 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		System.out.println(theFSM.getType());
 		System.out.println(theFSM.getPrice());
+			
+	}
+	
+	protected void doShowOptionsRaised(String value) {
+		switch(value) {
+		case "Coffee":
+		case "Expresso":
+			option1.setText("Maple Syrup");
+			option1.setVisible(true);
+			option2.setText("Splash of Milk");
+			option2.setVisible(true);
+			option3.setText("Mixed Ice Cream");
+			option3.setVisible(true);
+			break;
+		case "Tea":
+			option1.setText("Maple Syrup");
+			option1.setVisible(true);
+			option2.setText("Splash of Milk");
+			option2.setVisible(true);
+			option3.setVisible(false);
+			break;
+		case "Soup":
+			option1.setText("Croutons");
+			option1.setVisible(true);
+			option2.setVisible(false);
+			option3.setVisible(false);
+			break;
+		case "Iced Tea": 
+			option1.setText("Maple Syrup");
+			option1.setVisible(true);
+			option2.setVisible(false);
+			option3.setVisible(false);
+			break;
+		default:
+			option1.setVisible(false);
+			option2.setVisible(false);
+			option3.setVisible(false);
+		}
 			
 	}
 
@@ -308,23 +349,26 @@ public class DrinkFactoryMachine extends JFrame {
 		lblOptions.setBounds(115, 85, 120, 25);
 		contentPane.add(lblOptions);
 		
-		JButton option1 = new JButton("option 1");
+		option1 = new JButton("option 1");
 		option1.setForeground(Color.WHITE);
 		option1.setBackground(Color.DARK_GRAY);
 		option1.setBounds(115, 108, 120, 25);
 		contentPane.add(option1);
+		option1.setVisible(false);
 		
-		JButton option2 = new JButton("option 2");
+		option2 = new JButton("option 2");
 		option2.setForeground(Color.WHITE);
 		option2.setBackground(Color.DARK_GRAY);
 		option2.setBounds(115, 145, 120, 25);
 		contentPane.add(option2);
+		option2.setVisible(false);
 		
-		JButton option3 = new JButton("option 3");
+		option3 = new JButton("option 3");
 		option3.setForeground(Color.WHITE);
 		option3.setBackground(Color.DARK_GRAY);
 		option3.setBounds(115, 182, 120, 25);
 		contentPane.add(option3);
+		option3.setVisible(false);
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);

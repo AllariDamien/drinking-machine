@@ -40,6 +40,10 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoReset();
 		
+		public boolean isRaisedDoShowOptions();
+		
+		public String getDoShowOptionsValue();
+		
 		public boolean isRaisedDoAddSplashOfMilk();
 		
 		public boolean isRaisedDoAddMapleSyrup();
@@ -87,6 +91,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoUpdateAmountMoneyRaised(long value);
 		public void onDoSaveInformationsRaised(long value);
 		public void onDoResetRaised();
+		public void onDoShowOptionsRaised(String value);
 		public void onDoAddSplashOfMilkRaised();
 		public void onDoAddMapleSyrupRaised();
 		public void onDoAddMixedIceCreamRaised();

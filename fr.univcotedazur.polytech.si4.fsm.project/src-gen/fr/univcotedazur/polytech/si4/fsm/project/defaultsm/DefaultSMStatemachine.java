@@ -259,6 +259,35 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doShowOptions;
+		
+		private String doShowOptionsValue;
+		
+		
+		public boolean isRaisedDoShowOptions() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doShowOptions;
+			}
+		}
+		
+		protected void raiseDoShowOptions(String value) {
+			synchronized(DefaultSMStatemachine.this) {
+				doShowOptionsValue = value;
+				doShowOptions = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoShowOptionsRaised(value);
+				}
+			}
+		}
+		
+		public String getDoShowOptionsValue() {
+			synchronized(DefaultSMStatemachine.this) {
+				if (! doShowOptions ) 
+					throw new IllegalStateException("Illegal event value access. Event DoShowOptions is not raised!");
+				return doShowOptionsValue;
+			}
+		}
+		
 		private boolean doAddSplashOfMilk;
 		
 		
@@ -552,6 +581,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doUpdateAmountMoney = false;
 		doSaveInformations = false;
 		doReset = false;
+		doShowOptions = false;
 		doAddSplashOfMilk = false;
 		doAddMapleSyrup = false;
 		doAddMixedIceCream = false;
@@ -851,6 +881,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized boolean isRaisedDoReset() {
 		return sCInterface.isRaisedDoReset();
+	}
+	
+	public synchronized boolean isRaisedDoShowOptions() {
+		return sCInterface.isRaisedDoShowOptions();
+	}
+	
+	public synchronized String getDoShowOptionsValue() {
+		return sCInterface.getDoShowOptionsValue();
 	}
 	
 	public synchronized boolean isRaisedDoAddSplashOfMilk() {
@@ -1341,6 +1379,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			if (sCInterface.selectType) {
 				exitSequence_main_region_Cancellable_Drink_Drink_Selection();
 				sCInterface.raiseDoTypeSelection(sCInterface.getSelectTypeValue());
+				
+				sCInterface.raiseDoShowOptions(sCInterface.getSelectTypeValue());
 				
 				enterSequence_main_region_Cancellable_Drink_Drink_Selection_default();
 			} else {
