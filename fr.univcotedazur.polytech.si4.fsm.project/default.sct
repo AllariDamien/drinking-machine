@@ -6,7 +6,7 @@
         <outgoingTransitions xmi:id="__as9ZAoOEeu6Lv5zbtu5oA" target="__as9VAoOEeu6Lv5zbtu5oA"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="__as9VAoOEeu6Lv5zbtu5oA" name="Ready" incomingTransitions="__as9ZAoOEeu6Lv5zbtu5oA _3_MJ0AoVEeuRgIFPxjHZ8w _plExwA-IEeuSq4uCBX5wew _VUAaYA-KEeuSq4uCBX5wew">
-        <outgoingTransitions xmi:id="_LhJf0AoREeu6Lv5zbtu5oA" specification="selectType / raise doTypeSelection : &#xD;&#xA;valueof(selectType)" target="_2kKIgAoQEeu6Lv5zbtu5oA"/>
+        <outgoingTransitions xmi:id="_LhJf0AoREeu6Lv5zbtu5oA" specification="selectType / raise doTypeSelection : &#xD;&#xA;valueof(selectType);&#xD;&#xA; raise doShowOptions: valueof(selectType)" target="_2kKIgAoQEeu6Lv5zbtu5oA"/>
         <outgoingTransitions xmi:id="_v1E3kA-FEeuSq4uCBX5wew" specification="coinSlot / raise doUpdateAmountMoney :&#xD;&#xA;valueof(coinSlot)" target="_Gyi3kBq4EeuGnZ_Et4xlig"/>
         <outgoingTransitions xmi:id="_A3GGwBlNEeufvPJS5ggzWg" specification="NFC / raise doSaveInformations:&#xA;valueof(NFC)" target="_IJOIABk2EeuJE5_Qtg2rvg"/>
       </vertices>

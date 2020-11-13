@@ -1328,6 +1328,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				exitSequence_main_region_Ready();
 				sCInterface.raiseDoTypeSelection(sCInterface.getSelectTypeValue());
 				
+				sCInterface.raiseDoShowOptions(sCInterface.getSelectTypeValue());
+				
 				enterSequence_main_region_Cancellable_default();
 				react();
 			} else {

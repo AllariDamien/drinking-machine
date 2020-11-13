@@ -100,8 +100,8 @@ public class DrinkFactoryMachine extends JFrame {
 		default:
 			theFSM.setPrice(-1);
 		}
-		System.out.println(theFSM.getType());
-		System.out.println(theFSM.getPrice());
+		//System.out.println(theFSM.getType());
+		//System.out.println(theFSM.getPrice());
 			
 	}
 	
@@ -149,6 +149,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 	protected void doResetRaised() {
 		doTypeSelectionRaised("");
+		doShowOptionsRaised("");
 		theFSM.setBalance(0);
 		temporaryId = 0;
 		
