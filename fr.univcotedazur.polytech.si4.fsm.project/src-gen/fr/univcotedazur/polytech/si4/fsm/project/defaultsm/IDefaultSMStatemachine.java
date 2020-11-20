@@ -56,11 +56,25 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoStartingPreparation();
 		
-		public boolean isRaisedDoInitialisation();
+		public boolean isRaisedDoHeatingWater();
 		
-		public boolean isRaisedDoSetTemperatureAndCup();
+		public boolean isRaisedDoPutProduct();
 		
-		public boolean isRaisedDoPutSugarAndWater();
+		public String getDoPutProductValue();
+		
+		public boolean isRaisedDoSetTemperature();
+		
+		public long getDoSetTemperatureValue();
+		
+		public boolean isRaisedDoSetCup();
+		
+		public boolean isRaisedDoPutSugar();
+		
+		public long getDoPutSugarValue();
+		
+		public boolean isRaisedDoPourWater();
+		
+		public long getDoPourWaterValue();
 		
 		public boolean isRaisedDoBrewing();
 		
@@ -98,9 +112,12 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoAddCroutonsRaised();
 		public void onDoRefoundMoneyRaised();
 		public void onDoStartingPreparationRaised();
-		public void onDoInitialisationRaised();
-		public void onDoSetTemperatureAndCupRaised();
-		public void onDoPutSugarAndWaterRaised();
+		public void onDoHeatingWaterRaised();
+		public void onDoPutProductRaised(String value);
+		public void onDoSetTemperatureRaised(long value);
+		public void onDoSetCupRaised();
+		public void onDoPutSugarRaised(long value);
+		public void onDoPourWaterRaised(long value);
 		public void onDoBrewingRaised();
 		public void onDoRemoveTeaBagRaised();
 		public void onDoDrinkCollectableRaised();

@@ -77,29 +77,53 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 		// TODO Auto-generated method stub
 		machine.doDrinkCollectableRaised();
 	}
-
-
+	
+	
 
 	@Override
-	public void onDoInitialisationRaised() {
+	public void onDoHeatingWaterRaised() {
 		// TODO Auto-generated method stub
-		machine.doInitialisationRaised();
+		machine.doHeatingWaterRaised();
+	}
+	
+	
+	
+	@Override
+	public void onDoPutProductRaised(String value) {
+		// TODO Auto-generated method stub
+		machine.doPutProductRaised(value);
+	}
+
+	
+	
+	@Override
+	public void onDoSetTemperatureRaised(long value) {
+		// TODO Auto-generated method stub
+		machine.doSetTemperatureRaised(value);
+	}
+	
+	
+	
+	@Override
+	public void onDoSetCupRaised() {
+		// TODO Auto-generated method stub
+		machine.doSetCupRaised();		
 	}
 
 
 
 	@Override
-	public void onDoSetTemperatureAndCupRaised() {
+	public void onDoPourWaterRaised(long value) {
 		// TODO Auto-generated method stub
-		machine.doSetTemperatureAndCupRaised();
+		machine.doPourWaterRaised(value);
 	}
-
-
+	
+	
 
 	@Override
-	public void onDoPutSugarAndWaterRaised() {
+	public void onDoPutSugarRaised(long value) {
 		// TODO Auto-generated method stub
-		machine.doPutSugarAndWaterRaised();
+		machine.doPutSugarRaised(value);
 	}
 
 
@@ -157,6 +181,8 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 		// TODO Auto-generated method stub
 		machine.doShowOptionsRaised(value);
 	}
+
+
 	
 	
 }

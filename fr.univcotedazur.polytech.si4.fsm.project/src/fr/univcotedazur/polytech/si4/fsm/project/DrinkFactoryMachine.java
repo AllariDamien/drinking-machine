@@ -42,6 +42,13 @@ public class DrinkFactoryMachine extends JFrame {
 	private HashMap<Long, Long> infosNFC = new HashMap<Long ,Long>();
 	private long temporaryId;
 	
+	private boolean optionMilk = false;
+	private boolean optionMapleSyrup = false;
+	private boolean optionMixedIceCream = false;
+	private boolean optionCroutons = false;
+	
+	JLabel messagesToUser;
+	
 	JButton option1;
 	JButton option2;
 	JButton option3;
@@ -76,7 +83,6 @@ public class DrinkFactoryMachine extends JFrame {
 	
 	protected void doUpdateAmountMoneyRaised(long value) {
 		theFSM.setBalance(theFSM.getBalance() + value);
-		System.out.println(theFSM.getBalance());
 	}
 
 	protected void doTypeSelectionRaised(String value) {
@@ -159,8 +165,8 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	protected void doRefoundMoneyRaised() {
-		long changeToBeReturned = theFSM.getBalance() - theFSM.getPrice();
-		
+		long changeToBeReturned = (theFSM.getBalance() - theFSM.getPrice());
+		messagesToUser.setText("Monnaie rendue : " + (float)changeToBeReturned/100 + "€");		
 	}
 
 	protected void doStartingPreparationRaised() {
@@ -180,15 +186,86 @@ public class DrinkFactoryMachine extends JFrame {
 		
 	}
 	
-	protected void doInitialisationRaised() {
+	protected void doHeatingWaterRaised() {
+		messagesToUser.setText(messagesToUser.getText() + "\nDémarage du chauffage de l'eau");
+	}
+	
+	protected void doPutProductRaised(String value) {
+		switch(value) {
+		case "Coffee":
+			messagesToUser.setText("Ajout de la dosette");
+			// décrémenter le compteur de dosette de café
+			break;
+		case "Expresso":
+			messagesToUser.setText("Broyage des grains");
+			// décrémenter le compteur de grains
+			break;
+		case "Tea":
+			messagesToUser.setText("Ajout du sachet");
+			// décrémenter le compteur de sachet
+			break;
+		case "Soup":
+			messagesToUser.setText("Ajout de la dose de soupe");
+			// décrémenter le compteur de dose
+			break;
+		case "Iced Tea": 
+			messagesToUser.setText("Ajout de la dosette");
+			// décrémenter le compteur de dosette de thé
+			break;
+		}
+			
+	}
+	
+	protected void doSetTemperatureRaised(long value) {
+		switch((int)value) {
+			case 0:
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				messagesToUser.setText("Température atteinte !");
+				break;
+			case 1:
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				messagesToUser.setText("Température atteinte !");
+				break;
+			case 2:
+			try {
+				Thread.sleep(15);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				messagesToUser.setText("Température atteinte !");
+				break;
+			case 3:
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				messagesToUser.setText("Température atteinte !");
+				break;
+		}
+	}
+	
+	protected void doSetCupRaised() {
 		
 	}
 	
-	protected void doSetTemperatureAndCupRaised() {
+	protected void doPutSugarRaised(long value) {
 		
 	}
 	
-	protected void doPutSugarAndWaterRaised() {
+	protected void doPourWaterRaised(long value) {
 		
 	}
 	
@@ -264,7 +341,7 @@ public class DrinkFactoryMachine extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel messagesToUser = new JLabel("<html>This is<br>place to communicate <br> with the user");
+		messagesToUser = new JLabel("<html>This is<br>place to communicate <br> with the user");
 		messagesToUser.setForeground(Color.WHITE);
 		messagesToUser.setHorizontalAlignment(SwingConstants.LEFT);
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
@@ -314,8 +391,7 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType("Tea");;
-				// doStop();
+				theFSM.raiseSelectType("Tea");
 			}
 		});
 
@@ -370,6 +446,13 @@ public class DrinkFactoryMachine extends JFrame {
 		option3.setBounds(115, 182, 120, 25);
 		contentPane.add(option3);
 		option3.setVisible(false);
+		option3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
 
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
