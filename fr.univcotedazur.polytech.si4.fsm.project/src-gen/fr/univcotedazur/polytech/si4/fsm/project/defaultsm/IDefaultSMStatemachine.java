@@ -52,6 +52,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoAddCroutons();
 		
+		public boolean isRaisedDoPress();
+		
 		public boolean isRaisedDoRefoundMoney();
 		
 		public boolean isRaisedDoStartingPreparation();
@@ -104,6 +106,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoAddMapleSyrupRaised();
 		public void onDoAddMixedIceCreamRaised();
 		public void onDoAddCroutonsRaised();
+		public void onDoPressRaised();
 		public void onDoRefoundMoneyRaised();
 		public void onDoStartingPreparationRaised();
 		public void onDoHeatingWaterRaised();

@@ -360,6 +360,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doPress;
+		
+		
+		public boolean isRaisedDoPress() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doPress;
+			}
+		}
+		
+		protected void raiseDoPress() {
+			synchronized(DefaultSMStatemachine.this) {
+				doPress = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoPressRaised();
+				}
+			}
+		}
+		
 		private boolean doRefoundMoney;
 		
 		
@@ -651,6 +669,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doAddMapleSyrup = false;
 		doAddMixedIceCream = false;
 		doAddCroutons = false;
+		doPress = false;
 		doRefoundMoney = false;
 		doStartingPreparation = false;
 		doHeatingWater = false;
@@ -692,6 +711,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_Set_Temperature_and_Cup,
 		main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate,
 		main_region_Set_Temperature_and_Cup_r2_gobelet,
+		main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains,
 		$NullState$
 	};
 	
@@ -788,6 +808,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			case main_region_Set_Temperature_and_Cup_r2_gobelet:
 				main_region_Set_Temperature_and_Cup_r2_gobelet_react(true);
 				break;
+			case main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains:
+				main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains_react(true);
+				break;
 			default:
 				// $NullState$
 			}
@@ -873,11 +896,13 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[1] == State.main_region_Waiting_for_Preparation_r2_dosette___broyage;
 		case main_region_Set_Temperature_and_Cup:
 			return stateVector[0].ordinal() >= State.
-					main_region_Set_Temperature_and_Cup.ordinal()&& stateVector[0].ordinal() <= State.main_region_Set_Temperature_and_Cup_r2_gobelet.ordinal();
+					main_region_Set_Temperature_and_Cup.ordinal()&& stateVector[0].ordinal() <= State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains.ordinal();
 		case main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate:
 			return stateVector[0] == State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate;
 		case main_region_Set_Temperature_and_Cup_r2_gobelet:
 			return stateVector[1] == State.main_region_Set_Temperature_and_Cup_r2_gobelet;
+		case main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains:
+			return stateVector[2] == State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains;
 		default:
 			return false;
 		}
@@ -999,6 +1024,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoAddCroutons();
 	}
 	
+	public synchronized boolean isRaisedDoPress() {
+		return sCInterface.isRaisedDoPress();
+	}
+	
 	public synchronized boolean isRaisedDoRefoundMoney() {
 		return sCInterface.isRaisedDoRefoundMoney();
 	}
@@ -1079,12 +1108,26 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return (sCInterface.getType()== null?"Tea" ==null :sCInterface.getType().equals("Tea"));
 	}
 	
+	private boolean check_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr0_tr0() {
+		return (sCInterface.getType()== null?"Expresso" ==null :sCInterface.getType().equals("Expresso"));
+	}
+	
 	private void effect_main_region__choice_0_tr0() {
 		enterSequence_main_region_Step_Bonus_1_default();
 	}
 	
 	private void effect_main_region__choice_0_tr1() {
 		enterSequence_main_region_Step_4_Done___Drink_available_default();
+	}
+	
+	private void effect_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr0() {
+		sCInterface.raiseDoPress();
+		
+		enterSequence_main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains_default();
+	}
+	
+	private void effect_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr1() {
+		enterSequence_main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains_default();
 	}
 	
 	/* Entry action for state 'Timer'. */
@@ -1199,6 +1242,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void enterSequence_main_region_Set_Temperature_and_Cup_default() {
 		enterSequence_main_region_Set_Temperature_and_Cup_r1_default();
 		enterSequence_main_region_Set_Temperature_and_Cup_r2_default();
+		enterSequence_main_region_Set_Temperature_and_Cup_expresso_only_default();
 	}
 	
 	/* 'default' enter sequence for state attente de la température adéquate */
@@ -1211,6 +1255,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void enterSequence_main_region_Set_Temperature_and_Cup_r2_gobelet_default() {
 		nextStateIndex = 1;
 		stateVector[1] = State.main_region_Set_Temperature_and_Cup_r2_gobelet;
+	}
+	
+	/* 'default' enter sequence for state Tassage des grains */
+	private void enterSequence_main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains_default() {
+		nextStateIndex = 2;
+		stateVector[2] = State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains;
 	}
 	
 	/* 'default' enter sequence for region main region */
@@ -1261,6 +1311,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/* 'default' enter sequence for region r2 */
 	private void enterSequence_main_region_Set_Temperature_and_Cup_r2_default() {
 		react_main_region_Set_Temperature_and_Cup_r2__entry_Default();
+	}
+	
+	/* 'default' enter sequence for region expresso only */
+	private void enterSequence_main_region_Set_Temperature_and_Cup_expresso_only_default() {
+		react_main_region_Set_Temperature_and_Cup_expresso_only__entry_Default();
 	}
 	
 	/* Default exit sequence for state Ready */
@@ -1366,6 +1421,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void exitSequence_main_region_Set_Temperature_and_Cup() {
 		exitSequence_main_region_Set_Temperature_and_Cup_r1();
 		exitSequence_main_region_Set_Temperature_and_Cup_r2();
+		exitSequence_main_region_Set_Temperature_and_Cup_expresso_only();
 	}
 	
 	/* Default exit sequence for state attente de la température adéquate */
@@ -1378,6 +1434,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void exitSequence_main_region_Set_Temperature_and_Cup_r2_gobelet() {
 		nextStateIndex = 1;
 		stateVector[1] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Tassage des grains */
+	private void exitSequence_main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains() {
+		nextStateIndex = 2;
+		stateVector[2] = State.$NullState$;
 	}
 	
 	/* Default exit sequence for region main region */
@@ -1437,6 +1499,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		switch (stateVector[2]) {
 		case main_region_Cancellable_Timer_Timer:
 			exitSequence_main_region_Cancellable_Timer_Timer();
+			break;
+		case main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains:
+			exitSequence_main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains();
 			break;
 		default:
 			break;
@@ -1548,12 +1613,32 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		}
 	}
 	
+	/* Default exit sequence for region expresso only */
+	private void exitSequence_main_region_Set_Temperature_and_Cup_expresso_only() {
+		switch (stateVector[2]) {
+		case main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains:
+			exitSequence_main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains();
+			break;
+		default:
+			break;
+		}
+	}
+	
 	/* The reactions of state null. */
 	private void react_main_region__choice_0() {
 		if (check_main_region__choice_0_tr0_tr0()) {
 			effect_main_region__choice_0_tr0();
 		} else {
 			effect_main_region__choice_0_tr1();
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region_Set_Temperature_and_Cup_expresso_only__choice_0() {
+		if (check_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr0_tr0()) {
+			effect_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr0();
+		} else {
+			effect_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr1();
 		}
 	}
 	
@@ -1605,6 +1690,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	/* Default react sequence for initial entry  */
 	private void react_main_region_Set_Temperature_and_Cup_r2__entry_Default() {
 		enterSequence_main_region_Set_Temperature_and_Cup_r2_gobelet_default();
+	}
+	
+	/* Default react sequence for initial entry  */
+	private void react_main_region_Set_Temperature_and_Cup_expresso_only__entry_Default() {
+		react_main_region_Set_Temperature_and_Cup_expresso_only__choice_0();
 	}
 	
 	/* The reactions of state null. */
@@ -1982,7 +2072,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (isStateActive(State.main_region_Set_Temperature_and_Cup_r2_gobelet)) {
+			if ((isStateActive(State.main_region_Set_Temperature_and_Cup_r2_gobelet) && isStateActive(State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains))) {
 				exitSequence_main_region_Set_Temperature_and_Cup();
 				sCInterface.raiseDoSetTemperature();
 				
@@ -2000,7 +2090,25 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (isStateActive(State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate)) {
+			if ((isStateActive(State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate) && isStateActive(State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains))) {
+				exitSequence_main_region_Set_Temperature_and_Cup();
+				sCInterface.raiseDoSetTemperature();
+				
+				sCInterface.raiseDoSetCup();
+				
+				react_main_region__sync2();
+			} else {
+				did_transition = false;
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if ((isStateActive(State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate) && isStateActive(State.main_region_Set_Temperature_and_Cup_r2_gobelet))) {
 				exitSequence_main_region_Set_Temperature_and_Cup();
 				sCInterface.raiseDoSetTemperature();
 				

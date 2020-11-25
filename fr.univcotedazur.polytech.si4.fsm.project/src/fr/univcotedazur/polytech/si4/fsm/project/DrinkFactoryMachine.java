@@ -211,7 +211,11 @@ public class DrinkFactoryMachine extends JFrame {
 			// décrémenter le compteur de dosette de thé
 			break;
 		}
-			
+	}
+	
+	protected void doPressRaised() {
+		// faire en fonction de la taille
+		System.out.println("ça broie en balle");
 	}
 	
 	protected void doSetTemperatureRaised() {

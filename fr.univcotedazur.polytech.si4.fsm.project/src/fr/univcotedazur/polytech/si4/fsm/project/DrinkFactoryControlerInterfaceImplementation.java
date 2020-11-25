@@ -183,6 +183,14 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	}
 
 
+
+	@Override
+	public void onDoPressRaised() {
+		// TODO Auto-generated method stub
+		machine.doPressRaised();		
+	}
+
+
 	
 	
 }
