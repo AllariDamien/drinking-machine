@@ -64,17 +64,11 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoSetTemperature();
 		
-		public long getDoSetTemperatureValue();
-		
 		public boolean isRaisedDoSetCup();
 		
 		public boolean isRaisedDoPutSugar();
 		
-		public long getDoPutSugarValue();
-		
 		public boolean isRaisedDoPourWater();
-		
-		public long getDoPourWaterValue();
 		
 		public boolean isRaisedDoBrewing();
 		
@@ -114,10 +108,10 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoStartingPreparationRaised();
 		public void onDoHeatingWaterRaised();
 		public void onDoPutProductRaised(String value);
-		public void onDoSetTemperatureRaised(long value);
+		public void onDoSetTemperatureRaised();
 		public void onDoSetCupRaised();
-		public void onDoPutSugarRaised(long value);
-		public void onDoPourWaterRaised(long value);
+		public void onDoPutSugarRaised();
+		public void onDoPourWaterRaised();
 		public void onDoBrewingRaised();
 		public void onDoRemoveTeaBagRaised();
 		public void onDoDrinkCollectableRaised();

@@ -97,9 +97,9 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	
 	
 	@Override
-	public void onDoSetTemperatureRaised(long value) {
+	public void onDoSetTemperatureRaised() {
 		// TODO Auto-generated method stub
-		machine.doSetTemperatureRaised(value);
+		machine.doSetTemperatureRaised();
 	}
 	
 	
@@ -113,17 +113,17 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 
 
 	@Override
-	public void onDoPourWaterRaised(long value) {
+	public void onDoPourWaterRaised() {
 		// TODO Auto-generated method stub
-		machine.doPourWaterRaised(value);
+		machine.doPourWaterRaised();
 	}
 	
 	
 
 	@Override
-	public void onDoPutSugarRaised(long value) {
+	public void onDoPutSugarRaised() {
 		// TODO Auto-generated method stub
-		machine.doPutSugarRaised(value);
+		machine.doPutSugarRaised();
 	}
 
 

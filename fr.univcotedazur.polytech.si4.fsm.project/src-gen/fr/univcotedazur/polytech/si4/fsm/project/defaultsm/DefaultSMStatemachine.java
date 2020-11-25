@@ -445,8 +445,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		private boolean doSetTemperature;
 		
-		private long doSetTemperatureValue;
-		
 		
 		public boolean isRaisedDoSetTemperature() {
 			synchronized(DefaultSMStatemachine.this) {
@@ -454,21 +452,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		protected void raiseDoSetTemperature(long value) {
+		protected void raiseDoSetTemperature() {
 			synchronized(DefaultSMStatemachine.this) {
-				doSetTemperatureValue = value;
 				doSetTemperature = true;
 				for (SCInterfaceListener listener : listeners) {
-					listener.onDoSetTemperatureRaised(value);
+					listener.onDoSetTemperatureRaised();
 				}
-			}
-		}
-		
-		public long getDoSetTemperatureValue() {
-			synchronized(DefaultSMStatemachine.this) {
-				if (! doSetTemperature ) 
-					throw new IllegalStateException("Illegal event value access. Event DoSetTemperature is not raised!");
-				return doSetTemperatureValue;
 			}
 		}
 		
@@ -492,8 +481,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		
 		private boolean doPutSugar;
 		
-		private long doPutSugarValue;
-		
 		
 		public boolean isRaisedDoPutSugar() {
 			synchronized(DefaultSMStatemachine.this) {
@@ -501,27 +488,16 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		protected void raiseDoPutSugar(long value) {
+		protected void raiseDoPutSugar() {
 			synchronized(DefaultSMStatemachine.this) {
-				doPutSugarValue = value;
 				doPutSugar = true;
 				for (SCInterfaceListener listener : listeners) {
-					listener.onDoPutSugarRaised(value);
+					listener.onDoPutSugarRaised();
 				}
 			}
 		}
 		
-		public long getDoPutSugarValue() {
-			synchronized(DefaultSMStatemachine.this) {
-				if (! doPutSugar ) 
-					throw new IllegalStateException("Illegal event value access. Event DoPutSugar is not raised!");
-				return doPutSugarValue;
-			}
-		}
-		
 		private boolean doPourWater;
-		
-		private long doPourWaterValue;
 		
 		
 		public boolean isRaisedDoPourWater() {
@@ -530,21 +506,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		protected void raiseDoPourWater(long value) {
+		protected void raiseDoPourWater() {
 			synchronized(DefaultSMStatemachine.this) {
-				doPourWaterValue = value;
 				doPourWater = true;
 				for (SCInterfaceListener listener : listeners) {
-					listener.onDoPourWaterRaised(value);
+					listener.onDoPourWaterRaised();
 				}
-			}
-		}
-		
-		public long getDoPourWaterValue() {
-			synchronized(DefaultSMStatemachine.this) {
-				if (! doPourWater ) 
-					throw new IllegalStateException("Illegal event value access. Event DoPourWater is not raised!");
-				return doPourWaterValue;
 			}
 		}
 		
@@ -1056,10 +1023,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoSetTemperature();
 	}
 	
-	public synchronized long getDoSetTemperatureValue() {
-		return sCInterface.getDoSetTemperatureValue();
-	}
-	
 	public synchronized boolean isRaisedDoSetCup() {
 		return sCInterface.isRaisedDoSetCup();
 	}
@@ -1068,16 +1031,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoPutSugar();
 	}
 	
-	public synchronized long getDoPutSugarValue() {
-		return sCInterface.getDoPutSugarValue();
-	}
-	
 	public synchronized boolean isRaisedDoPourWater() {
 		return sCInterface.isRaisedDoPourWater();
-	}
-	
-	public synchronized long getDoPourWaterValue() {
-		return sCInterface.getDoPourWaterValue();
 	}
 	
 	public synchronized boolean isRaisedDoBrewing() {
@@ -1925,11 +1880,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((sCInterface.goNextStep && isStateActive(State.main_region_Put_Sugar_and_Water_r2_water)) && sCInterface.goNextStep)) {
+			if (isStateActive(State.main_region_Put_Sugar_and_Water_r2_water)) {
 				exitSequence_main_region_Put_Sugar_and_Water();
-				sCInterface.raiseDoPutSugar(sCInterface.getSugarSliderValue());
+				sCInterface.raiseDoPutSugar();
 				
-				sCInterface.raiseDoPourWater(sCInterface.getSizeSliderValue());
+				sCInterface.raiseDoPourWater();
 				
 				react_main_region__sync3();
 			} else {
@@ -1943,11 +1898,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (((sCInterface.goNextStep && isStateActive(State.main_region_Put_Sugar_and_Water_r1_sugar)) && sCInterface.goNextStep)) {
+			if (isStateActive(State.main_region_Put_Sugar_and_Water_r1_sugar)) {
 				exitSequence_main_region_Put_Sugar_and_Water();
-				sCInterface.raiseDoPutSugar(sCInterface.getSugarSliderValue());
+				sCInterface.raiseDoPutSugar();
 				
-				sCInterface.raiseDoPourWater(sCInterface.getSizeSliderValue());
+				sCInterface.raiseDoPourWater();
 				
 				react_main_region__sync3();
 			} else {
@@ -2029,7 +1984,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		if (try_transition) {
 			if (isStateActive(State.main_region_Set_Temperature_and_Cup_r2_gobelet)) {
 				exitSequence_main_region_Set_Temperature_and_Cup();
-				sCInterface.raiseDoSetTemperature(sCInterface.getTemperatureSliderValue());
+				sCInterface.raiseDoSetTemperature();
 				
 				sCInterface.raiseDoSetCup();
 				
@@ -2047,7 +2002,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		if (try_transition) {
 			if (isStateActive(State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate)) {
 				exitSequence_main_region_Set_Temperature_and_Cup();
-				sCInterface.raiseDoSetTemperature(sCInterface.getTemperatureSliderValue());
+				sCInterface.raiseDoSetTemperature();
 				
 				sCInterface.raiseDoSetCup();
 				

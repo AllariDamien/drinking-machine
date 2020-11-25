@@ -53,6 +53,8 @@ public class DrinkFactoryMachine extends JFrame {
 	JButton option2;
 	JButton option3;
 	JSlider sizeSlider;
+	JSlider temperatureSlider;
+	JSlider sugarSlider;
 	
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -181,10 +183,6 @@ public class DrinkFactoryMachine extends JFrame {
 			  System.out.println(i + " " + infosNFC.get(i));
 			}
 	}
-
-	protected void doDrinkCollectableRaised() {
-		
-	}
 	
 	protected void doHeatingWaterRaised() {
 		messagesToUser.setText(messagesToUser.getText() + "\nDémarage du chauffage de l'eau");
@@ -216,57 +214,105 @@ public class DrinkFactoryMachine extends JFrame {
 			
 	}
 	
-	protected void doSetTemperatureRaised(long value) {
-		switch((int)value) {
+	protected void doSetTemperatureRaised() {
+		switch(temperatureSlider.getValue()) {
 			case 0:
 			try {
-				Thread.sleep(5);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				messagesToUser.setText("Température atteinte !");
+				messagesToUser.setText("Température atteinte : 20°C !");
 				break;
 			case 1:
 			try {
-				Thread.sleep(10);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				messagesToUser.setText("Température atteinte !");
+				messagesToUser.setText("Température atteinte :35°C !");
 				break;
 			case 2:
 			try {
-				Thread.sleep(15);
+				Thread.sleep(15000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				messagesToUser.setText("Température atteinte !");
+				messagesToUser.setText("Température atteinte 60°C !");
 				break;
 			case 3:
 			try {
-				Thread.sleep(20);
+				Thread.sleep(20000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				messagesToUser.setText("Température atteinte !");
+				messagesToUser.setText("Température atteinte : 85°C !");
 				break;
 		}
 	}
 	
 	protected void doSetCupRaised() {
-		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		messagesToUser.setText("Gobelet positionné !");
 	}
 	
-	protected void doPutSugarRaised(long value) {
-		
+	protected void doPutSugarRaised() {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		switch(sugarSlider.getValue()) {
+			case 0:
+				messagesToUser.setText("Sans sucre !");
+				break;
+			case 1:
+				messagesToUser.setText("Une dose de sucre ajoutée !");
+				//décrémenter compteur sucre
+				break;
+			case 2:
+				messagesToUser.setText("2 doses de sucre ajoutées !");
+				//décrémenter compteur sucre
+				break;
+			case 3:
+				messagesToUser.setText("3 doses de sucre ajoutées !");
+				//décrémenter compteur sucre
+				break;
+			case 4:
+				messagesToUser.setText("4 doses de sucre ajoutées !");
+				//décrémenter compteur sucre
+				break;
+		}
 	}
 	
-	protected void doPourWaterRaised(long value) {
-		
+	protected void doPourWaterRaised() {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		switch(sizeSlider.getValue()) {
+			case 0:
+				messagesToUser.setText("Eau ajoutée : court !");
+				break;
+			case 1:
+				messagesToUser.setText("Eau ajoutée : normal !");
+				break;
+			case 2:
+				messagesToUser.setText("Eau ajoutée : long !");
+				break;
+		}
 	}
 	
 	protected void doBrewingRaised() {
@@ -275,6 +321,10 @@ public class DrinkFactoryMachine extends JFrame {
 	
 	protected void doRemoveTeaBagRaised() {
 	
+	}
+	
+	protected void doDrinkCollectableRaised() {
+		
 	}
 	
 	protected void doCleanSystemRaised() {
@@ -462,7 +512,7 @@ public class DrinkFactoryMachine extends JFrame {
 		progressBar.setBounds(12, 254, 622, 26);
 		contentPane.add(progressBar);
 
-		JSlider sugarSlider = new JSlider();
+		sugarSlider = new JSlider();
 		sugarSlider.setValue(1);
 		sugarSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		sugarSlider.setBackground(Color.DARK_GRAY);
@@ -505,7 +555,7 @@ public class DrinkFactoryMachine extends JFrame {
 		});
 		
 
-		JSlider temperatureSlider = new JSlider();
+		temperatureSlider = new JSlider();
 		temperatureSlider.setPaintLabels(true);
 		temperatureSlider.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		temperatureSlider.setValue(2);
