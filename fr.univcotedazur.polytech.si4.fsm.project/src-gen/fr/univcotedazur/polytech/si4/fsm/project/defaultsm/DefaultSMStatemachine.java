@@ -569,24 +569,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		private boolean doDrinkCollectable;
-		
-		
-		public boolean isRaisedDoDrinkCollectable() {
-			synchronized(DefaultSMStatemachine.this) {
-				return doDrinkCollectable;
-			}
-		}
-		
-		protected void raiseDoDrinkCollectable() {
-			synchronized(DefaultSMStatemachine.this) {
-				doDrinkCollectable = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onDoDrinkCollectableRaised();
-				}
-			}
-		}
-		
 		private boolean doCleanSystem;
 		
 		
@@ -680,7 +662,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doPourWater = false;
 		doBrewing = false;
 		doRemoveTeaBag = false;
-		doDrinkCollectable = false;
 		doCleanSystem = false;
 		}
 		
@@ -1070,10 +1051,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized boolean isRaisedDoRemoveTeaBag() {
 		return sCInterface.isRaisedDoRemoveTeaBag();
-	}
-	
-	public synchronized boolean isRaisedDoDrinkCollectable() {
-		return sCInterface.isRaisedDoDrinkCollectable();
 	}
 	
 	public synchronized boolean isRaisedDoCleanSystem() {

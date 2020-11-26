@@ -76,8 +76,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoRemoveTeaBag();
 		
-		public boolean isRaisedDoDrinkCollectable();
-		
 		public boolean isRaisedDoCleanSystem();
 		
 		public long getBalance();
@@ -117,7 +115,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoPourWaterRaised();
 		public void onDoBrewingRaised();
 		public void onDoRemoveTeaBagRaised();
-		public void onDoDrinkCollectableRaised();
 		public void onDoCleanSystemRaised();
 		}
 	

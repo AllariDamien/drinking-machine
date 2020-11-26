@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -156,19 +157,36 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	protected void doResetRaised() {
-		doTypeSelectionRaised("");
+		messagesToUser.setText("Choix annulé");
+		doResetSliders();
+		doTypeSelectionRaised(""); // reset aussi le prix à 0
+		
+		if(theFSM.getBalance()!= 0) {
+			doRefoundMoneyRaised();
+		}
+		
+		if(temporaryId != 0) {
+			messagesToUser.setText(messagesToUser.getText() + "Transaction annulée");
+			temporaryId = 0;
+		}
+		
 		doShowOptionsRaised("");
-		theFSM.setBalance(0);
-		temporaryId = 0;
 		
-		// doRefoundMoneyRaised();
-		
-		
+	}
+	
+	protected void doResetSliders() {
+		sugarSlider.setValue(1);
+		sizeSlider.setValue(1);
+		temperatureSlider.setValue(2);
 	}
 
 	protected void doRefoundMoneyRaised() {
 		long changeToBeReturned = (theFSM.getBalance() - theFSM.getPrice());
-		messagesToUser.setText("Monnaie rendue : " + (float)changeToBeReturned/100 + "€");		
+		messagesToUser.setText(messagesToUser.getText() + "Monnaie rendue : " + (float)changeToBeReturned/100 + "€");
+		theFSM.setBalance(0);
+		
+		// rajouter pour NFC
+		
 	}
 
 	protected void doStartingPreparationRaised() {
@@ -327,12 +345,17 @@ public class DrinkFactoryMachine extends JFrame {
 	
 	}
 	
-	protected void doDrinkCollectableRaised() {
-		
-	}
-	
 	protected void doCleanSystemRaised() {
-		
+		messagesToUser.setText("Boisson récupérée ! Machine en cours de nettoyage ! ");
+		doTypeSelectionRaised("");
+		doResetSliders();
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		messagesToUser.setText("Machine nettoyée");
 	}
 	
 	protected void doAddSplashOfMilk() {
@@ -671,7 +694,6 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				theFSM.raiseNFC(1234);
-				// doStop();
 			}
 		});
 
@@ -701,6 +723,34 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		JLabel labelForPictures = new JLabel(new ImageIcon(myPicture));
 		labelForPictures.setBounds(175, 319, 286, 260);
+		labelForPictures.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				theFSM.raiseDrinkCollected();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
 		contentPane.add(labelForPictures);
 
 		JPanel panel_2 = new JPanel();
@@ -715,9 +765,6 @@ public class DrinkFactoryMachine extends JFrame {
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				sugarSlider.setValue(1);
-				sizeSlider.setValue(1);
-				temperatureSlider.setValue(2);
 				theFSM.raiseCancelButton();
 			}
 		});

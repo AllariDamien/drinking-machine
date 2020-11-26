@@ -68,18 +68,10 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	public void onDoCleanSystemRaised() {
 		// TODO Auto-generated method stub
 		machine.doCleanSystemRaised();
-	}
-
-
-
-	@Override
-	public void onDoDrinkCollectableRaised() {
-		// TODO Auto-generated method stub
-		machine.doDrinkCollectableRaised();
-	}
-	
+	}	
 	
 
+	
 	@Override
 	public void onDoHeatingWaterRaised() {
 		// TODO Auto-generated method stub
