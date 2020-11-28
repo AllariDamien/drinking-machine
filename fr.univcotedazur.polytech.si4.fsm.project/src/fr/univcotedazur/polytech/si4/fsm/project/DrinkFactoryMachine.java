@@ -11,8 +11,11 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -41,7 +44,8 @@ public class DrinkFactoryMachine extends JFrame {
 	private static final long serialVersionUID = 2030629304432075314L;
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
-	private HashMap<Long, Long> infosNFC = new HashMap<Long ,Long>();
+	private Map<Long, List<Long>> infosNFC = new HashMap<>();
+	List<Long> listeId; 
 	private long temporaryId;
 	
 	private boolean optionMilk = false;
@@ -155,6 +159,9 @@ public class DrinkFactoryMachine extends JFrame {
 
 	protected void doSaveInformationsRaised(long id) {
 		temporaryId = id;
+		listeId = new ArrayList<Long>();
+		
+		
 	}
 
 	protected void doResetRaised() {
@@ -172,6 +179,7 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		
 		doShowOptionsRaised("");
+		
 		
 	}
 	
@@ -192,14 +200,36 @@ public class DrinkFactoryMachine extends JFrame {
 
 	protected void doStartingPreparationRaised() {
 		long value = 1;
+		long moyenne;
+		long nbCommande;
+		
+		
 		if(infosNFC.containsKey(temporaryId)) {
-			infosNFC.put(temporaryId, infosNFC.get(temporaryId)+1);
+			if(infosNFC.get(temporaryId).get(0) == 10 && theFSM.getPrice() <= infosNFC.get(temporaryId).get(1)) {
+				// boisson gratuite
+				
+			}
+				
+			
+			nbCommande = infosNFC.get(temporaryId).get(0) + 1;
+			
+			listeId.add(nbCommande);
+			moyenne = (infosNFC.get(temporaryId).get(1) * infosNFC.get(temporaryId).get(0) + theFSM.getPrice()) 
+			/ nbCommande;
+			listeId.add(moyenne);
+
+			infosNFC.put(temporaryId, listeId );
+			
 		}
 		else {
-			infosNFC.put(temporaryId, value);
+			listeId.add(value);
+			moyenne = theFSM.getPrice();
+			listeId.add(moyenne);
+			infosNFC.put(temporaryId, listeId);
+			
 		}
 		for (Long i : infosNFC.keySet()) {
-			  System.out.println(i + " " + infosNFC.get(i));
+			  System.out.println(i + " " + "nb de commandes = " + infosNFC.get(i).get(0) + " moyenne = " + infosNFC.get(i).get(1));
 			}
 	}
 	
@@ -687,14 +717,20 @@ public class DrinkFactoryMachine extends JFrame {
 		panel_1.setBounds(538, 154, 96, 40);
 		contentPane.add(panel_1);
 		
+		JPanel panelId = new JPanel();
+		panelId.setBackground(Color.DARK_GRAY);
+		panelId.setBounds(538, 180, 96, 40);
+		contentPane.add(panelId);
+		
 		
 
 		JTextField idCard = new JTextField();
+		
 		JButton nfcBiiiipButton = new JButton("biiip");
 		nfcBiiiipButton.setForeground(Color.WHITE);
 		nfcBiiiipButton.setBackground(Color.DARK_GRAY);
 		panel_1.add(nfcBiiiipButton);
-		panel_1.add(idCard);
+		panelId.add(idCard);
 		nfcBiiiipButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
