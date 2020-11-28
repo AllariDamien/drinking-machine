@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
@@ -411,7 +412,7 @@ public class DrinkFactoryMachine extends JFrame {
 		setBackground(Color.DARK_GRAY);
 		setTitle("Drinking Factory Machine");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 650); //x, y, largeur, hauteur
+		setBounds(100, 100, 750, 750); //x, y, largeur, hauteur
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -685,18 +686,23 @@ public class DrinkFactoryMachine extends JFrame {
 		panel_1.setBackground(Color.DARK_GRAY);
 		panel_1.setBounds(538, 154, 96, 40);
 		contentPane.add(panel_1);
+		
+		
 
+		JTextField idCard = new JTextField();
 		JButton nfcBiiiipButton = new JButton("biiip");
 		nfcBiiiipButton.setForeground(Color.WHITE);
 		nfcBiiiipButton.setBackground(Color.DARK_GRAY);
 		panel_1.add(nfcBiiiipButton);
+		panel_1.add(idCard);
 		nfcBiiiipButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseNFC(1234);
+				theFSM.raiseNFC(Long.parseLong(idCard.getText()));
 			}
 		});
 
+		
 		JLabel lblNfc = new JLabel("NFC");
 		lblNfc.setForeground(Color.WHITE);
 		lblNfc.setHorizontalAlignment(SwingConstants.CENTER);
