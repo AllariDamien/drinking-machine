@@ -516,6 +516,7 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 
+		
 		JButton soupButton = new JButton("Soup");
 		soupButton.setForeground(Color.WHITE);
 		soupButton.setBackground(Color.DARK_GRAY);
