@@ -1,2 +1,8 @@
-Bois: 10
+Lait: 10
+Glace: 10
 Sucre: 10
+Cafe: 0
+Grains: 10
+Sachet: 10
+Soupe: 10
+The: 10
