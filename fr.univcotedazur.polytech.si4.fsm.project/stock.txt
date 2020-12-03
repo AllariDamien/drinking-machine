@@ -1,0 +1,2 @@
+Bois: 15
+Sucre: 6
