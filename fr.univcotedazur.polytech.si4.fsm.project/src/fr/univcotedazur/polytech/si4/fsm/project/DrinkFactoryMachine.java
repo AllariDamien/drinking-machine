@@ -50,6 +50,8 @@ public class DrinkFactoryMachine extends JFrame {
 	private boolean optionMixedIceCream = false;
 	private boolean optionCroutons = false;
 	
+	Stock stock;
+	
 	JLabel messagesToUser;
 	
 	JButton refuseAllOptions;
@@ -98,11 +100,69 @@ public class DrinkFactoryMachine extends JFrame {
 	/**
 	 * Do methods
 	 */
-	
+	protected boolean isDrinkAvailable() {
+		boolean drinkAvailable = false;
+		if(sugarSlider.getValue() > stock.getStock().get("Sucre")) {
+			drinkAvailable = false;
+			messagesToUser.setText("Le stock de sucre est insuffisant");
+		}
+		
+		switch(theFSM.getType()) {
+		case "Coffee":
+			if(stock.getStock().get("Cafe") < 1) {
+				messagesToUser.setText("Il n'y a plus de dosette en stock");
+				return false;
+			}
+				
+			break;
+		case "Expresso":
+			if(stock.getStock().get("Grains") < 1) {
+				messagesToUser.setText("Il n'y a plus de grains en stock");
+				return false;
+			}
+				
+			break;
+		case "Tea":
+			if(stock.getStock().get("Sachet") < 1) {
+				messagesToUser.setText("Il n'y a plus de sachet en stock");
+				return false;
+			}
+				
+			break;
+		case "Soup":
+			if(stock.getStock().get("Soupe") < 1) {
+				messagesToUser.setText("Il n'y a plus de soup en stock");
+				return false;
+			}
+				
+			break;
+		case "Iced Tea": 
+			if(stock.getStock().get("The") < 1) {
+				messagesToUser.setText("Il n'y a plus de dosette de the en stock");
+				return false;
+			}
+				
+			break;
+		default:
+			theFSM.setPrice(-1);
+		}
+		
+		return drinkAvailable;
+		
+	}
 	protected boolean isOptionsSelected() {
-		if((cbOption1Yes.isSelected()||cbOption1No.isSelected()) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()) && (cbOption3Yes.isSelected() || cbOption3No.isSelected()))
-			return true;
-		return false;
+		boolean drinkAvailable = false;
+		
+		if((cbOption1Yes.isSelected()||cbOption1No.isSelected()) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()) && (cbOption3Yes.isSelected() || cbOption3No.isSelected())) 
+			drinkAvailable = true;
+		else
+			messagesToUser.setText("Toutes les options ne sont pas cochés");
+		
+		if(!isDrinkAvailable())
+			drinkAvailable = false;
+		
+			
+		return drinkAvailable;
 	}
 	
 	protected void doUpdateAmountMoneyRaised(long value) {
@@ -248,34 +308,36 @@ public class DrinkFactoryMachine extends JFrame {
 		long moyenne;
 		long nbCommande;
 		
-		
-		if(infosNFC.containsKey(temporaryId)) {
-			if(infosNFC.get(temporaryId).get(0) == 10 && theFSM.getPrice() <= infosNFC.get(temporaryId).get(1)) {
-				// boisson gratuite
+		if(temporaryId != 0) {
+			if(infosNFC.containsKey(temporaryId)) {
+				if(infosNFC.get(temporaryId).get(0) == 10 && theFSM.getPrice() <= infosNFC.get(temporaryId).get(1)) {
+					// boisson gratuite
+					
+				}
+					
 				
-			}
+				nbCommande = infosNFC.get(temporaryId).get(0) + 1;
 				
-			
-			nbCommande = infosNFC.get(temporaryId).get(0) + 1;
-			
-			listeId.add(nbCommande);
-			moyenne = (infosNFC.get(temporaryId).get(1) * infosNFC.get(temporaryId).get(0) + theFSM.getPrice()) 
-			/ nbCommande;
-			listeId.add(moyenne);
+				listeId.add(nbCommande);
+				moyenne = (infosNFC.get(temporaryId).get(1) * infosNFC.get(temporaryId).get(0) + theFSM.getPrice()) 
+				/ nbCommande;
+				listeId.add(moyenne);
 
-			infosNFC.put(temporaryId, listeId );
-			
-		}
-		else {
-			listeId.add(value);
-			moyenne = theFSM.getPrice();
-			listeId.add(moyenne);
-			infosNFC.put(temporaryId, listeId);
-			
-		}
-		for (Long i : infosNFC.keySet()) {
-			  System.out.println(i + " " + "nb de commandes = " + infosNFC.get(i).get(0) + " moyenne = " + infosNFC.get(i).get(1));
+				infosNFC.put(temporaryId, listeId );
+				
 			}
+			else {
+				listeId.add(value);
+				moyenne = theFSM.getPrice();
+				listeId.add(moyenne);
+				infosNFC.put(temporaryId, listeId);
+				
+			}
+			for (Long i : infosNFC.keySet()) {
+				  System.out.println(i + " " + "nb de commandes = " + infosNFC.get(i).get(0) + " moyenne = " + infosNFC.get(i).get(1));
+				}
+		}
+		
 	}
 	
 	protected void doHeatingWaterRaised() {
@@ -287,22 +349,28 @@ public class DrinkFactoryMachine extends JFrame {
 		case "Coffee":
 			messagesToUser.setText("Ajout de la dosette");
 			// décrémenter le compteur de dosette de café
+			stock.decrementStock("Cafe", 1);
 			break;
 		case "Expresso":
 			messagesToUser.setText("Broyage des grains");
 			// décrémenter le compteur de grains
+			
+			stock.decrementStock("Grains", 1);
 			break;
 		case "Tea":
 			messagesToUser.setText("Ajout du sachet");
 			// décrémenter le compteur de sachet
+			stock.decrementStock("Sachet", 1);
 			break;
 		case "Soup":
 			messagesToUser.setText("Ajout de la dose de soupe");
 			// décrémenter le compteur de dose
+			stock.decrementStock("Soupe", 1);
 			break;
 		case "Iced Tea": 
 			messagesToUser.setText("Ajout de la dosette");
 			// décrémenter le compteur de dosette de thé
+			stock.decrementStock("The", 1);
 			break;
 		}
 	}
@@ -391,6 +459,7 @@ public class DrinkFactoryMachine extends JFrame {
 				//décrémenter compteur sucre
 				break;
 		}
+		stock.decrementStock("Sucre", sugarSlider.getValue());
 	}
 	
 	protected void doPourWaterRaised() {
@@ -462,7 +531,7 @@ public class DrinkFactoryMachine extends JFrame {
 		theFSM.init();
 		theFSM.enter();
 		theFSM.getSCInterface().getListeners().add(new DrinkFactoryControlerInterfaceImplementation(this));
-		
+		stock = new Stock();
 		Runnable r = new Runnable() {
 			
 			@Override
@@ -765,6 +834,7 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				doRefuseAllOptionsRaised();
+				if(isOptionsSelected())
             	theFSM.setOptionsSelected(true);
 			}
 		});
