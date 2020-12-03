@@ -159,37 +159,38 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	protected void doShowOptionsRaised(String value) {
+		System.out.println("hellooooo");
 		switch(value) {
 		case "Coffee":
 		case "Expresso":
 			setVisibleOption1(true);
 			setVisibleOption2(true);
 			setVisibleOption3(true);
-			setVisibleOption3(false);
+			setVisibleOption4(false);
 			break;
 		case "Tea":
 			setVisibleOption1(true);
 			setVisibleOption2(true);
-			setVisibleOption3(true);
 			setVisibleOption3(false);
+			setVisibleOption4(false);
 			break;
 		case "Soup":
-			setVisibleOption1(true);
-			setVisibleOption2(true);
-			setVisibleOption3(true);
+			setVisibleOption1(false);
+			setVisibleOption2(false);
 			setVisibleOption3(false);
+			setVisibleOption4(true);
 			break;
 		case "Iced Tea": 
 			setVisibleOption1(true);
-			setVisibleOption2(true);
-			setVisibleOption3(true);
+			setVisibleOption2(false);
 			setVisibleOption3(false);
+			setVisibleOption4(false);
 			break;
 		default:
-			setVisibleOption1(true);
-			setVisibleOption2(true);
-			setVisibleOption3(true);
+			setVisibleOption1(false);
+			setVisibleOption2(false);
 			setVisibleOption3(false);
+			setVisibleOption4(false);
 		}
 			
 	}
@@ -222,7 +223,7 @@ public class DrinkFactoryMachine extends JFrame {
 			temporaryId = 0;
 		}
 		
-		//doShowOptionsRaised("");
+		doShowOptionsRaised("");
 		
 		
 	}
@@ -577,14 +578,14 @@ public class DrinkFactoryMachine extends JFrame {
 		lblOptions.setForeground(Color.WHITE);
 		lblOptions.setBackground(Color.DARK_GRAY);
 		lblOptions.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOptions.setBounds(115, 34, 120, 25);
+		lblOptions.setBounds(115, 20, 120, 25);
 		contentPane.add(lblOptions);
 		
 		lblOption1 = new JLabel("Maple Syrup");
 		lblOption1.setForeground(Color.WHITE);
 		lblOption1.setBackground(Color.DARK_GRAY);
 		lblOption1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOption1.setBounds(115, 60, 120, 25);
+		lblOption1.setBounds(115, 40, 120, 25);
 		contentPane.add(lblOption1);
 		lblOption1.setVisible(false);
 		
@@ -593,7 +594,7 @@ public class DrinkFactoryMachine extends JFrame {
 		lblOption2.setForeground(Color.WHITE);
 		lblOption2.setBackground(Color.DARK_GRAY);
 		lblOption2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOption2.setBounds(115, 80, 120, 25);
+		lblOption2.setBounds(115, 75, 120, 25);
 		contentPane.add(lblOption2);
 		lblOption2.setVisible(false);
 		
@@ -602,7 +603,7 @@ public class DrinkFactoryMachine extends JFrame {
 		lblOption3.setForeground(Color.WHITE);
 		lblOption3.setBackground(Color.DARK_GRAY);
 		lblOption3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOption3.setBounds(115, 100, 120, 25);
+		lblOption3.setBounds(115, 110, 120, 25);
 		contentPane.add(lblOption3);
 		lblOption3.setVisible(false);
 		
@@ -610,7 +611,7 @@ public class DrinkFactoryMachine extends JFrame {
 		lblOption4.setForeground(Color.WHITE);
 		lblOption4.setBackground(Color.DARK_GRAY);
 		lblOption4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOption4.setBounds(115, 120, 120, 25);
+		lblOption4.setBounds(115, 145, 120, 25);
 		contentPane.add(lblOption4);
 		lblOption4.setVisible(false);
 		
@@ -618,16 +619,18 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption1Yes.setForeground(Color.WHITE);
 		cbOption1Yes.setBackground(Color.DARK_GRAY);
 		cbOption1Yes.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption1Yes.setBounds(130, 108, 60, 30);
+		cbOption1Yes.setBounds(130, 52, 60, 30);
 		contentPane.add(cbOption1Yes);
+		cbOption1Yes.setVisible(false);
 		
 		
 		cbOption1No = new JCheckBox("No");
 		cbOption1No.setForeground(Color.WHITE);
 		cbOption1No.setBackground(Color.DARK_GRAY);
 		cbOption1No.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption1No.setBounds(180, 108, 60, 30);
+		cbOption1No.setBounds(180, 52, 60, 30);
 		contentPane.add(cbOption1No);
+		cbOption1No.setVisible(false);
 		
 		cbOption1Yes.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -652,16 +655,18 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption2Yes.setForeground(Color.WHITE);
 		cbOption2Yes.setBackground(Color.DARK_GRAY);
 		cbOption2Yes.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption2Yes.setBounds(130, 148, 60, 30);
+		cbOption2Yes.setBounds(130, 87, 60, 30);
 		contentPane.add(cbOption2Yes);
+		cbOption2Yes.setVisible(false);
 		
 		
 		cbOption2No = new JCheckBox("No");
 		cbOption2No.setForeground(Color.WHITE);
 		cbOption2No.setBackground(Color.DARK_GRAY);
 		cbOption2No.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption2No.setBounds(180, 148, 60, 30);
+		cbOption2No.setBounds(180, 87, 60, 30);
 		contentPane.add(cbOption2No);
+		cbOption2No.setVisible(false);
 		
 		cbOption2Yes.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -685,16 +690,18 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption3Yes.setForeground(Color.WHITE);
 		cbOption3Yes.setBackground(Color.DARK_GRAY);
 		cbOption3Yes.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption3Yes.setBounds(130, 188, 60, 30);
+		cbOption3Yes.setBounds(130, 122, 60, 30);
 		contentPane.add(cbOption3Yes);
+		cbOption3Yes.setVisible(false);
 		
 		
 		cbOption3No = new JCheckBox("No");
 		cbOption3No.setForeground(Color.WHITE);
 		cbOption3No.setBackground(Color.DARK_GRAY);
 		cbOption3No.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption3No.setBounds(180, 188, 60, 30);
+		cbOption3No.setBounds(180, 122, 60, 30);
 		contentPane.add(cbOption3No);
+		cbOption3No.setVisible(false);
 		
 		cbOption3Yes.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -712,21 +719,23 @@ public class DrinkFactoryMachine extends JFrame {
             	if(isOptionsSelected())
             		theFSM.setOptionsSelected(true);
             }    
-         }); 
+         }); 	
 		
 		cbOption4Yes = new JCheckBox("Yes");
 		cbOption4Yes.setForeground(Color.WHITE);
 		cbOption4Yes.setBackground(Color.DARK_GRAY);
 		cbOption4Yes.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption4Yes.setBounds(130, 188, 60, 30);
+		cbOption4Yes.setBounds(130, 157, 60, 30);
 		contentPane.add(cbOption4Yes);
+		cbOption4Yes.setVisible(false);
 		
 		cbOption4No = new JCheckBox("No");
 		cbOption4No.setForeground(Color.WHITE);
 		cbOption4No.setBackground(Color.DARK_GRAY);
 		cbOption4No.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption4No.setBounds(180, 188, 60, 30);
+		cbOption4No.setBounds(180, 157, 60, 30);
 		contentPane.add(cbOption4No);
+		cbOption4No.setVisible(false);
 		
 		cbOption4Yes.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -749,7 +758,7 @@ public class DrinkFactoryMachine extends JFrame {
 		refuseAllOptions = new JButton("No Options");
 		refuseAllOptions.setForeground(Color.WHITE);
 		refuseAllOptions.setBackground(Color.DARK_GRAY);
-		refuseAllOptions.setBounds(115, 80, 120, 25);
+		refuseAllOptions.setBounds(115, 190, 120, 25);
 		contentPane.add(refuseAllOptions);
 		refuseAllOptions.setVisible(true);
 		refuseAllOptions.addActionListener(new ActionListener() {

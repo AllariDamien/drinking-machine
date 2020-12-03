@@ -171,7 +171,7 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	@Override
 	public void onDoShowOptionsRaised(String value) {
 		// TODO Auto-generated method stub
-		//machine.doShowOptionsRaised(value);
+		machine.doShowOptionsRaised(value);
 	}
 
 
