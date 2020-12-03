@@ -616,7 +616,12 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType("Coffee");;
+				if(stock.getStock().get("Cafe") > 0) 
+					theFSM.raiseSelectType("Coffee");
+				else
+					messagesToUser.setText("Il n'y a plus de dosette en stock");
+				
+				
 				// doStop();
 			}
 		});
@@ -629,7 +634,10 @@ public class DrinkFactoryMachine extends JFrame {
 		expressoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType("Expresso");;
+				if(stock.getStock().get("Grains") < 1) 
+					theFSM.raiseSelectType("Expresso");
+				else
+					messagesToUser.setText("Il n'y a plus de grains en stock");
 				// doStop();
 			}
 		});
@@ -642,7 +650,10 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType("Tea");
+				if(stock.getStock().get("Sachet") < 1) 
+					theFSM.raiseSelectType("Tea");
+				else
+					messagesToUser.setText("Il n'y a plus de sachet en stock");
 			}
 		});
 
@@ -655,7 +666,10 @@ public class DrinkFactoryMachine extends JFrame {
 		soupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType("Soup");
+				if(stock.getStock().get("Soupe") < 1) 
+					theFSM.raiseSelectType("Soup");
+				else
+					messagesToUser.setText("Il n'y a plus de soup en stock");
 			}
 		});
 		
@@ -667,7 +681,10 @@ public class DrinkFactoryMachine extends JFrame {
 		icedTeaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseSelectType("Iced Tea");
+				if(stock.getStock().get("The") < 1) 	
+					theFSM.raiseSelectType("Iced Tea");
+				else
+					messagesToUser.setText("Il n'y a plus de dosette de the en stock");
 			}
 		});
 		
