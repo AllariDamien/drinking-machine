@@ -1,8 +1,8 @@
-Lait: 10
-Glace: 10
-Sucre: 10
-Cafe: 0
-Grains: 10
-Sachet: 10
-Soupe: 10
 The: 10
+Cafe: 9
+Lait: 10
+Grains: 8
+Glace: 10
+Sachet: 9
+Soupe: 10
+Sucre: 8

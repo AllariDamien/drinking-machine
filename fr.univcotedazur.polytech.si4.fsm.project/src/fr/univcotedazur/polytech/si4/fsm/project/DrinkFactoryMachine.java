@@ -100,10 +100,10 @@ public class DrinkFactoryMachine extends JFrame {
 	/**
 	 * Do methods
 	 */
-	protected boolean isDrinkAvailable() {
-		boolean drinkAvailable = false;
+	protected boolean hasEnoughIngredients() {
+		boolean enoughIngredients = true;
 		if(sugarSlider.getValue() > stock.getStock().get("Sucre")) {
-			drinkAvailable = false;
+			enoughIngredients = false;
 			messagesToUser.setText("Le stock de sucre est insuffisant");
 		}
 		
@@ -134,7 +134,6 @@ public class DrinkFactoryMachine extends JFrame {
 				messagesToUser.setText("Il n'y a plus de soup en stock");
 				return false;
 			}
-				
 			break;
 		case "Iced Tea": 
 			if(stock.getStock().get("The") < 1) {
@@ -143,26 +142,50 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 				
 			break;
-		default:
-			theFSM.setPrice(-1);
 		}
 		
-		return drinkAvailable;
+		return enoughIngredients;
 		
 	}
-	protected boolean isOptionsSelected() {
-		boolean drinkAvailable = false;
+	
+	private boolean isOptionsSelected(String value) {
+		switch(value) {
+			case "Coffee":				
+			case "Expresso":
+				if((cbOption1Yes.isSelected()||cbOption1No.isSelected()) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()) && (cbOption3Yes.isSelected() || cbOption3No.isSelected()))
+					return true;
+				break;
+			case "Tea":
+				if((cbOption1Yes.isSelected()||cbOption1No.isSelected()) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()))
+					return true;
+				break;
+			case "Soup":
+				if(cbOption4Yes.isSelected() || cbOption4No.isSelected())
+					return true;
+				break;
+			case "Iced Tea": 
+				if(cbOption1Yes.isSelected() || cbOption1No.isSelected())
+					return true;
+				break;
+		}
 		
-		if((cbOption1Yes.isSelected()||cbOption1No.isSelected()) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()) && (cbOption3Yes.isSelected() || cbOption3No.isSelected())) 
-			drinkAvailable = true;
-		else
-			messagesToUser.setText("Toutes les options ne sont pas cochés");
+		return false;
+	}
+	
+	
+	
+	protected boolean isDrinkAvailable(String value) {
 		
-		if(!isDrinkAvailable())
-			drinkAvailable = false;
+		if(!isOptionsSelected(value)) {
+			messagesToUser.setText("Toutes les options ne sont pas cochées");
+			return false;
+		}
 		
+		if(!hasEnoughIngredients())
+			return false;
+	
 			
-		return drinkAvailable;
+		return true;
 	}
 	
 	protected void doUpdateAmountMoneyRaised(long value) {
@@ -172,23 +195,23 @@ public class DrinkFactoryMachine extends JFrame {
 	protected void doTypeSelectionRaised(String value) {
 		theFSM.setType(value);
 		switch(value) {
-		case "Coffee":
-			theFSM.setPrice(35);
-			break;
-		case "Expresso":
-			theFSM.setPrice(50);
-			break;
-		case "Tea":
-			theFSM.setPrice(40);
-			break;
-		case "Soup":
-			theFSM.setPrice(75);
-			break;
-		case "Iced Tea": 
-			theFSM.setPrice((sizeSlider.getValue()==1) ? 50 : 75); // à changer une fois qu'on aura un MVP qui marche --> enlever l'option short donc sizeSlider = 0
-			break;
-		default:
-			theFSM.setPrice(-1);
+			case "Coffee":
+				theFSM.setPrice(35);
+				break;
+			case "Expresso":
+				theFSM.setPrice(50);
+				break;
+			case "Tea":
+				theFSM.setPrice(40);
+				break;
+			case "Soup":
+				theFSM.setPrice(75);
+				break;
+			case "Iced Tea": 
+				theFSM.setPrice((sizeSlider.getValue()==1) ? 50 : 75); // à changer une fois qu'on aura un MVP qui marche --> enlever l'option short donc sizeSlider = 0
+				break;
+			default:
+				theFSM.setPrice(-1);
 		}
 			
 	}
@@ -198,59 +221,67 @@ public class DrinkFactoryMachine extends JFrame {
 		lblOption1.setVisible(value);
 		cbOption1Yes.setVisible(value);
 		cbOption1No.setVisible(value);
+		cbOption1Yes.setSelected(false);
+		cbOption1No.setSelected(false);
+		
 	}
 	
 	public void setVisibleOption2(boolean value) {
 		lblOption2.setVisible(value);
 		cbOption2Yes.setVisible(value);
 		cbOption2No.setVisible(value);
+		cbOption2Yes.setSelected(false);
+		cbOption2No.setSelected(false);
 	}
 	
 	public void setVisibleOption3(boolean value) {
 		lblOption3.setVisible(value);
 		cbOption3Yes.setVisible(value);
 		cbOption3No.setVisible(value);
+		cbOption3Yes.setSelected(false);
+		cbOption3No.setSelected(false);
 	}
 	
 	public void setVisibleOption4(boolean value) {
 		lblOption4.setVisible(value);
 		cbOption4Yes.setVisible(value);
 		cbOption4No.setVisible(value);
+		cbOption4Yes.setSelected(false);
+		cbOption4No.setSelected(false);
 	}
 	
 	protected void doShowOptionsRaised(String value) {
-		System.out.println("hellooooo");
 		switch(value) {
-		case "Coffee":
-		case "Expresso":
-			setVisibleOption1(true);
-			setVisibleOption2(true);
-			setVisibleOption3(true);
-			setVisibleOption4(false);
-			break;
-		case "Tea":
-			setVisibleOption1(true);
-			setVisibleOption2(true);
-			setVisibleOption3(false);
-			setVisibleOption4(false);
-			break;
-		case "Soup":
-			setVisibleOption1(false);
-			setVisibleOption2(false);
-			setVisibleOption3(false);
-			setVisibleOption4(true);
-			break;
-		case "Iced Tea": 
-			setVisibleOption1(true);
-			setVisibleOption2(false);
-			setVisibleOption3(false);
-			setVisibleOption4(false);
-			break;
-		default:
-			setVisibleOption1(false);
-			setVisibleOption2(false);
-			setVisibleOption3(false);
-			setVisibleOption4(false);
+			case "Coffee":
+			case "Expresso":
+				setVisibleOption1(true);
+				setVisibleOption2(true);
+				setVisibleOption3(true);
+				setVisibleOption4(false);
+				break;
+			case "Tea":
+				setVisibleOption1(true);
+				setVisibleOption2(true);
+				setVisibleOption3(false);
+				setVisibleOption4(false);
+				break;
+			case "Soup":
+				setVisibleOption1(false);
+				setVisibleOption2(false);
+				setVisibleOption3(false);
+				setVisibleOption4(true);
+				break;
+			case "Iced Tea": 
+				setVisibleOption1(true);
+				setVisibleOption2(false);
+				setVisibleOption3(false);
+				setVisibleOption4(false);
+				break;
+			default:
+				setVisibleOption1(false);
+				setVisibleOption2(false);
+				setVisibleOption3(false);
+				setVisibleOption4(false);
 		}
 			
 	}
@@ -273,6 +304,7 @@ public class DrinkFactoryMachine extends JFrame {
 		
 		doResetSliders();
 		doTypeSelectionRaised(""); // reset aussi le prix à 0
+		doShowOptionsRaised("");
 		
 		if(theFSM.getBalance()!= 0) {
 			doRefoundMoneyRaised();
@@ -282,10 +314,6 @@ public class DrinkFactoryMachine extends JFrame {
 			messagesToUser.setText(messagesToUser.getText() + "<br>Transaction annulée");
 			temporaryId = 0;
 		}
-		
-		doShowOptionsRaised("");
-		
-		
 	}
 	
 	protected void doResetSliders() {
@@ -493,6 +521,7 @@ public class DrinkFactoryMachine extends JFrame {
 	protected void doCleanSystemRaised() {
 		messagesToUser.setText("Boisson récupérée ! Machine en cours de nettoyage ! ");
 		doTypeSelectionRaised("");
+		doShowOptionsRaised("");
 		doResetSliders();
 		try {
 			Thread.sleep(5000);
@@ -705,7 +734,7 @@ public class DrinkFactoryMachine extends JFrame {
             public void itemStateChanged(ItemEvent e) {
             	if(cbOption1Yes.isSelected())
             		cbOption1No.setSelected(false);
-            	if(isOptionsSelected())
+            	if(isDrinkAvailable(theFSM.getType()))
             		theFSM.setOptionsSelected(true);
             }
          });
@@ -715,7 +744,7 @@ public class DrinkFactoryMachine extends JFrame {
             	//cbOption1Yes.setSelected((e.getStateChange()==0?true:false));
             	if(cbOption1No.isSelected())
             		cbOption1Yes.setSelected(false);
-            	if(isOptionsSelected())
+            	if(isDrinkAvailable(theFSM.getType()))
             		theFSM.setOptionsSelected(true);
             }    
          });
@@ -741,7 +770,7 @@ public class DrinkFactoryMachine extends JFrame {
             public void itemStateChanged(ItemEvent e) {
             	if(cbOption2Yes.isSelected())
             		cbOption2No.setSelected(false);
-            	if(isOptionsSelected())
+            	if(isDrinkAvailable(theFSM.getType()))
             		theFSM.setOptionsSelected(true);
             }
          });
@@ -750,7 +779,7 @@ public class DrinkFactoryMachine extends JFrame {
             public void itemStateChanged(ItemEvent e) {
             	if(cbOption2No.isSelected())
             		cbOption2Yes.setSelected(false);
-            	if(isOptionsSelected())
+            	if(isDrinkAvailable(theFSM.getType()))
             		theFSM.setOptionsSelected(true);
             }    
          }); 
@@ -776,7 +805,7 @@ public class DrinkFactoryMachine extends JFrame {
             public void itemStateChanged(ItemEvent e) {
             	if(cbOption3Yes.isSelected())
             		cbOption3No.setSelected(false);
-            	if(isOptionsSelected())
+            	if(isDrinkAvailable(theFSM.getType()))
             		theFSM.setOptionsSelected(true);
             }
          });
@@ -785,7 +814,7 @@ public class DrinkFactoryMachine extends JFrame {
             public void itemStateChanged(ItemEvent e) {
             	if(cbOption3No.isSelected())
             		cbOption3Yes.setSelected(false);
-            	if(isOptionsSelected())
+            	if(isDrinkAvailable(theFSM.getType()))
             		theFSM.setOptionsSelected(true);
             }    
          }); 	
@@ -810,7 +839,7 @@ public class DrinkFactoryMachine extends JFrame {
             public void itemStateChanged(ItemEvent e) {
             	if(cbOption4Yes.isSelected())
             		cbOption4No.setSelected(false);
-            	if(isOptionsSelected())
+            	if(isDrinkAvailable(theFSM.getType()))
             		theFSM.setOptionsSelected(true);
             }
          });
@@ -819,7 +848,7 @@ public class DrinkFactoryMachine extends JFrame {
             public void itemStateChanged(ItemEvent e) {
             	if(cbOption4No.isSelected())
             		cbOption4Yes.setSelected(false);
-            	if(isOptionsSelected())
+            	if(isDrinkAvailable(theFSM.getType()))
             		theFSM.setOptionsSelected(true);
             }    
          }); 
@@ -834,8 +863,8 @@ public class DrinkFactoryMachine extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				doRefuseAllOptionsRaised();
-				if(isOptionsSelected())
-            	theFSM.setOptionsSelected(true);
+				if(isDrinkAvailable(theFSM.getType()))
+					theFSM.setOptionsSelected(true);
 			}
 		});
 		
