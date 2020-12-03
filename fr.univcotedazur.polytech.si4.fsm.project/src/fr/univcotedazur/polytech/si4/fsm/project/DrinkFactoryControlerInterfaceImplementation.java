@@ -167,11 +167,11 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 	}
 
 
-
+	
 	@Override
 	public void onDoShowOptionsRaised(String value) {
 		// TODO Auto-generated method stub
-		machine.doShowOptionsRaised(value);
+		//machine.doShowOptionsRaised(value);
 	}
 
 
@@ -181,8 +181,6 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 		// TODO Auto-generated method stub
 		machine.doPressRaised();		
 	}
-
-
 	
 	
 }

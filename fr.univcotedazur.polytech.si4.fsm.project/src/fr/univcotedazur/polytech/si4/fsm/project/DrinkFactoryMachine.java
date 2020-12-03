@@ -3,11 +3,7 @@ package fr.univcotedazur.polytech.si4.fsm.project;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +21,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
@@ -51,12 +48,18 @@ public class DrinkFactoryMachine extends JFrame {
 	
 	JLabel messagesToUser;
 	
-	JButton option1;
-	JButton option2;
-	JButton option3;
+	JButton refuseAllOptions;
 	JSlider sizeSlider;
 	JSlider temperatureSlider;
 	JSlider sugarSlider;
+	
+	JCheckBox cbOption1Yes;
+	JCheckBox cbOption1No;
+	JCheckBox cbOption2Yes;
+	JCheckBox cbOption2No;
+	JCheckBox cbOption3Yes;
+	JCheckBox cbOption3No;
+
 	
 	/**
 	 * @wbp.nonvisual location=311,475
@@ -85,6 +88,12 @@ public class DrinkFactoryMachine extends JFrame {
 	 * Do methods
 	 */
 	
+	protected boolean isOptionsSelected() {
+		if((cbOption1Yes.isSelected()||cbOption1No.isSelected()) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()) && (cbOption3Yes.isSelected() || cbOption3No.isSelected()))
+			return true;
+		return false;
+	}
+	
 	protected void doUpdateAmountMoneyRaised(long value) {
 		theFSM.setBalance(theFSM.getBalance() + value);
 	}
@@ -110,8 +119,6 @@ public class DrinkFactoryMachine extends JFrame {
 		default:
 			theFSM.setPrice(-1);
 		}
-		//System.out.println(theFSM.getType());
-		//System.out.println(theFSM.getPrice());
 			
 	}
 	
@@ -119,38 +126,44 @@ public class DrinkFactoryMachine extends JFrame {
 		switch(value) {
 		case "Coffee":
 		case "Expresso":
-			option1.setText("Maple Syrup");
-			option1.setVisible(true);
-			option2.setText("Splash of Milk");
-			option2.setVisible(true);
-			option3.setText("Mixed Ice Cream");
-			option3.setVisible(true);
-			break;
+//			option1.setText("Maple Syrup");
+//			option1.setVisible(true);
+//			option2.setText("Splash of Milk");
+//			option2.setVisible(true);
+//			option3.setText("Mixed Ice Cream");
+//			option3.setVisible(true);
+//			break;
 		case "Tea":
-			option1.setText("Maple Syrup");
-			option1.setVisible(true);
-			option2.setText("Splash of Milk");
-			option2.setVisible(true);
-			option3.setVisible(false);
-			break;
+//			option1.setText("Maple Syrup");
+//			option1.setVisible(true);
+//			option2.setText("Splash of Milk");
+//			option2.setVisible(true);
+//			option3.setVisible(false);
+//			break;
 		case "Soup":
-			option1.setText("Croutons");
-			option1.setVisible(true);
-			option2.setVisible(false);
-			option3.setVisible(false);
-			break;
+//			option1.setText("Croutons");
+//			option1.setVisible(true);
+//			option2.setVisible(false);
+//			option3.setVisible(false);
+//			break;
 		case "Iced Tea": 
-			option1.setText("Maple Syrup");
-			option1.setVisible(true);
-			option2.setVisible(false);
-			option3.setVisible(false);
-			break;
+//			option1.setText("Maple Syrup");
+//			option1.setVisible(true);
+//			option2.setVisible(false);
+//			option3.setVisible(false);
+//			break;
 		default:
-			option1.setVisible(false);
-			option2.setVisible(false);
-			option3.setVisible(false);
+//			option1.setVisible(false);
+//			option2.setVisible(false);
+//			option3.setVisible(false);
 		}
 			
+	}
+	
+	protected void doRefuseAllOptionsRaised() {
+		cbOption1No.setSelected(true);
+		cbOption2No.setSelected(true);
+		cbOption3No.setSelected(true);
 	}
 
 	protected void doSaveInformationsRaised(long id) {
@@ -158,7 +171,7 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	protected void doResetRaised() {
-		messagesToUser.setText("Choix annulé");
+		messagesToUser.setText("<html>Choix annulé");
 		doResetSliders();
 		doTypeSelectionRaised(""); // reset aussi le prix à 0
 		
@@ -167,11 +180,11 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		
 		if(temporaryId != 0) {
-			messagesToUser.setText(messagesToUser.getText() + "Transaction annulée");
+			messagesToUser.setText(messagesToUser.getText() + "<br>Transaction annulée");
 			temporaryId = 0;
 		}
 		
-		doShowOptionsRaised("");
+		//doShowOptionsRaised("");
 		
 	}
 	
@@ -183,7 +196,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 	protected void doRefoundMoneyRaised() {
 		long changeToBeReturned = (theFSM.getBalance() - theFSM.getPrice());
-		messagesToUser.setText(messagesToUser.getText() + "Monnaie rendue : " + (float)changeToBeReturned/100 + "€");
+		messagesToUser.setText(messagesToUser.getText() + "<br>Monnaie rendue : " + (float)changeToBeReturned/100 + "€");
 		theFSM.setBalance(0);
 		
 		// rajouter pour NFC
@@ -204,7 +217,7 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	protected void doHeatingWaterRaised() {
-		messagesToUser.setText(messagesToUser.getText() + "\nDémarage du chauffage de l'eau");
+		messagesToUser.setText(messagesToUser.getText() + "<br>Démarage du chauffage de l'eau");
 	}
 	
 	protected void doPutProductRaised(String value) {
@@ -425,7 +438,7 @@ public class DrinkFactoryMachine extends JFrame {
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
 		messagesToUser.setToolTipText("message to the user");
 		messagesToUser.setBackground(Color.WHITE);
-		messagesToUser.setBounds(126, 34, 165, 70);
+		messagesToUser.setBounds(480, 336, 165, 70);
 		contentPane.add(messagesToUser);
 
 		JLabel lblCoins = new JLabel("Coins");
@@ -497,39 +510,154 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 		
-		JLabel lblOptions = new JLabel("Options");
+			
+		JLabel lblOptions = new JLabel("OPTIONS");
 		lblOptions.setForeground(Color.WHITE);
 		lblOptions.setBackground(Color.DARK_GRAY);
 		lblOptions.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOptions.setBounds(115, 85, 120, 25);
+		lblOptions.setBounds(115, 34, 120, 25);
 		contentPane.add(lblOptions);
 		
-		option1 = new JButton("option 1");
-		option1.setForeground(Color.WHITE);
-		option1.setBackground(Color.DARK_GRAY);
-		option1.setBounds(115, 108, 120, 25);
-		contentPane.add(option1);
-		option1.setVisible(false);
+		JLabel lblOption1 = new JLabel("Option 1");
+		lblOption1.setForeground(Color.WHITE);
+		lblOption1.setBackground(Color.DARK_GRAY);
+		lblOption1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOption1.setBounds(115, 34, 120, 25);
+		contentPane.add(lblOption1);
+		lblOption1.setVisible(false);
 		
-		option2 = new JButton("option 2");
-		option2.setForeground(Color.WHITE);
-		option2.setBackground(Color.DARK_GRAY);
-		option2.setBounds(115, 145, 120, 25);
-		contentPane.add(option2);
-		option2.setVisible(false);
 		
-		option3 = new JButton("option 3");
-		option3.setForeground(Color.WHITE);
-		option3.setBackground(Color.DARK_GRAY);
-		option3.setBounds(115, 182, 120, 25);
-		contentPane.add(option3);
-		option3.setVisible(false);
-		option3.addActionListener(new ActionListener() {
+		JLabel lblOption2 = new JLabel("Option 2");
+		lblOption2.setForeground(Color.WHITE);
+		lblOption2.setBackground(Color.DARK_GRAY);
+		lblOption2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOption2.setBounds(115, 34, 120, 25);
+		contentPane.add(lblOption2);
+		lblOption2.setVisible(false);
+		
+		
+		JLabel lblOption3 = new JLabel("Option 3");
+		lblOption3.setForeground(Color.WHITE);
+		lblOption3.setBackground(Color.DARK_GRAY);
+		lblOption3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOption3.setBounds(115, 34, 120, 25);
+		contentPane.add(lblOption3);
+		lblOption3.setVisible(false);
+		
+		cbOption1Yes = new JCheckBox("Yes");
+		cbOption1Yes.setForeground(Color.WHITE);
+		cbOption1Yes.setBackground(Color.DARK_GRAY);
+		cbOption1Yes.setHorizontalAlignment(SwingConstants.CENTER);
+		cbOption1Yes.setBounds(130, 108, 60, 30);
+		contentPane.add(cbOption1Yes);
+		
+		
+		cbOption1No = new JCheckBox("No");
+		cbOption1No.setForeground(Color.WHITE);
+		cbOption1No.setBackground(Color.DARK_GRAY);
+		cbOption1No.setHorizontalAlignment(SwingConstants.CENTER);
+		cbOption1No.setBounds(180, 108, 60, 30);
+		contentPane.add(cbOption1No);
+		
+		cbOption1Yes.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+            	if(cbOption1Yes.isSelected())
+            		cbOption1No.setSelected(false);
+            	if(isOptionsSelected())
+            		theFSM.setOptionsSelected(true);
+            }
+         });
+		
+		cbOption1No.addItemListener(new ItemListener() { 
+            public void itemStateChanged(ItemEvent e) {
+            	//cbOption1Yes.setSelected((e.getStateChange()==0?true:false));
+            	if(cbOption1No.isSelected())
+            		cbOption1Yes.setSelected(false);
+            	if(isOptionsSelected())
+            		theFSM.setOptionsSelected(true);
+            }    
+         });
+		
+		cbOption2Yes = new JCheckBox("Yes");
+		cbOption2Yes.setForeground(Color.WHITE);
+		cbOption2Yes.setBackground(Color.DARK_GRAY);
+		cbOption2Yes.setHorizontalAlignment(SwingConstants.CENTER);
+		cbOption2Yes.setBounds(130, 148, 60, 30);
+		contentPane.add(cbOption2Yes);
+		
+		
+		cbOption2No = new JCheckBox("No");
+		cbOption2No.setForeground(Color.WHITE);
+		cbOption2No.setBackground(Color.DARK_GRAY);
+		cbOption2No.setHorizontalAlignment(SwingConstants.CENTER);
+		cbOption2No.setBounds(180, 148, 60, 30);
+		contentPane.add(cbOption2No);
+		
+		cbOption2Yes.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+            	if(cbOption2Yes.isSelected())
+            		cbOption2No.setSelected(false);
+            	if(isOptionsSelected())
+            		theFSM.setOptionsSelected(true);
+            }
+         });
+		
+		cbOption2No.addItemListener(new ItemListener() { 
+            public void itemStateChanged(ItemEvent e) {
+            	if(cbOption2No.isSelected())
+            		cbOption2Yes.setSelected(false);
+            	if(isOptionsSelected())
+            		theFSM.setOptionsSelected(true);
+            }    
+         }); 
+		
+		cbOption3Yes = new JCheckBox("Yes");
+		cbOption3Yes.setForeground(Color.WHITE);
+		cbOption3Yes.setBackground(Color.DARK_GRAY);
+		cbOption3Yes.setHorizontalAlignment(SwingConstants.CENTER);
+		cbOption3Yes.setBounds(130, 188, 60, 30);
+		contentPane.add(cbOption3Yes);
+		
+		
+		cbOption3No = new JCheckBox("No");
+		cbOption3No.setForeground(Color.WHITE);
+		cbOption3No.setBackground(Color.DARK_GRAY);
+		cbOption3No.setHorizontalAlignment(SwingConstants.CENTER);
+		cbOption3No.setBounds(180, 188, 60, 30);
+		contentPane.add(cbOption3No);
+		
+		cbOption3Yes.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+            	if(cbOption3Yes.isSelected())
+            		cbOption3No.setSelected(false);
+            	if(isOptionsSelected())
+            		theFSM.setOptionsSelected(true);
+            }
+         });
+		
+		cbOption3No.addItemListener(new ItemListener() { 
+            public void itemStateChanged(ItemEvent e) {
+            	if(cbOption3No.isSelected())
+            		cbOption3Yes.setSelected(false);
+            	if(isOptionsSelected())
+            		theFSM.setOptionsSelected(true);
+            }    
+         }); 
+		
+		refuseAllOptions = new JButton("No Options");
+		refuseAllOptions.setForeground(Color.WHITE);
+		refuseAllOptions.setBackground(Color.DARK_GRAY);
+		refuseAllOptions.setBounds(115, 80, 120, 25);
+		contentPane.add(refuseAllOptions);
+		refuseAllOptions.setVisible(true);
+		refuseAllOptions.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				doRefuseAllOptionsRaised();
+            	theFSM.setOptionsSelected(true);
 			}
 		});
+		
 		
 
 		JProgressBar progressBar = new JProgressBar();

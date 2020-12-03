@@ -629,6 +629,20 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean optionsSelected;
+		
+		public synchronized boolean getOptionsSelected() {
+			synchronized(DefaultSMStatemachine.this) {
+				return optionsSelected;
+			}
+		}
+		
+		public void setOptionsSelected(boolean value) {
+			synchronized(DefaultSMStatemachine.this) {
+				this.optionsSelected = value;
+			}
+		}
+		
 		protected void clearEvents() {
 			selectType = false;
 			coinSlot = false;
@@ -723,6 +737,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setPrice(-1);
 		
 		sCInterface.setType("");
+		
+		sCInterface.setOptionsSelected(false);
 	}
 	
 	public synchronized void enter() {
@@ -1079,6 +1095,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized void setType(String value) {
 		sCInterface.setType(value);
+	}
+	
+	public synchronized boolean getOptionsSelected() {
+		return sCInterface.getOptionsSelected();
+	}
+	
+	public synchronized void setOptionsSelected(boolean value) {
+		sCInterface.setOptionsSelected(value);
 	}
 	
 	private boolean check_main_region__choice_0_tr0_tr0() {
@@ -1768,7 +1792,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				
 				enterSequence_main_region_Cancellable_Drink_Drink_Selection_default();
 			} else {
-				if ((sCInterface.getPrice()>=0 && isStateActive(State.main_region_Cancellable_Payment_Payed))) {
+				if (((sCInterface.getPrice()>=0 && sCInterface.getOptionsSelected()) && isStateActive(State.main_region_Cancellable_Payment_Payed))) {
 					exitSequence_main_region_Cancellable();
 					react_main_region__sync0();
 				} else {
@@ -1806,7 +1830,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((isStateActive(State.main_region_Cancellable_Drink_Drink_Selection) && sCInterface.getPrice()>=0)) {
+			if ((isStateActive(State.main_region_Cancellable_Drink_Drink_Selection) && (sCInterface.getPrice()>=0 && sCInterface.getOptionsSelected()))) {
 				exitSequence_main_region_Cancellable();
 				react_main_region__sync0();
 			} else {

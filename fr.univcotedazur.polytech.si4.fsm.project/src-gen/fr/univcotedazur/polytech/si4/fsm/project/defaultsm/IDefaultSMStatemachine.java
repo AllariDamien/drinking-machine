@@ -90,6 +90,10 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void setType(String value);
 		
+		public boolean getOptionsSelected();
+		
+		public void setOptionsSelected(boolean value);
+		
 	public List<SCInterfaceListener> getListeners();
 	}
 	
