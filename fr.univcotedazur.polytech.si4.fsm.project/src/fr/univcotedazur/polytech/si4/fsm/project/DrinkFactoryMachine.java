@@ -41,8 +41,9 @@ public class DrinkFactoryMachine extends JFrame {
 	private static final long serialVersionUID = 2030629304432075314L;
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
-	private Map<Long, List<Long>> infosNFC = new HashMap<>();
-	List<Long> listeId; 
+	private InformationsNFC infoNFC;
+	//private Map<Long, List<Long>> infoNFC.getNfc() = new HashMap<>();
+	private Order order; 
 	private long temporaryId;
 	
 	Stock stock;
@@ -353,7 +354,10 @@ public class DrinkFactoryMachine extends JFrame {
 
 	protected void doSaveInformationsRaised(long id) {
 		temporaryId = id;
-		listeId = new ArrayList<Long>();
+		//listeId = new ArrayList<Double>();
+		//infoNFC.setListeId(listeId);
+		
+		
 		
 		
 	}
@@ -391,10 +395,21 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	protected void doRefoundMoneyRaised() {
-		System.out.println(theFSM.getBalance() + "    " +   theFSM.getPrice());
-		long changeToBeReturned = (theFSM.getBalance() - theFSM.getPrice());
-		messagesToUser.setText(messagesToUser.getText() + "Monnaie rendue : " + (float)changeToBeReturned/100 + "€<br>");
-		theFSM.setBalance(0);
+		//System.out.println(theFSM.getBalance() + "    " +   theFSM.getPrice());
+		messagesToUser.setText(messagesToUser.getText() + "Le prix de votre boisson est  : " + (float)theFSM.getPrice()/100 + "€<br>");
+		if(theFSM.getBalance() > 0) {
+			long changeToBeReturned = (theFSM.getBalance() - theFSM.getPrice());
+			messagesToUser.setText(messagesToUser.getText() + "Monnaie rendue : " + (float)changeToBeReturned/100 + "€<br>");
+			theFSM.setBalance(0);
+		}
+		
+		else {
+			if(theFSM.getPrice() == 0)
+				messagesToUser.setText(messagesToUser.getText() + "11ème achat, votre boisson est gratuite <br> ");
+			else
+				messagesToUser.setText(messagesToUser.getText() + "Vous avez été crédité de  : " + (float)theFSM.getPrice()/100 + "€<br>");
+		}
+		
 		
 		// rajouter pour NFC
 		
@@ -411,32 +426,23 @@ public class DrinkFactoryMachine extends JFrame {
 		long nbCommande;
 		
 		if(temporaryId != 0) {
-			if(infosNFC.containsKey(temporaryId)) {
-				if(infosNFC.get(temporaryId).get(0) == 10 && theFSM.getPrice() <= infosNFC.get(temporaryId).get(1)) {
+			if(infoNFC.getNfc().containsKey(temporaryId)) {
+				if(infoNFC.getNfc().get(temporaryId).getNbCommande() == 2 && theFSM.getPrice() <= infoNFC.getNfc().get(temporaryId).getPrixMoyen()) {
 					// boisson gratuite
+					theFSM.setPrice(0);
+					infoNFC.remove(temporaryId);
 					
 				}
-					
-				
-				nbCommande = infosNFC.get(temporaryId).get(0) + 1;
-				
-				listeId.add(nbCommande);
-				moyenne = (infosNFC.get(temporaryId).get(1) * infosNFC.get(temporaryId).get(0) + theFSM.getPrice()) 
-				/ nbCommande;
-				listeId.add(moyenne);
-
-				infosNFC.put(temporaryId, listeId );
+				else	
+					infoNFC.incrementeNFC(temporaryId, theFSM.getPrice());
 				
 			}
 			else {
-				listeId.add(value);
-				moyenne = theFSM.getPrice();
-				listeId.add(moyenne);
-				infosNFC.put(temporaryId, listeId);
+				infoNFC.addNFC(temporaryId, theFSM.getPrice());
 				
 			}
-			for (Long i : infosNFC.keySet()) {
-				  System.out.println(i + " " + "nb de commandes = " + infosNFC.get(i).get(0) + " moyenne = " + infosNFC.get(i).get(1));
+			for (Long i : infoNFC.getNfc().keySet()) {
+				  System.out.println(i + " " + "nb de commandes = " + infoNFC.getNfc().get(i).getNbCommande() + " moyenne = " + infoNFC.getNfc().get(i).getPrixMoyen());
 				}
 		}
 		
@@ -717,6 +723,7 @@ public class DrinkFactoryMachine extends JFrame {
 		theFSM.enter();
 		theFSM.getSCInterface().getListeners().add(new DrinkFactoryControlerInterfaceImplementation(this));
 		stock = new Stock();
+		infoNFC = new InformationsNFC();
 		Runnable r = new Runnable() {
 			
 			@Override
