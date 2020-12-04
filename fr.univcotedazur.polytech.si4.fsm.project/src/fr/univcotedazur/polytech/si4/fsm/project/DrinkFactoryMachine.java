@@ -575,11 +575,11 @@ public class DrinkFactoryMachine extends JFrame {
 		switch(sizeSliderValue) {
 			case 0:
 				if(theFSM.getType().equals("Expresso"))
-					messagesToUser.setText(messagesToUser.getText() + "Ecoulement de l'eau pendant 2 secondes !<br>");
+					messagesToUser.setText(messagesToUser.getText() + "Ecoulement de l'eau pendant 4 secondes !<br>");
 				else
 					messagesToUser.setText(messagesToUser.getText() + "Ajout de l'eau de volume : court !<br>");
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(4000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -587,11 +587,11 @@ public class DrinkFactoryMachine extends JFrame {
 				break;
 			case 1:
 				if(theFSM.getType().equals("Expresso"))
-					messagesToUser.setText(messagesToUser.getText() + "Ecoulement de l'eau pendant 3 secondes !<br>");
+					messagesToUser.setText(messagesToUser.getText() + "Ecoulement de l'eau pendant 6 secondes !<br>");
 				else
 					messagesToUser.setText(messagesToUser.getText() + "Ajout de l'eau de volume : normal !<br>");
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(6000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -599,11 +599,11 @@ public class DrinkFactoryMachine extends JFrame {
 				break;
 			case 2:
 				if(theFSM.getType().equals("Expresso"))
-					messagesToUser.setText(messagesToUser.getText() + "Ecoulement de l'eau pendant 4 secondes !<br>");
+					messagesToUser.setText(messagesToUser.getText() + "Ecoulement de l'eau pendant 8 secondes !<br>");
 				else
 					messagesToUser.setText(messagesToUser.getText() + "Ajout de l'eau de volume : long !<br>");
 				try {
-					Thread.sleep(4000);
+					Thread.sleep(8000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -767,15 +767,6 @@ public class DrinkFactoryMachine extends JFrame {
 		messagesToUser.setBounds(480, 320, 225, 350);
 		messagesToUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 		contentPane.add(messagesToUser);
-		
-		
-		JLabel displayPrice = new JLabel("<html>Prix de la boisson<br>" + theFSM.getPrice());
-		displayPrice.setForeground(Color.WHITE);
-		displayPrice.setToolTipText("message to the user");
-		displayPrice.setBackground(Color.WHITE);
-		displayPrice.setBounds(630, 30, 80, 70);
-		displayPrice.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-		contentPane.add(displayPrice);
 		
 
 		JLabel lblCoins = new JLabel("Coins");
