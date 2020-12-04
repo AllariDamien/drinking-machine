@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -42,9 +43,9 @@ public class DrinkFactoryMachine extends JFrame {
 	private JPanel contentPane;
 	private DefaultSMStatemachine theFSM;
 	private InformationsNFC infoNFC;
-	//private Map<Long, List<Long>> infoNFC.getNfc() = new HashMap<>();
 	private Order order; 
 	private long temporaryId;
+	private String cardInformation = "";
 	
 	Stock stock;
 	
@@ -161,6 +162,14 @@ public class DrinkFactoryMachine extends JFrame {
 	protected void doTypeSelectionRaised(String value) {
 		theFSM.setType(value);
 		doSetDrinkPrice(value);
+		temperatureTable.replace(0, new JLabel("20°C"));
+		temperatureTable.replace(1, new JLabel("35°C"));
+		temperatureTable.replace(2, new JLabel("60°C"));
+		temperatureTable.replace(3, new JLabel("85°C"));	
+		for (JLabel l : temperatureTable.values()) {
+			l.setForeground(Color.WHITE);
+		}
+		temperatureSlider.setLabelTable(temperatureTable);
 		switch(value) {
 			case "Coffee":
 				messagesToUser.setText("<html>Boisson sélectionnée : Café<br>");
@@ -180,9 +189,14 @@ public class DrinkFactoryMachine extends JFrame {
 				temperatureTable.replace(0, new JLabel("2°C"));
 				temperatureTable.replace(1, new JLabel("6°C"));
 				temperatureTable.replace(2, new JLabel("10°C"));
-				temperatureTable.replace(3, new JLabel("14°C"));			
+				temperatureTable.replace(3, new JLabel("14°C"));	
+				for (JLabel l : temperatureTable.values()) {
+					l.setForeground(Color.WHITE);
+				}
+				temperatureSlider.setLabelTable(temperatureTable);
 				break;
 			default:
+				
 				messagesToUser.setText("<html>Veuillez choisir une boisson<br>");
 				return;
 		}
@@ -225,7 +239,7 @@ public class DrinkFactoryMachine extends JFrame {
 		if(theFSM.getOptionCroutons())
 			theFSM.setPrice(theFSM.getPrice() + 30);
 		
-		System.out.println("prix " + theFSM.getPrice() + " solde  " + theFSM.getBalance());
+		
 	}
 	
 	
@@ -322,10 +336,11 @@ public class DrinkFactoryMachine extends JFrame {
 
 	protected void doSaveInformationsRaised(long id) {
 		temporaryId = id;
-		//listeId = new ArrayList<Double>();
-		//infoNFC.setListeId(listeId);
-		
-		
+		Random random = new Random();
+		cardInformation  = random.ints(48,  57)
+				.limit(10)
+				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+				.toString();
 		
 		
 	}
@@ -352,7 +367,9 @@ public class DrinkFactoryMachine extends JFrame {
 			e.printStackTrace();
 		}
 		theFSM.setOptionsSelected(false);
+		
 		doTypeSelectionRaised(""); // reset aussi le prix à 0
+		
 		
 	}
 	
@@ -360,6 +377,7 @@ public class DrinkFactoryMachine extends JFrame {
 		sugarSlider.setValue(1);
 		sizeSlider.setValue(1);
 		temperatureSlider.setValue(2);
+		
 	}
 
 	protected void doRefoundMoneyRaised() {
@@ -402,10 +420,9 @@ public class DrinkFactoryMachine extends JFrame {
 				infoNFC.addNFC(temporaryId, theFSM.getPrice());
 				
 			}
-			for (Long i : infoNFC.getNfc().keySet()) {
-				  System.out.println(i + " " + "nb de commandes = " + infoNFC.getNfc().get(i).getNbCommande() + " moyenne = " + infoNFC.getNfc().get(i).getPrixMoyen());
-				}
+			
 		}
+		cardInformation = "";
 		
 	}
 	
