@@ -22,7 +22,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void raiseCancelButton();
 		
-		public void raiseGoNextStep();
+		public void raiseSelectOption();
 		
 		public void raiseDrinkCollected();
 		
@@ -44,16 +44,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public String getDoShowOptionsValue();
 		
-		public boolean isRaisedDoAddSplashOfMilk();
-		
-		public boolean isRaisedDoAddMapleSyrup();
-		
-		public boolean isRaisedDoAddMixedIceCream();
-		
-		public boolean isRaisedDoAddCroutons();
-		
-		public boolean isRaisedDoPress();
-		
 		public boolean isRaisedDoRefoundMoney();
 		
 		public boolean isRaisedDoStartingPreparation();
@@ -72,9 +62,21 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoPourWater();
 		
+		public boolean isRaisedDoPress();
+		
+		public boolean isRaisedDoAddMapleSyrup();
+		
+		public boolean isRaisedDoAddSplashOfMilk();
+		
+		public boolean isRaisedDoAddMixedIceCream();
+		
+		public boolean isRaisedDoAddCroutons();
+		
 		public boolean isRaisedDoBrewing();
 		
 		public boolean isRaisedDoRemoveTeaBag();
+		
+		public boolean isRaisedDoDrinkRetrievable();
 		
 		public boolean isRaisedDoCleanSystem();
 		
@@ -94,6 +96,22 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void setOptionsSelected(boolean value);
 		
+		public boolean getOptionMapleSyrup();
+		
+		public void setOptionMapleSyrup(boolean value);
+		
+		public boolean getOptionSplashOfMilk();
+		
+		public void setOptionSplashOfMilk(boolean value);
+		
+		public boolean getOptionMixedIceCream();
+		
+		public void setOptionMixedIceCream(boolean value);
+		
+		public boolean getOptionCroutons();
+		
+		public void setOptionCroutons(boolean value);
+		
 	public List<SCInterfaceListener> getListeners();
 	}
 	
@@ -104,11 +122,6 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoSaveInformationsRaised(long value);
 		public void onDoResetRaised();
 		public void onDoShowOptionsRaised(String value);
-		public void onDoAddSplashOfMilkRaised();
-		public void onDoAddMapleSyrupRaised();
-		public void onDoAddMixedIceCreamRaised();
-		public void onDoAddCroutonsRaised();
-		public void onDoPressRaised();
 		public void onDoRefoundMoneyRaised();
 		public void onDoStartingPreparationRaised();
 		public void onDoHeatingWaterRaised();
@@ -117,8 +130,14 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoSetCupRaised();
 		public void onDoPutSugarRaised();
 		public void onDoPourWaterRaised();
+		public void onDoPressRaised();
+		public void onDoAddMapleSyrupRaised();
+		public void onDoAddSplashOfMilkRaised();
+		public void onDoAddMixedIceCreamRaised();
+		public void onDoAddCroutonsRaised();
 		public void onDoBrewingRaised();
 		public void onDoRemoveTeaBagRaised();
+		public void onDoDrinkRetrievableRaised();
 		public void onDoCleanSystemRaised();
 		}
 	

@@ -1,10 +1,10 @@
-The: 9
+The: 8
 Cafe: 0
 Croutons: 10
-Grains: 6
+Grains: 10
 Lait: 10
-Sachet: 6
+Sachet: 3
 Glace: 10
 Soupe: 10
-Sucre: 8
-Sirop: 10
+Sucre: 10
+Sirop: 6

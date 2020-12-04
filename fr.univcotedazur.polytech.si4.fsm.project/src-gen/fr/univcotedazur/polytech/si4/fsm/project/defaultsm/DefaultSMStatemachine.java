@@ -136,12 +136,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
-		private boolean goNextStep;
+		private boolean selectOption;
 		
 		
-		public void raiseGoNextStep() {
+		public void raiseSelectOption() {
 			synchronized(DefaultSMStatemachine.this) {
-				goNextStep = true;
+				selectOption = true;
 			}
 		}
 		
@@ -285,96 +285,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				if (! doShowOptions ) 
 					throw new IllegalStateException("Illegal event value access. Event DoShowOptions is not raised!");
 				return doShowOptionsValue;
-			}
-		}
-		
-		private boolean doAddSplashOfMilk;
-		
-		
-		public boolean isRaisedDoAddSplashOfMilk() {
-			synchronized(DefaultSMStatemachine.this) {
-				return doAddSplashOfMilk;
-			}
-		}
-		
-		protected void raiseDoAddSplashOfMilk() {
-			synchronized(DefaultSMStatemachine.this) {
-				doAddSplashOfMilk = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onDoAddSplashOfMilkRaised();
-				}
-			}
-		}
-		
-		private boolean doAddMapleSyrup;
-		
-		
-		public boolean isRaisedDoAddMapleSyrup() {
-			synchronized(DefaultSMStatemachine.this) {
-				return doAddMapleSyrup;
-			}
-		}
-		
-		protected void raiseDoAddMapleSyrup() {
-			synchronized(DefaultSMStatemachine.this) {
-				doAddMapleSyrup = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onDoAddMapleSyrupRaised();
-				}
-			}
-		}
-		
-		private boolean doAddMixedIceCream;
-		
-		
-		public boolean isRaisedDoAddMixedIceCream() {
-			synchronized(DefaultSMStatemachine.this) {
-				return doAddMixedIceCream;
-			}
-		}
-		
-		protected void raiseDoAddMixedIceCream() {
-			synchronized(DefaultSMStatemachine.this) {
-				doAddMixedIceCream = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onDoAddMixedIceCreamRaised();
-				}
-			}
-		}
-		
-		private boolean doAddCroutons;
-		
-		
-		public boolean isRaisedDoAddCroutons() {
-			synchronized(DefaultSMStatemachine.this) {
-				return doAddCroutons;
-			}
-		}
-		
-		protected void raiseDoAddCroutons() {
-			synchronized(DefaultSMStatemachine.this) {
-				doAddCroutons = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onDoAddCroutonsRaised();
-				}
-			}
-		}
-		
-		private boolean doPress;
-		
-		
-		public boolean isRaisedDoPress() {
-			synchronized(DefaultSMStatemachine.this) {
-				return doPress;
-			}
-		}
-		
-		protected void raiseDoPress() {
-			synchronized(DefaultSMStatemachine.this) {
-				doPress = true;
-				for (SCInterfaceListener listener : listeners) {
-					listener.onDoPressRaised();
-				}
 			}
 		}
 		
@@ -533,6 +443,96 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doPress;
+		
+		
+		public boolean isRaisedDoPress() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doPress;
+			}
+		}
+		
+		protected void raiseDoPress() {
+			synchronized(DefaultSMStatemachine.this) {
+				doPress = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoPressRaised();
+				}
+			}
+		}
+		
+		private boolean doAddMapleSyrup;
+		
+		
+		public boolean isRaisedDoAddMapleSyrup() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddMapleSyrup;
+			}
+		}
+		
+		protected void raiseDoAddMapleSyrup() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddMapleSyrup = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddMapleSyrupRaised();
+				}
+			}
+		}
+		
+		private boolean doAddSplashOfMilk;
+		
+		
+		public boolean isRaisedDoAddSplashOfMilk() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddSplashOfMilk;
+			}
+		}
+		
+		protected void raiseDoAddSplashOfMilk() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddSplashOfMilk = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddSplashOfMilkRaised();
+				}
+			}
+		}
+		
+		private boolean doAddMixedIceCream;
+		
+		
+		public boolean isRaisedDoAddMixedIceCream() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddMixedIceCream;
+			}
+		}
+		
+		protected void raiseDoAddMixedIceCream() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddMixedIceCream = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddMixedIceCreamRaised();
+				}
+			}
+		}
+		
+		private boolean doAddCroutons;
+		
+		
+		public boolean isRaisedDoAddCroutons() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddCroutons;
+			}
+		}
+		
+		protected void raiseDoAddCroutons() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddCroutons = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddCroutonsRaised();
+				}
+			}
+		}
+		
 		private boolean doBrewing;
 		
 		
@@ -565,6 +565,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				doRemoveTeaBag = true;
 				for (SCInterfaceListener listener : listeners) {
 					listener.onDoRemoveTeaBagRaised();
+				}
+			}
+		}
+		
+		private boolean doDrinkRetrievable;
+		
+		
+		public boolean isRaisedDoDrinkRetrievable() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doDrinkRetrievable;
+			}
+		}
+		
+		protected void raiseDoDrinkRetrievable() {
+			synchronized(DefaultSMStatemachine.this) {
+				doDrinkRetrievable = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoDrinkRetrievableRaised();
 				}
 			}
 		}
@@ -643,6 +661,62 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean optionMapleSyrup;
+		
+		public synchronized boolean getOptionMapleSyrup() {
+			synchronized(DefaultSMStatemachine.this) {
+				return optionMapleSyrup;
+			}
+		}
+		
+		public void setOptionMapleSyrup(boolean value) {
+			synchronized(DefaultSMStatemachine.this) {
+				this.optionMapleSyrup = value;
+			}
+		}
+		
+		private boolean optionSplashOfMilk;
+		
+		public synchronized boolean getOptionSplashOfMilk() {
+			synchronized(DefaultSMStatemachine.this) {
+				return optionSplashOfMilk;
+			}
+		}
+		
+		public void setOptionSplashOfMilk(boolean value) {
+			synchronized(DefaultSMStatemachine.this) {
+				this.optionSplashOfMilk = value;
+			}
+		}
+		
+		private boolean optionMixedIceCream;
+		
+		public synchronized boolean getOptionMixedIceCream() {
+			synchronized(DefaultSMStatemachine.this) {
+				return optionMixedIceCream;
+			}
+		}
+		
+		public void setOptionMixedIceCream(boolean value) {
+			synchronized(DefaultSMStatemachine.this) {
+				this.optionMixedIceCream = value;
+			}
+		}
+		
+		private boolean optionCroutons;
+		
+		public synchronized boolean getOptionCroutons() {
+			synchronized(DefaultSMStatemachine.this) {
+				return optionCroutons;
+			}
+		}
+		
+		public void setOptionCroutons(boolean value) {
+			synchronized(DefaultSMStatemachine.this) {
+				this.optionCroutons = value;
+			}
+		}
+		
 		protected void clearEvents() {
 			selectType = false;
 			coinSlot = false;
@@ -651,7 +725,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			sizeSlider = false;
 			temperatureSlider = false;
 			cancelButton = false;
-			goNextStep = false;
+			selectOption = false;
 			drinkCollected = false;
 		}
 		protected void clearOutEvents() {
@@ -661,11 +735,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doSaveInformations = false;
 		doReset = false;
 		doShowOptions = false;
-		doAddSplashOfMilk = false;
-		doAddMapleSyrup = false;
-		doAddMixedIceCream = false;
-		doAddCroutons = false;
-		doPress = false;
 		doRefoundMoney = false;
 		doStartingPreparation = false;
 		doHeatingWater = false;
@@ -674,8 +743,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doSetCup = false;
 		doPutSugar = false;
 		doPourWater = false;
+		doPress = false;
+		doAddMapleSyrup = false;
+		doAddSplashOfMilk = false;
+		doAddMixedIceCream = false;
+		doAddCroutons = false;
 		doBrewing = false;
 		doRemoveTeaBag = false;
+		doDrinkRetrievable = false;
 		doCleanSystem = false;
 		}
 		
@@ -694,7 +769,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_Cancellable_Payment_Payed,
 		main_region_Cancellable_Payment_Coins,
 		main_region_Cancellable_Timer_Timer,
-		main_region_Step_4_Done___Drink_available,
+		main_region_Option_Splash_of_Milk,
 		main_region_Step_Bonus_1,
 		main_region_Brewed,
 		main_region_Put_Sugar_and_Water,
@@ -707,6 +782,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate,
 		main_region_Set_Temperature_and_Cup_r2_gobelet,
 		main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains,
+		main_region_Boisson_r_cup_rable,
+		main_region_Ice_Cream_option,
+		main_region_Step_4_Done___Pr_paration_termin_e,
 		$NullState$
 	};
 	
@@ -739,6 +817,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setType("");
 		
 		sCInterface.setOptionsSelected(false);
+		
+		sCInterface.setOptionMapleSyrup(false);
+		
+		sCInterface.setOptionSplashOfMilk(false);
+		
+		sCInterface.setOptionMixedIceCream(false);
+		
+		sCInterface.setOptionCroutons(false);
 	}
 	
 	public synchronized void enter() {
@@ -778,8 +864,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			case main_region_Cancellable_Timer_Timer:
 				main_region_Cancellable_Timer_Timer_react(true);
 				break;
-			case main_region_Step_4_Done___Drink_available:
-				main_region_Step_4_Done___Drink_available_react(true);
+			case main_region_Option_Splash_of_Milk:
+				main_region_Option_Splash_of_Milk_react(true);
 				break;
 			case main_region_Step_Bonus_1:
 				main_region_Step_Bonus_1_react(true);
@@ -807,6 +893,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				break;
 			case main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains:
 				main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains_react(true);
+				break;
+			case main_region_Boisson_r_cup_rable:
+				main_region_Boisson_r_cup_rable_react(true);
+				break;
+			case main_region_Ice_Cream_option:
+				main_region_Ice_Cream_option_react(true);
+				break;
+			case main_region_Step_4_Done___Pr_paration_termin_e:
+				main_region_Step_4_Done___Pr_paration_termin_e_react(true);
 				break;
 			default:
 				// $NullState$
@@ -871,8 +966,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[1] == State.main_region_Cancellable_Payment_Coins;
 		case main_region_Cancellable_Timer_Timer:
 			return stateVector[2] == State.main_region_Cancellable_Timer_Timer;
-		case main_region_Step_4_Done___Drink_available:
-			return stateVector[0] == State.main_region_Step_4_Done___Drink_available;
+		case main_region_Option_Splash_of_Milk:
+			return stateVector[0] == State.main_region_Option_Splash_of_Milk;
 		case main_region_Step_Bonus_1:
 			return stateVector[0] == State.main_region_Step_Bonus_1;
 		case main_region_Brewed:
@@ -900,6 +995,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[1] == State.main_region_Set_Temperature_and_Cup_r2_gobelet;
 		case main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains:
 			return stateVector[2] == State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains;
+		case main_region_Boisson_r_cup_rable:
+			return stateVector[0] == State.main_region_Boisson_r_cup_rable;
+		case main_region_Ice_Cream_option:
+			return stateVector[0] == State.main_region_Ice_Cream_option;
+		case main_region_Step_4_Done___Pr_paration_termin_e:
+			return stateVector[0] == State.main_region_Step_4_Done___Pr_paration_termin_e;
 		default:
 			return false;
 		}
@@ -961,8 +1062,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.raiseCancelButton();
 	}
 	
-	public synchronized void raiseGoNextStep() {
-		sCInterface.raiseGoNextStep();
+	public synchronized void raiseSelectOption() {
+		sCInterface.raiseSelectOption();
 	}
 	
 	public synchronized void raiseDrinkCollected() {
@@ -1005,26 +1106,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.getDoShowOptionsValue();
 	}
 	
-	public synchronized boolean isRaisedDoAddSplashOfMilk() {
-		return sCInterface.isRaisedDoAddSplashOfMilk();
-	}
-	
-	public synchronized boolean isRaisedDoAddMapleSyrup() {
-		return sCInterface.isRaisedDoAddMapleSyrup();
-	}
-	
-	public synchronized boolean isRaisedDoAddMixedIceCream() {
-		return sCInterface.isRaisedDoAddMixedIceCream();
-	}
-	
-	public synchronized boolean isRaisedDoAddCroutons() {
-		return sCInterface.isRaisedDoAddCroutons();
-	}
-	
-	public synchronized boolean isRaisedDoPress() {
-		return sCInterface.isRaisedDoPress();
-	}
-	
 	public synchronized boolean isRaisedDoRefoundMoney() {
 		return sCInterface.isRaisedDoRefoundMoney();
 	}
@@ -1061,12 +1142,36 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoPourWater();
 	}
 	
+	public synchronized boolean isRaisedDoPress() {
+		return sCInterface.isRaisedDoPress();
+	}
+	
+	public synchronized boolean isRaisedDoAddMapleSyrup() {
+		return sCInterface.isRaisedDoAddMapleSyrup();
+	}
+	
+	public synchronized boolean isRaisedDoAddSplashOfMilk() {
+		return sCInterface.isRaisedDoAddSplashOfMilk();
+	}
+	
+	public synchronized boolean isRaisedDoAddMixedIceCream() {
+		return sCInterface.isRaisedDoAddMixedIceCream();
+	}
+	
+	public synchronized boolean isRaisedDoAddCroutons() {
+		return sCInterface.isRaisedDoAddCroutons();
+	}
+	
 	public synchronized boolean isRaisedDoBrewing() {
 		return sCInterface.isRaisedDoBrewing();
 	}
 	
 	public synchronized boolean isRaisedDoRemoveTeaBag() {
 		return sCInterface.isRaisedDoRemoveTeaBag();
+	}
+	
+	public synchronized boolean isRaisedDoDrinkRetrievable() {
+		return sCInterface.isRaisedDoDrinkRetrievable();
 	}
 	
 	public synchronized boolean isRaisedDoCleanSystem() {
@@ -1105,12 +1210,56 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		sCInterface.setOptionsSelected(value);
 	}
 	
+	public synchronized boolean getOptionMapleSyrup() {
+		return sCInterface.getOptionMapleSyrup();
+	}
+	
+	public synchronized void setOptionMapleSyrup(boolean value) {
+		sCInterface.setOptionMapleSyrup(value);
+	}
+	
+	public synchronized boolean getOptionSplashOfMilk() {
+		return sCInterface.getOptionSplashOfMilk();
+	}
+	
+	public synchronized void setOptionSplashOfMilk(boolean value) {
+		sCInterface.setOptionSplashOfMilk(value);
+	}
+	
+	public synchronized boolean getOptionMixedIceCream() {
+		return sCInterface.getOptionMixedIceCream();
+	}
+	
+	public synchronized void setOptionMixedIceCream(boolean value) {
+		sCInterface.setOptionMixedIceCream(value);
+	}
+	
+	public synchronized boolean getOptionCroutons() {
+		return sCInterface.getOptionCroutons();
+	}
+	
+	public synchronized void setOptionCroutons(boolean value) {
+		sCInterface.setOptionCroutons(value);
+	}
+	
 	private boolean check_main_region__choice_0_tr0_tr0() {
 		return (sCInterface.getType()== null?"Tea" ==null :sCInterface.getType().equals("Tea"));
 	}
 	
+	private boolean check_main_region_Put_Sugar_and_Water_r1__choice_0_tr0_tr0() {
+		return sCInterface.getOptionMapleSyrup();
+	}
+	
 	private boolean check_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr0_tr0() {
 		return (sCInterface.getType()== null?"Expresso" ==null :sCInterface.getType().equals("Expresso"));
+	}
+	
+	private boolean check_main_region__choice_1_tr0_tr0() {
+		return sCInterface.getOptionMixedIceCream();
+	}
+	
+	private boolean check_main_region__choice_2_tr0_tr0() {
+		return sCInterface.getOptionSplashOfMilk();
 	}
 	
 	private void effect_main_region__choice_0_tr0() {
@@ -1118,7 +1267,19 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	private void effect_main_region__choice_0_tr1() {
-		enterSequence_main_region_Step_4_Done___Drink_available_default();
+		enterSequence_main_region_Ice_Cream_option_default();
+	}
+	
+	private void effect_main_region_Put_Sugar_and_Water_r1__choice_0_tr0() {
+		sCInterface.raiseDoAddMapleSyrup();
+		
+		enterSequence_main_region_Put_Sugar_and_Water_r1_sugar_default();
+	}
+	
+	private void effect_main_region_Put_Sugar_and_Water_r1__choice_0_tr1() {
+		sCInterface.raiseDoPutSugar();
+		
+		enterSequence_main_region_Put_Sugar_and_Water_r1_sugar_default();
 	}
 	
 	private void effect_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr0() {
@@ -1129,6 +1290,26 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	private void effect_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr1() {
 		enterSequence_main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains_default();
+	}
+	
+	private void effect_main_region__choice_1_tr0() {
+		sCInterface.raiseDoAddMixedIceCream();
+		
+		enterSequence_main_region_Option_Splash_of_Milk_default();
+	}
+	
+	private void effect_main_region__choice_1_tr1() {
+		enterSequence_main_region_Option_Splash_of_Milk_default();
+	}
+	
+	private void effect_main_region__choice_2_tr0() {
+		sCInterface.raiseDoAddSplashOfMilk();
+		
+		enterSequence_main_region_Step_4_Done___Pr_paration_termin_e_default();
+	}
+	
+	private void effect_main_region__choice_2_tr1() {
+		enterSequence_main_region_Step_4_Done___Pr_paration_termin_e_default();
 	}
 	
 	/* Entry action for state 'Timer'. */
@@ -1185,10 +1366,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[2] = State.main_region_Cancellable_Timer_Timer;
 	}
 	
-	/* 'default' enter sequence for state Step 4 Done : Drink available */
-	private void enterSequence_main_region_Step_4_Done___Drink_available_default() {
+	/* 'default' enter sequence for state Option Splash of Milk */
+	private void enterSequence_main_region_Option_Splash_of_Milk_default() {
 		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Step_4_Done___Drink_available;
+		stateVector[0] = State.main_region_Option_Splash_of_Milk;
 	}
 	
 	/* 'default' enter sequence for state Step Bonus 1 */
@@ -1262,6 +1443,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	private void enterSequence_main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains_default() {
 		nextStateIndex = 2;
 		stateVector[2] = State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains;
+	}
+	
+	/* 'default' enter sequence for state Boisson récupérable */
+	private void enterSequence_main_region_Boisson_r_cup_rable_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Boisson_r_cup_rable;
+	}
+	
+	/* 'default' enter sequence for state Ice Cream option */
+	private void enterSequence_main_region_Ice_Cream_option_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Ice_Cream_option;
+	}
+	
+	/* 'default' enter sequence for state Step 4 Done : Préparation terminée */
+	private void enterSequence_main_region_Step_4_Done___Pr_paration_termin_e_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Step_4_Done___Pr_paration_termin_e;
 	}
 	
 	/* 'default' enter sequence for region main region */
@@ -1364,8 +1563,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		exitAction_main_region_Cancellable_Timer_Timer();
 	}
 	
-	/* Default exit sequence for state Step 4 Done : Drink available */
-	private void exitSequence_main_region_Step_4_Done___Drink_available() {
+	/* Default exit sequence for state Option Splash of Milk */
+	private void exitSequence_main_region_Option_Splash_of_Milk() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
 	}
@@ -1443,6 +1642,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[2] = State.$NullState$;
 	}
 	
+	/* Default exit sequence for state Boisson récupérable */
+	private void exitSequence_main_region_Boisson_r_cup_rable() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Ice Cream option */
+	private void exitSequence_main_region_Ice_Cream_option() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Step 4 Done : Préparation terminée */
+	private void exitSequence_main_region_Step_4_Done___Pr_paration_termin_e() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
@@ -1452,8 +1669,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		case main_region_Cancellable_Drink_Drink_Selection:
 			exitSequence_main_region_Cancellable_Drink_Drink_Selection();
 			break;
-		case main_region_Step_4_Done___Drink_available:
-			exitSequence_main_region_Step_4_Done___Drink_available();
+		case main_region_Option_Splash_of_Milk:
+			exitSequence_main_region_Option_Splash_of_Milk();
 			break;
 		case main_region_Step_Bonus_1:
 			exitSequence_main_region_Step_Bonus_1();
@@ -1469,6 +1686,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			break;
 		case main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate:
 			exitSequence_main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate();
+			break;
+		case main_region_Boisson_r_cup_rable:
+			exitSequence_main_region_Boisson_r_cup_rable();
+			break;
+		case main_region_Ice_Cream_option:
+			exitSequence_main_region_Ice_Cream_option();
+			break;
+		case main_region_Step_4_Done___Pr_paration_termin_e:
+			exitSequence_main_region_Step_4_Done___Pr_paration_termin_e();
 			break;
 		default:
 			break;
@@ -1635,11 +1861,38 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* The reactions of state null. */
+	private void react_main_region_Put_Sugar_and_Water_r1__choice_0() {
+		if (check_main_region_Put_Sugar_and_Water_r1__choice_0_tr0_tr0()) {
+			effect_main_region_Put_Sugar_and_Water_r1__choice_0_tr0();
+		} else {
+			effect_main_region_Put_Sugar_and_Water_r1__choice_0_tr1();
+		}
+	}
+	
+	/* The reactions of state null. */
 	private void react_main_region_Set_Temperature_and_Cup_expresso_only__choice_0() {
 		if (check_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr0_tr0()) {
 			effect_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr0();
 		} else {
 			effect_main_region_Set_Temperature_and_Cup_expresso_only__choice_0_tr1();
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__choice_1() {
+		if (check_main_region__choice_1_tr0_tr0()) {
+			effect_main_region__choice_1_tr0();
+		} else {
+			effect_main_region__choice_1_tr1();
+		}
+	}
+	
+	/* The reactions of state null. */
+	private void react_main_region__choice_2() {
+		if (check_main_region__choice_2_tr0_tr0()) {
+			effect_main_region__choice_2_tr0();
+		} else {
+			effect_main_region__choice_2_tr1();
 		}
 	}
 	
@@ -1665,7 +1918,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	/* Default react sequence for initial entry  */
 	private void react_main_region_Put_Sugar_and_Water_r1__entry_Default() {
-		enterSequence_main_region_Put_Sugar_and_Water_r1_sugar_default();
+		react_main_region_Put_Sugar_and_Water_r1__choice_0();
 	}
 	
 	/* Default react sequence for initial entry  */
@@ -1865,7 +2118,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((sCInterface.selectType || (sCInterface.sugarSlider || (sCInterface.sizeSlider || (sCInterface.temperatureSlider || (sCInterface.coinSlot || sCInterface.nFC)))))) {
+			if ((sCInterface.selectType || (sCInterface.sugarSlider || (sCInterface.sizeSlider || (sCInterface.temperatureSlider || (sCInterface.coinSlot || (sCInterface.nFC || sCInterface.selectOption))))))) {
 				exitSequence_main_region_Cancellable_Timer_Timer();
 				enterSequence_main_region_Cancellable_Timer_Timer_default();
 				main_region_Cancellable_react(false);
@@ -1895,19 +2148,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return did_transition;
 	}
 	
-	private boolean main_region_Step_4_Done___Drink_available_react(boolean try_transition) {
+	private boolean main_region_Option_Splash_of_Milk_react(boolean try_transition) {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (sCInterface.drinkCollected) {
-				exitSequence_main_region_Step_4_Done___Drink_available();
-				sCInterface.raiseDoCleanSystem();
-				
-				enterSequence_main_region_Ready_default();
-				react();
-			} else {
-				did_transition = false;
-			}
+			exitSequence_main_region_Option_Splash_of_Milk();
+			react_main_region__choice_2();
 		}
 		if (did_transition==false) {
 			did_transition = react();
@@ -1938,7 +2184,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			exitSequence_main_region_Brewed();
 			sCInterface.raiseDoRemoveTeaBag();
 			
-			enterSequence_main_region_Step_4_Done___Drink_available_default();
+			enterSequence_main_region_Option_Splash_of_Milk_default();
 			react();
 		}
 		if (did_transition==false) {
@@ -1965,8 +2211,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		if (try_transition) {
 			if (((true && isStateActive(State.main_region_Put_Sugar_and_Water_r2_water)) && true)) {
 				exitSequence_main_region_Put_Sugar_and_Water();
-				sCInterface.raiseDoPutSugar();
-				
 				sCInterface.raiseDoPourWater();
 				
 				react_main_region__sync3();
@@ -1983,8 +2227,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		if (try_transition) {
 			if (((true && isStateActive(State.main_region_Put_Sugar_and_Water_r1_sugar)) && true)) {
 				exitSequence_main_region_Put_Sugar_and_Water();
-				sCInterface.raiseDoPutSugar();
-				
 				sCInterface.raiseDoPourWater();
 				
 				react_main_region__sync3();
@@ -2114,6 +2356,55 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		}
 		if (did_transition==false) {
 			did_transition = main_region_Set_Temperature_and_Cup_react(try_transition);
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Boisson_r_cup_rable_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.drinkCollected) {
+				exitSequence_main_region_Boisson_r_cup_rable();
+				sCInterface.raiseDoCleanSystem();
+				
+				enterSequence_main_region_Ready_default();
+				react();
+			} else {
+				did_transition = false;
+			}
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Ice_Cream_option_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			exitSequence_main_region_Ice_Cream_option();
+			react_main_region__choice_1();
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Step_4_Done___Pr_paration_termin_e_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			exitSequence_main_region_Step_4_Done___Pr_paration_termin_e();
+			sCInterface.raiseDoDrinkRetrievable();
+			
+			enterSequence_main_region_Boisson_r_cup_rable_default();
+			react();
+		}
+		if (did_transition==false) {
+			did_transition = react();
 		}
 		return did_transition;
 	}
