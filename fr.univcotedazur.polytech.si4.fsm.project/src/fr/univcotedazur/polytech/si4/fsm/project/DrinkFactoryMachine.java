@@ -102,47 +102,48 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	protected boolean hasEnoughIngredients() {
 		boolean enoughIngredients = true;
+		//System.out.println(sugarSlider.getValue() + "  " + stock.getStock().get("Sucre"));
 		if(sugarSlider.getValue() > stock.getStock().get("Sucre")) {
 			enoughIngredients = false;
-			messagesToUser.setText("Le stock de sucre est insuffisant");
+			messagesToUser.setText("<html>Le stock de sucre est insuffisant");
 		}
 		
-		switch(theFSM.getType()) {
-		case "Coffee":
-			if(stock.getStock().get("Cafe") < 1) {
-				messagesToUser.setText("Il n'y a plus de dosette en stock");
-				return false;
-			}
-				
-			break;
-		case "Expresso":
-			if(stock.getStock().get("Grains") < 1) {
-				messagesToUser.setText("Il n'y a plus de grains en stock");
-				return false;
-			}
-				
-			break;
-		case "Tea":
-			if(stock.getStock().get("Sachet") < 1) {
-				messagesToUser.setText("Il n'y a plus de sachet en stock");
-				return false;
-			}
-				
-			break;
-		case "Soup":
-			if(stock.getStock().get("Soupe") < 1) {
-				messagesToUser.setText("Il n'y a plus de soup en stock");
-				return false;
-			}
-			break;
-		case "Iced Tea": 
-			if(stock.getStock().get("The") < 1) {
-				messagesToUser.setText("Il n'y a plus de dosette de the en stock");
-				return false;
-			}
-				
-			break;
-		}
+//		switch(theFSM.getType()) {
+//		case "Coffee":
+//			if(stock.getStock().get("Cafe") < 1) {
+//				messagesToUser.setText("Il n'y a plus de dosette en stock");
+//				return false;
+//			}
+//				
+//			break;
+//		case "Expresso":
+//			if(stock.getStock().get("Grains") < 1) {
+//				messagesToUser.setText("Il n'y a plus de grains en stock");
+//				return false;
+//			}
+//				
+//			break;
+//		case "Tea":
+//			if(stock.getStock().get("Sachet") < 1) {
+//				messagesToUser.setText("Il n'y a plus de sachet en stock");
+//				return false;
+//			}
+//				
+//			break;
+//		case "Soup":
+//			if(stock.getStock().get("Soupe") < 1) {
+//				messagesToUser.setText("Il n'y a plus de soup en stock");
+//				return false;
+//			}
+//			break;
+//		case "Iced Tea": 
+//			if(stock.getStock().get("The") < 1) {
+//				messagesToUser.setText("Il n'y a plus de dosette de the en stock");
+//				return false;
+//			}
+//				
+//			break;
+//		}
 		
 		return enoughIngredients;
 		
@@ -177,9 +178,9 @@ public class DrinkFactoryMachine extends JFrame {
 	protected boolean isDrinkAvailable(String value) {
 		
 		if(!isOptionsSelected(value)) {
-			messagesToUser.setText("Toutes les options ne sont pas cochées");
 			return false;
 		}
+		//messagesToUser.setText("Toutes les options sont cochées");
 		
 		if(!hasEnoughIngredients())
 			return false;
@@ -197,57 +198,75 @@ public class DrinkFactoryMachine extends JFrame {
 		switch(value) {
 			case "Coffee":
 				theFSM.setPrice(35);
+				messagesToUser.setText("<html>Boisson sélectionnée : Café<br>");
 				break;
 			case "Expresso":
 				theFSM.setPrice(50);
+				messagesToUser.setText("<html>Boisson sélectionnée : Expresso<br>");
 				break;
 			case "Tea":
 				theFSM.setPrice(40);
+				messagesToUser.setText("<html>Boisson sélectionnée : Thé<br>");
 				break;
 			case "Soup":
 				theFSM.setPrice(75);
+				messagesToUser.setText("<html>Boisson sélectionnée : Soupe<br>");
 				break;
 			case "Iced Tea": 
 				theFSM.setPrice((sizeSlider.getValue()==1) ? 50 : 75); // à changer une fois qu'on aura un MVP qui marche --> enlever l'option short donc sizeSlider = 0
+				messagesToUser.setText("<html>Boisson sélectionnée : Thé glacé<br>");
 				break;
 			default:
 				theFSM.setPrice(-1);
+				messagesToUser.setText("<html>Veuillez choisir une boisson<br>");
+				return;
 		}
+		messagesToUser.setText(messagesToUser.getText() + "Veuillez choisir les options<br>");
 			
 	}
 	
 	
 	public void setVisibleOption1(boolean value) {
-		lblOption1.setVisible(value);
-		cbOption1Yes.setVisible(value);
-		cbOption1No.setVisible(value);
-		cbOption1Yes.setSelected(false);
-		cbOption1No.setSelected(false);
+		if(stock.getStock().get("Sirop") > 0) {
+			lblOption1.setVisible(value);
+			cbOption1Yes.setVisible(value);
+			cbOption1No.setVisible(value);
+			cbOption1Yes.setSelected(false);
+			cbOption1No.setSelected(false);
+		}
 		
 	}
 	
 	public void setVisibleOption2(boolean value) {
-		lblOption2.setVisible(value);
-		cbOption2Yes.setVisible(value);
-		cbOption2No.setVisible(value);
-		cbOption2Yes.setSelected(false);
-		cbOption2No.setSelected(false);
+		if(stock.getStock().get("Lait") > 0) {
+			lblOption2.setVisible(value);
+			cbOption2Yes.setVisible(value);
+			cbOption2No.setVisible(value);
+			cbOption2Yes.setSelected(false);
+			cbOption2No.setSelected(false);
+		}
 	}
 	
 	public void setVisibleOption3(boolean value) {
-		lblOption3.setVisible(value);
-		cbOption3Yes.setVisible(value);
-		cbOption3No.setVisible(value);
-		cbOption3Yes.setSelected(false);
-		cbOption3No.setSelected(false);
+		if(stock.getStock().get("Glace") > 0) {
+			lblOption3.setVisible(value);
+			cbOption3Yes.setVisible(value);
+			cbOption3No.setVisible(value);
+			cbOption3Yes.setSelected(false);
+			cbOption3No.setSelected(false);
+		}
+	
 	}
 	
 	public void setVisibleOption4(boolean value) {
-		lblOption4.setVisible(value);
-		cbOption4Yes.setVisible(value);
-		cbOption4No.setVisible(value);
-		cbOption4Yes.setSelected(false);
-		cbOption4No.setSelected(false);
+		if(stock.getStock().get("Croutons") > 0) {
+			lblOption4.setVisible(value);
+			cbOption4Yes.setVisible(value);
+			cbOption4No.setVisible(value);
+			cbOption4Yes.setSelected(false);
+			cbOption4No.setSelected(false);
+		}
+		
 	}
 	
 	protected void doShowOptionsRaised(String value) {
@@ -258,30 +277,35 @@ public class DrinkFactoryMachine extends JFrame {
 				setVisibleOption2(true);
 				setVisibleOption3(true);
 				setVisibleOption4(false);
+				refuseAllOptions.setVisible(true);
 				break;
 			case "Tea":
 				setVisibleOption1(true);
 				setVisibleOption2(true);
 				setVisibleOption3(false);
 				setVisibleOption4(false);
+				refuseAllOptions.setVisible(true);
 				break;
 			case "Soup":
 				setVisibleOption1(false);
 				setVisibleOption2(false);
 				setVisibleOption3(false);
 				setVisibleOption4(true);
+				refuseAllOptions.setVisible(true);
 				break;
 			case "Iced Tea": 
 				setVisibleOption1(true);
 				setVisibleOption2(false);
 				setVisibleOption3(false);
 				setVisibleOption4(false);
+				refuseAllOptions.setVisible(true);
 				break;
 			default:
 				setVisibleOption1(false);
 				setVisibleOption2(false);
 				setVisibleOption3(false);
 				setVisibleOption4(false);
+				refuseAllOptions.setVisible(false);
 		}
 			
 	}
@@ -290,6 +314,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption1No.setSelected(true);
 		cbOption2No.setSelected(true);
 		cbOption3No.setSelected(true);
+		cbOption4No.setSelected(true);
 	}
 
 	protected void doSaveInformationsRaised(long id) {
@@ -303,7 +328,6 @@ public class DrinkFactoryMachine extends JFrame {
 		messagesToUser.setText("<html>Choix annulé");
 		
 		doResetSliders();
-		doTypeSelectionRaised(""); // reset aussi le prix à 0
 		doShowOptionsRaised("");
 		
 		if(theFSM.getBalance()!= 0) {
@@ -314,6 +338,15 @@ public class DrinkFactoryMachine extends JFrame {
 			messagesToUser.setText(messagesToUser.getText() + "<br>Transaction annulée");
 			temporaryId = 0;
 		}
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		doTypeSelectionRaised(""); // reset aussi le prix à 0
+		
 	}
 	
 	protected void doResetSliders() {
@@ -324,7 +357,7 @@ public class DrinkFactoryMachine extends JFrame {
 
 	protected void doRefoundMoneyRaised() {
 		long changeToBeReturned = (theFSM.getBalance() - theFSM.getPrice());
-		messagesToUser.setText(messagesToUser.getText() + "<br>Monnaie rendue : " + (float)changeToBeReturned/100 + "€");
+		messagesToUser.setText(messagesToUser.getText() + "Monnaie rendue : " + (float)changeToBeReturned/100 + "€<br>");
 		theFSM.setBalance(0);
 		
 		// rajouter pour NFC
@@ -369,35 +402,29 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	protected void doHeatingWaterRaised() {
-		messagesToUser.setText(messagesToUser.getText() + "<br>Démarage du chauffage de l'eau");
+		messagesToUser.setText(messagesToUser.getText() + "Démarage du chauffage de l'eau<br>");
 	}
 	
 	protected void doPutProductRaised(String value) {
 		switch(value) {
 		case "Coffee":
-			messagesToUser.setText("Ajout de la dosette");
-			// décrémenter le compteur de dosette de café
+			messagesToUser.setText(messagesToUser.getText() + "Ajout de la dosette<br>");
 			stock.decrementStock("Cafe", 1);
 			break;
 		case "Expresso":
-			messagesToUser.setText("Broyage des grains");
-			// décrémenter le compteur de grains
-			
+			messagesToUser.setText(messagesToUser.getText() + "Broyage des grains<br>");
 			stock.decrementStock("Grains", 1);
 			break;
 		case "Tea":
-			messagesToUser.setText("Ajout du sachet");
-			// décrémenter le compteur de sachet
+			messagesToUser.setText(messagesToUser.getText() + "Ajout du sachet<br>");
 			stock.decrementStock("Sachet", 1);
 			break;
 		case "Soup":
-			messagesToUser.setText("Ajout de la dose de soupe");
-			// décrémenter le compteur de dose
+			messagesToUser.setText(messagesToUser.getText() + "Ajout de la dose de soupe<br>");
 			stock.decrementStock("Soupe", 1);
 			break;
 		case "Iced Tea": 
-			messagesToUser.setText("Ajout de la dosette");
-			// décrémenter le compteur de dosette de thé
+			messagesToUser.setText(messagesToUser.getText() + "Ajout de la dosette<br>");
 			stock.decrementStock("The", 1);
 			break;
 		}
@@ -405,46 +432,57 @@ public class DrinkFactoryMachine extends JFrame {
 	
 	protected void doPressRaised() {
 		// faire en fonction de la taille
-		System.out.println("ça broie en balle");
+		messagesToUser.setText(messagesToUser.getText() + "Tassage des grains pour taille ");
+		switch(sizeSlider.getValue()) {
+		case 0:
+			messagesToUser.setText(messagesToUser.getText() + "short<br>");
+			break;
+		case 1:
+			messagesToUser.setText(messagesToUser.getText() + "normal<br>");
+			break;
+		case 2:
+			messagesToUser.setText(messagesToUser.getText() + "long<br>");
+			break;			
+		}
 	}
 	
 	protected void doSetTemperatureRaised() {
 		switch(temperatureSlider.getValue()) {
 			case 0:
 			try {
+				Thread.sleep(2500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				messagesToUser.setText(messagesToUser.getText() + "Température atteinte : 20°C !<br>");
+				break;
+			case 1:
+			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				messagesToUser.setText("Température atteinte : 20°C !");
+				messagesToUser.setText(messagesToUser.getText() + "Température atteinte :35°C !<br>");
 				break;
-			case 1:
+			case 2:
+			try {
+				Thread.sleep(7500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				messagesToUser.setText(messagesToUser.getText() + "Température atteinte 60°C !<br>");
+				break;
+			case 3:
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				messagesToUser.setText("Température atteinte :35°C !");
-				break;
-			case 2:
-			try {
-				Thread.sleep(15000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				messagesToUser.setText("Température atteinte 60°C !");
-				break;
-			case 3:
-			try {
-				Thread.sleep(20000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				messagesToUser.setText("Température atteinte : 85°C !");
+				messagesToUser.setText(messagesToUser.getText() + "Température atteinte : 85°C !<br>");
 				break;
 		}
 	}
@@ -456,7 +494,7 @@ public class DrinkFactoryMachine extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		messagesToUser.setText("Gobelet positionné !");
+		messagesToUser.setText(messagesToUser.getText() + "Gobelet positionné !<br>");
 	}
 	
 	protected void doPutSugarRaised() {
@@ -468,22 +506,22 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		switch(sugarSlider.getValue()) {
 			case 0:
-				messagesToUser.setText("Sans sucre !");
+				messagesToUser.setText(messagesToUser.getText() + "Sans sucre !<br>");
 				break;
 			case 1:
-				messagesToUser.setText("Une dose de sucre ajoutée !");
+				messagesToUser.setText(messagesToUser.getText() + "Une dose de sucre ajoutée !<br>");
 				//décrémenter compteur sucre
 				break;
 			case 2:
-				messagesToUser.setText("2 doses de sucre ajoutées !");
+				messagesToUser.setText(messagesToUser.getText() + "2 doses de sucre ajoutées !<br>");
 				//décrémenter compteur sucre
 				break;
 			case 3:
-				messagesToUser.setText("3 doses de sucre ajoutées !");
+				messagesToUser.setText(messagesToUser.getText() + "3 doses de sucre ajoutées !<br>");
 				//décrémenter compteur sucre
 				break;
 			case 4:
-				messagesToUser.setText("4 doses de sucre ajoutées !");
+				messagesToUser.setText(messagesToUser.getText() + "4 doses de sucre ajoutées !<br>");
 				//décrémenter compteur sucre
 				break;
 		}
@@ -499,28 +537,40 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 		switch(sizeSlider.getValue()) {
 			case 0:
-				messagesToUser.setText("Eau ajoutée : court !");
+				messagesToUser.setText(messagesToUser.getText() + "Eau ajoutée : court !<br>");
 				break;
 			case 1:
-				messagesToUser.setText("Eau ajoutée : normal !");
+				messagesToUser.setText(messagesToUser.getText() + "Eau ajoutée : normal !<br>");
 				break;
 			case 2:
-				messagesToUser.setText("Eau ajoutée : long !");
+				messagesToUser.setText(messagesToUser.getText() + "Eau ajoutée : long !<br>");
 				break;
 		}
 	}
 	
 	protected void doBrewingRaised() {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		messagesToUser.setText(messagesToUser.getText() + "Veuillez attendre la fin de l'infusion<br>");
 		
 	}
 	
 	protected void doRemoveTeaBagRaised() {
-	
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		messagesToUser.setText(messagesToUser.getText() + "Veuillez attendre la fin de l'infusion<br>");
 	}
 	
 	protected void doCleanSystemRaised() {
-		messagesToUser.setText("Boisson récupérée ! Machine en cours de nettoyage ! ");
-		doTypeSelectionRaised("");
+		messagesToUser.setText(messagesToUser.getText() + "Boisson récupérée !<br> Machine en cours de nettoyage ! <br>");
 		doShowOptionsRaised("");
 		doResetSliders();
 		try {
@@ -530,6 +580,14 @@ public class DrinkFactoryMachine extends JFrame {
 			e.printStackTrace();
 		}
 		messagesToUser.setText("Machine nettoyée");
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		doTypeSelectionRaised("");
 	}
 	
 	protected void doAddSplashOfMilk() {
@@ -592,13 +650,14 @@ public class DrinkFactoryMachine extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		messagesToUser = new JLabel("<html>This is<br>place to communicate <br> with the user");
+		messagesToUser = new JLabel("<html>Veuillez choisir une boisson<br>");
 		messagesToUser.setForeground(Color.WHITE);
 		messagesToUser.setHorizontalAlignment(SwingConstants.LEFT);
 		messagesToUser.setVerticalAlignment(SwingConstants.TOP);
 		messagesToUser.setToolTipText("message to the user");
 		messagesToUser.setBackground(Color.WHITE);
-		messagesToUser.setBounds(480, 336, 165, 70);
+		messagesToUser.setBounds(480, 320, 220, 300);
+		messagesToUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 		contentPane.add(messagesToUser);
 
 		JLabel lblCoins = new JLabel("Coins");
@@ -616,13 +675,15 @@ public class DrinkFactoryMachine extends JFrame {
 		coffeeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(stock.getStock().get("Cafe") > 0) 
+				if(stock.getStock().get("Cafe") > 0) {
+					coffeeButton.setBackground(Color.DARK_GRAY);
 					theFSM.raiseSelectType("Coffee");
-				else
+				}
+				else {
+					coffeeButton.setBackground(Color.LIGHT_GRAY);
 					messagesToUser.setText("Il n'y a plus de dosette en stock");
+				}
 				
-				
-				// doStop();
 			}
 		});
 
@@ -634,11 +695,16 @@ public class DrinkFactoryMachine extends JFrame {
 		expressoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(stock.getStock().get("Grains") < 1) 
+				if(stock.getStock().get("Grains") > 0) {
+					expressoButton.setBackground(Color.DARK_GRAY);
 					theFSM.raiseSelectType("Expresso");
-				else
+				}
+				else {
+					expressoButton.setBackground(Color.LIGHT_GRAY);
 					messagesToUser.setText("Il n'y a plus de grains en stock");
-				// doStop();
+				}
+					
+				
 			}
 		});
 
@@ -650,10 +716,15 @@ public class DrinkFactoryMachine extends JFrame {
 		teaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(stock.getStock().get("Sachet") < 1) 
+				if(stock.getStock().get("Sachet") > 0) {
+					teaButton.setBackground(Color.DARK_GRAY);
 					theFSM.raiseSelectType("Tea");
-				else
+				}
+				else {
+					teaButton.setBackground(Color.LIGHT_GRAY);
 					messagesToUser.setText("Il n'y a plus de sachet en stock");
+				}
+					
 			}
 		});
 
@@ -666,10 +737,16 @@ public class DrinkFactoryMachine extends JFrame {
 		soupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(stock.getStock().get("Soupe") < 1) 
+				if(stock.getStock().get("Soupe") > 0) {
+					soupButton.setBackground(Color.DARK_GRAY);
 					theFSM.raiseSelectType("Soup");
-				else
-					messagesToUser.setText("Il n'y a plus de soup en stock");
+				}
+					
+				else {
+					soupButton.setBackground(Color.LIGHT_GRAY);
+					messagesToUser.setText("Il n'y a plus de soupe en stock");
+				}
+					
 			}
 		});
 		
@@ -681,10 +758,16 @@ public class DrinkFactoryMachine extends JFrame {
 		icedTeaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(stock.getStock().get("The") < 1) 	
+				if(stock.getStock().get("The") > 0) 	{
+					icedTeaButton.setBackground(Color.DARK_GRAY);
 					theFSM.raiseSelectType("Iced Tea");
-				else
+				}
+					
+				else {
+					icedTeaButton.setBackground(Color.LIGHT_GRAY);
 					messagesToUser.setText("Il n'y a plus de dosette de the en stock");
+				}
+					
 			}
 		});
 		
@@ -693,19 +776,19 @@ public class DrinkFactoryMachine extends JFrame {
 		lblOptions.setForeground(Color.WHITE);
 		lblOptions.setBackground(Color.DARK_GRAY);
 		lblOptions.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOptions.setBounds(115, 20, 120, 25);
+		lblOptions.setBounds(115, 15, 120, 25);
 		contentPane.add(lblOptions);
 		
 		lblOption1 = new JLabel("Maple Syrup");
 		lblOption1.setForeground(Color.WHITE);
 		lblOption1.setBackground(Color.DARK_GRAY);
 		lblOption1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOption1.setBounds(115, 40, 120, 25);
+		lblOption1.setBounds(115, 40, 120, 15);
 		contentPane.add(lblOption1);
 		lblOption1.setVisible(false);
 		
 		
-		lblOption2 = new JLabel("Milk Splash");
+		lblOption2 = new JLabel("Splash of Milk");
 		lblOption2.setForeground(Color.WHITE);
 		lblOption2.setBackground(Color.DARK_GRAY);
 		lblOption2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -718,7 +801,7 @@ public class DrinkFactoryMachine extends JFrame {
 		lblOption3.setForeground(Color.WHITE);
 		lblOption3.setBackground(Color.DARK_GRAY);
 		lblOption3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOption3.setBounds(115, 110, 120, 25);
+		lblOption3.setBounds(115, 115, 120, 25);
 		contentPane.add(lblOption3);
 		lblOption3.setVisible(false);
 		
@@ -734,7 +817,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption1Yes.setForeground(Color.WHITE);
 		cbOption1Yes.setBackground(Color.DARK_GRAY);
 		cbOption1Yes.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption1Yes.setBounds(130, 52, 60, 30);
+		cbOption1Yes.setBounds(130, 54, 60, 20);
 		contentPane.add(cbOption1Yes);
 		cbOption1Yes.setVisible(false);
 		
@@ -743,7 +826,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption1No.setForeground(Color.WHITE);
 		cbOption1No.setBackground(Color.DARK_GRAY);
 		cbOption1No.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption1No.setBounds(180, 52, 60, 30);
+		cbOption1No.setBounds(180, 54, 60, 20);
 		contentPane.add(cbOption1No);
 		cbOption1No.setVisible(false);
 		
@@ -770,7 +853,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption2Yes.setForeground(Color.WHITE);
 		cbOption2Yes.setBackground(Color.DARK_GRAY);
 		cbOption2Yes.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption2Yes.setBounds(130, 87, 60, 30);
+		cbOption2Yes.setBounds(130, 94, 60, 20);
 		contentPane.add(cbOption2Yes);
 		cbOption2Yes.setVisible(false);
 		
@@ -779,7 +862,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption2No.setForeground(Color.WHITE);
 		cbOption2No.setBackground(Color.DARK_GRAY);
 		cbOption2No.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption2No.setBounds(180, 87, 60, 30);
+		cbOption2No.setBounds(180, 94, 60, 20);
 		contentPane.add(cbOption2No);
 		cbOption2No.setVisible(false);
 		
@@ -805,7 +888,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption3Yes.setForeground(Color.WHITE);
 		cbOption3Yes.setBackground(Color.DARK_GRAY);
 		cbOption3Yes.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption3Yes.setBounds(130, 122, 60, 30);
+		cbOption3Yes.setBounds(130, 134, 60, 20);
 		contentPane.add(cbOption3Yes);
 		cbOption3Yes.setVisible(false);
 		
@@ -814,7 +897,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption3No.setForeground(Color.WHITE);
 		cbOption3No.setBackground(Color.DARK_GRAY);
 		cbOption3No.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption3No.setBounds(180, 122, 60, 30);
+		cbOption3No.setBounds(180, 134, 60, 20);
 		contentPane.add(cbOption3No);
 		cbOption3No.setVisible(false);
 		
@@ -840,7 +923,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption4Yes.setForeground(Color.WHITE);
 		cbOption4Yes.setBackground(Color.DARK_GRAY);
 		cbOption4Yes.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption4Yes.setBounds(130, 157, 60, 30);
+		cbOption4Yes.setBounds(130, 164, 60, 20);
 		contentPane.add(cbOption4Yes);
 		cbOption4Yes.setVisible(false);
 		
@@ -848,7 +931,7 @@ public class DrinkFactoryMachine extends JFrame {
 		cbOption4No.setForeground(Color.WHITE);
 		cbOption4No.setBackground(Color.DARK_GRAY);
 		cbOption4No.setHorizontalAlignment(SwingConstants.CENTER);
-		cbOption4No.setBounds(180, 157, 60, 30);
+		cbOption4No.setBounds(180, 164, 60, 20);
 		contentPane.add(cbOption4No);
 		cbOption4No.setVisible(false);
 		
@@ -873,9 +956,10 @@ public class DrinkFactoryMachine extends JFrame {
 		refuseAllOptions = new JButton("No Options");
 		refuseAllOptions.setForeground(Color.WHITE);
 		refuseAllOptions.setBackground(Color.DARK_GRAY);
-		refuseAllOptions.setBounds(115, 190, 120, 25);
+		refuseAllOptions.setBounds(125, 190, 110, 25);
+		refuseAllOptions.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(refuseAllOptions);
-		refuseAllOptions.setVisible(true);
+		refuseAllOptions.setVisible(false);
 		refuseAllOptions.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -912,6 +996,11 @@ public class DrinkFactoryMachine extends JFrame {
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
 				theFSM.raiseSugarSlider(sugarSlider.getValue());
+				if(isDrinkAvailable(theFSM.getType()))
+            		theFSM.setOptionsSelected(true);
+				else
+					theFSM.setOptionsSelected(false);
+				
 			}
 		});
 
@@ -933,7 +1022,6 @@ public class DrinkFactoryMachine extends JFrame {
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
 				theFSM.raiseSizeSlider(sizeSlider.getValue());
-				System.out.println(sizeSlider.getValue());
 			}
 		});
 		

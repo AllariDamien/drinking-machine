@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="__alokAoOEeu6Lv5zbtu5oA" specification="@CycleBased(200)&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;// Define events&#xA;// and variables here. &#xA;// Use CTRL + Space for content assist.&#xA;&#xA;in event selectType : string&#xA;in event coinSlot : integer //monnayeur&#xA;in event NFC : integer&#xA;in event sugarSlider : integer&#xA;in event sizeSlider : integer &#xA;in event temperatureSlider  : integer&#xA;//in event optionButton1&#xA;in event cancelButton&#xA;&#xA;//preparation events&#xA;in event goNextStep&#xA;in event drinkCollected&#xA;&#xA;&#xA;out event doTypeSelection : string&#xA;out event doUpdateAmountMoney : integer&#xA;out event doSaveInformations : integer&#xA;out event doReset&#xA;out event doShowOptions : string&#xA;out event doAddSplashOfMilk&#xA;out event doAddMapleSyrup&#xA;out event doAddMixedIceCream&#xA;out event doAddCroutons&#xA;&#xA;out event doPress&#xA;&#xA;out event doRefoundMoney&#xA;out event doStartingPreparation&#xA;&#xA;//preparation events&#xA;out event doHeatingWater&#xA;out event doPutProduct : string&#xA;out event doSetTemperature&#xA;out event doSetCup&#xA;out event doPutSugar&#xA;out event doPourWater&#xA;//out event doInitialisation&#xA;//out event doSetTemperatureAndCup&#xA;//out event doPutSugarAndWater&#xA;out event doBrewing&#xA;out event doRemoveTeaBag&#xA;out event doCleanSystem&#xA;&#xA;var balance: integer = 0 // balance = solde&#xA;var price: integer = -1&#xA;var type: string = &quot;&quot;&#xA;var optionsSelected: boolean = false" name="default">
+  <sgraph:Statechart xmi:id="__alokAoOEeu6Lv5zbtu5oA" specification="@CycleBased(200)&#xA;// Use the event driven execution model.&#xA;// Runs a run-to-completion step&#xA;// each time an event is raised.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'&#xA;// instead.&#xA;&#xA;@ChildFirstExecution&#xA;// In composite states, execute&#xA;// child states first.&#xA;// @ParentFirstExecution does the opposite.&#xA;&#xA;interface:&#xA;// Define events&#xA;// and variables here. &#xA;// Use CTRL + Space for content assist.&#xA;&#xA;in event selectType : string&#xA;in event coinSlot : integer //monnayeur&#xA;in event NFC : integer&#xA;in event sugarSlider : integer&#xA;in event sizeSlider : integer &#xA;in event temperatureSlider  : integer&#xA;in event cancelButton&#xA;&#xA;//preparation events&#xA;in event goNextStep&#xA;in event drinkCollected&#xA;&#xA;&#xA;out event doTypeSelection : string&#xA;out event doUpdateAmountMoney : integer&#xA;out event doSaveInformations : integer&#xA;out event doReset&#xA;out event doShowOptions : string&#xA;out event doAddSplashOfMilk&#xA;out event doAddMapleSyrup&#xA;out event doAddMixedIceCream&#xA;out event doAddCroutons&#xA;&#xA;out event doPress&#xA;&#xA;out event doRefoundMoney&#xA;out event doStartingPreparation&#xA;&#xA;//preparation events&#xA;out event doHeatingWater&#xA;out event doPutProduct : string&#xA;out event doSetTemperature&#xA;out event doSetCup&#xA;out event doPutSugar&#xA;out event doPourWater&#xA;//out event doInitialisation&#xA;//out event doSetTemperatureAndCup&#xA;//out event doPutSugarAndWater&#xA;out event doBrewing&#xA;out event doRemoveTeaBag&#xA;out event doCleanSystem&#xA;&#xA;var balance: integer = 0 // balance = solde&#xA;var price: integer = -1&#xA;var type: string = &quot;&quot;&#xA;var optionsSelected: boolean = false" name="default">
     <regions xmi:id="__aoE0woOEeu6Lv5zbtu5oA" name="main region">
       <vertices xsi:type="sgraph:Entry" xmi:id="__aqhGQoOEeu6Lv5zbtu5oA">
         <outgoingTransitions xmi:id="__as9ZAoOEeu6Lv5zbtu5oA" target="__as9VAoOEeu6Lv5zbtu5oA"/>
@@ -58,15 +58,15 @@
         <outgoingTransitions xmi:id="_YS0WYCQ6EeuSItcuc5lipw" specification="default" target="_ObcAEA-KEeuSq4uCBX5wew"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_oFmE4CQ1EeuSItcuc5lipw" name="Step Bonus 1" incomingTransitions="_tEaIQCQ1EeuSItcuc5lipw">
-        <outgoingTransitions xmi:id="_utuPcCQ1EeuSItcuc5lipw" specification="goNextStep / raise doBrewing" target="_p25qcCQ1EeuSItcuc5lipw"/>
+        <outgoingTransitions xmi:id="_utuPcCQ1EeuSItcuc5lipw" specification="always / raise doBrewing" target="_p25qcCQ1EeuSItcuc5lipw"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_p25qcCQ1EeuSItcuc5lipw" name="Brewed" incomingTransitions="_utuPcCQ1EeuSItcuc5lipw">
-        <outgoingTransitions xmi:id="_xOeU8CQ1EeuSItcuc5lipw" specification="goNextStep / raise doRemoveTeaBag" target="_ObcAEA-KEeuSq4uCBX5wew"/>
+        <outgoingTransitions xmi:id="_xOeU8CQ1EeuSItcuc5lipw" specification="always / raise doRemoveTeaBag" target="_ObcAEA-KEeuSq4uCBX5wew"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_kv8ewCWVEeuZGKMHyzzhWw" name="Put Sugar and Water" incomingTransitions="_nscdICscEeuJs_1az8O5Lw">
         <regions xmi:id="_kv8ewyWVEeuZGKMHyzzhWw" name="r1">
           <vertices xsi:type="sgraph:State" xmi:id="_CXiq8CsWEeuJs_1az8O5Lw" name="sugar" incomingTransitions="_XtNA8CsWEeuJs_1az8O5Lw">
-            <outgoingTransitions xmi:id="_N_StACsdEeuJs_1az8O5Lw" specification="/ raise doPutSugar" target="_KAHhsysdEeuJs_1az8O5Lw"/>
+            <outgoingTransitions xmi:id="_N_StACsdEeuJs_1az8O5Lw" specification="always / raise doPutSugar" target="_KAHhsysdEeuJs_1az8O5Lw"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_WlKa0CsWEeuJs_1az8O5Lw">
             <outgoingTransitions xmi:id="_XtNA8CsWEeuJs_1az8O5Lw" specification="" target="_CXiq8CsWEeuJs_1az8O5Lw"/>
@@ -77,7 +77,7 @@
             <outgoingTransitions xmi:id="_YdZHwCsWEeuJs_1az8O5Lw" specification="" target="_X-Q7wCsWEeuJs_1az8O5Lw"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_X-Q7wCsWEeuJs_1az8O5Lw" name="water" incomingTransitions="_YdZHwCsWEeuJs_1az8O5Lw">
-            <outgoingTransitions xmi:id="_K4kzsCsdEeuJs_1az8O5Lw" specification="/ raise doPourWater" target="_KAHhsysdEeuJs_1az8O5Lw"/>
+            <outgoingTransitions xmi:id="_K4kzsCsdEeuJs_1az8O5Lw" specification="always / raise doPourWater" target="_KAHhsysdEeuJs_1az8O5Lw"/>
           </vertices>
         </regions>
       </vertices>
@@ -92,7 +92,7 @@
         </regions>
         <regions xmi:id="_jEl3USsTEeuJs_1az8O5Lw" name="r2">
           <vertices xsi:type="sgraph:State" xmi:id="_pLnOACsVEeuJs_1az8O5Lw" name="dosette / broyage" incomingTransitions="_xJB7ECsWEeuJs_1az8O5Lw">
-            <outgoingTransitions xmi:id="_eccRYCscEeuJs_1az8O5Lw" specification=" / raise doPutProduct : type" target="_dG6o4CscEeuJs_1az8O5Lw"/>
+            <outgoingTransitions xmi:id="_eccRYCscEeuJs_1az8O5Lw" specification="always / raise doPutProduct : type" target="_dG6o4CscEeuJs_1az8O5Lw"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_wO3_8CsWEeuJs_1az8O5Lw">
             <outgoingTransitions xmi:id="_xJB7ECsWEeuJs_1az8O5Lw" specification="" target="_pLnOACsVEeuJs_1az8O5Lw"/>
@@ -102,7 +102,7 @@
       <vertices xsi:type="sgraph:State" xmi:id="_I7-oUCsWEeuJs_1az8O5Lw" name="Set Temperature and Cup" incomingTransitions="_iPwyACscEeuJs_1az8O5Lw">
         <regions xmi:id="_I7_PYSsWEeuJs_1az8O5Lw" name="r1">
           <vertices xsi:type="sgraph:State" xmi:id="_I7_PYisWEeuJs_1az8O5Lw" name="attente de la température adéquate" incomingTransitions="_I7_PZSsWEeuJs_1az8O5Lw">
-            <outgoingTransitions xmi:id="_mnoKICscEeuJs_1az8O5Lw" specification=" / raise doSetTemperature" target="_lA9HQyscEeuJs_1az8O5Lw"/>
+            <outgoingTransitions xmi:id="_mnoKICscEeuJs_1az8O5Lw" specification=" always / raise doSetTemperature" target="_lA9HQyscEeuJs_1az8O5Lw"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_I7_PZCsWEeuJs_1az8O5Lw">
             <outgoingTransitions xmi:id="_I7_PZSsWEeuJs_1az8O5Lw" specification="" target="_I7_PYisWEeuJs_1az8O5Lw"/>
@@ -110,7 +110,7 @@
         </regions>
         <regions xmi:id="_I7_PZisWEeuJs_1az8O5Lw" name="r2">
           <vertices xsi:type="sgraph:State" xmi:id="_I7_PZysWEeuJs_1az8O5Lw" name="gobelet" incomingTransitions="_MwrMgCsXEeuJs_1az8O5Lw">
-            <outgoingTransitions xmi:id="_mBYCcCscEeuJs_1az8O5Lw" specification="/ raise doSetCup" target="_lA9HQyscEeuJs_1az8O5Lw"/>
+            <outgoingTransitions xmi:id="_mBYCcCscEeuJs_1az8O5Lw" specification="always / raise doSetCup" target="_lA9HQyscEeuJs_1az8O5Lw"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_V41gUCsWEeuJs_1az8O5Lw">
             <outgoingTransitions xmi:id="_MwrMgCsXEeuJs_1az8O5Lw" specification="" target="_I7_PZysWEeuJs_1az8O5Lw"/>
@@ -344,18 +344,6 @@
           <styles xsi:type="notation:FontStyle" xmi:id="_2kKIhgoQEeu6Lv5zbtu5oA"/>
           <styles xsi:type="notation:BooleanValueStyle" xmi:id="_2kKIjwoQEeu6Lv5zbtu5oA" name="isHorizontal" booleanValue="true"/>
           <layoutConstraint xsi:type="notation:Bounds" xmi:id="_2kKIhwoQEeu6Lv5zbtu5oA" x="309" y="306" width="1355" height="500"/>
-        </children>
-        <children xsi:type="notation:Shape" xmi:id="_Wp1FMQ-HEeuSq4uCBX5wew" type="Note" fontName="Verdana" description="rajouter un enum pour ne pouvoir ajouter que 3 montants (10 / 25 /50)" fillColor="13369343" transparency="0" lineColor="6737151" lineWidth="1">
-          <children xsi:type="notation:BasicDecorationNode" xmi:id="_Wp1FMg-HEeuSq4uCBX5wew" type="DiagramName">
-            <element xsi:nil="true"/>
-          </children>
-          <children xsi:type="notation:BasicDecorationNode" xmi:id="_Wp1FMw-HEeuSq4uCBX5wew" type="Description">
-            <element xsi:nil="true"/>
-          </children>
-          <styles xsi:type="notation:TextStyle" xmi:id="_Wp1FNA-HEeuSq4uCBX5wew"/>
-          <styles xsi:type="notation:LineTypeStyle" xmi:id="_Wp1FNQ-HEeuSq4uCBX5wew"/>
-          <element xsi:nil="true"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_Wp1FNg-HEeuSq4uCBX5wew" x="1138" y="125" width="197" height="79"/>
         </children>
         <children xmi:id="_ObcAEw-KEeuSq4uCBX5wew" type="State" element="_ObcAEA-KEeuSq4uCBX5wew">
           <children xsi:type="notation:DecorationNode" xmi:id="_ObcAFw-KEeuSq4uCBX5wew" type="StateName">
@@ -763,18 +751,6 @@
           <element xsi:nil="true"/>
           <layoutConstraint xsi:type="notation:Bounds" xmi:id="_2G-0FiscEeuJs_1az8O5Lw" x="1050" y="1878" width="316" height="256"/>
         </children>
-        <children xsi:type="notation:Shape" xmi:id="_I0n-8SsdEeuJs_1az8O5Lw" type="Note" fontName="Verdana" description="Synchonized = ET logique --> utile pour checker le pirx &amp; la sélection" fillColor="13369343" transparency="0" lineColor="6737151" lineWidth="1">
-          <children xsi:type="notation:BasicDecorationNode" xmi:id="_I0n-8isdEeuJs_1az8O5Lw" type="DiagramName">
-            <element xsi:nil="true"/>
-          </children>
-          <children xsi:type="notation:BasicDecorationNode" xmi:id="_I0n-8ysdEeuJs_1az8O5Lw" type="Description">
-            <element xsi:nil="true"/>
-          </children>
-          <styles xsi:type="notation:TextStyle" xmi:id="_I0n-9CsdEeuJs_1az8O5Lw"/>
-          <styles xsi:type="notation:LineTypeStyle" xmi:id="_I0n-9SsdEeuJs_1az8O5Lw"/>
-          <element xsi:nil="true"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_I0n-9isdEeuJs_1az8O5Lw" x="534" y="2042" width="451" height="56"/>
-        </children>
         <children xsi:type="notation:Shape" xmi:id="_KAHhsSsdEeuJs_1az8O5Lw" type="Synchronization" element="_KAHhsysdEeuJs_1az8O5Lw" fontName="Verdana" lineColor="4210752">
           <layoutConstraint xsi:type="notation:Bounds" xmi:id="_KAHhsisdEeuJs_1az8O5Lw" x="1097" y="1836" width="290" height="8"/>
         </children>
@@ -1115,7 +1091,7 @@
     <edges xmi:id="_ecc4cCscEeuJs_1az8O5Lw" type="Transition" element="_eccRYCscEeuJs_1az8O5Lw" source="_-nNM5SsVEeuJs_1az8O5Lw" target="_dG73ACscEeuJs_1az8O5Lw">
       <children xsi:type="notation:DecorationNode" xmi:id="_ecc4dCscEeuJs_1az8O5Lw" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_ecc4dSscEeuJs_1az8O5Lw"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_ecc4discEeuJs_1az8O5Lw" x="-21" y="-133"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_ecc4discEeuJs_1az8O5Lw" x="-21" y="-115"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_ecc4cSscEeuJs_1az8O5Lw" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_ecc4cyscEeuJs_1az8O5Lw" fontName="Verdana"/>
@@ -1180,11 +1156,11 @@
     <edges xmi:id="_K4lawCsdEeuJs_1az8O5Lw" type="Transition" element="_K4kzsCsdEeuJs_1az8O5Lw" source="_m9RqDyscEeuJs_1az8O5Lw" target="_KAHhsSsdEeuJs_1az8O5Lw">
       <children xsi:type="notation:DecorationNode" xmi:id="_K4laxCsdEeuJs_1az8O5Lw" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_K4laxSsdEeuJs_1az8O5Lw"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_K4laxisdEeuJs_1az8O5Lw" x="-90" y="19"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_K4laxisdEeuJs_1az8O5Lw" x="-24" y="-102"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_K4lawSsdEeuJs_1az8O5Lw" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_K4lawysdEeuJs_1az8O5Lw" fontName="Verdana"/>
-      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_K4lawisdEeuJs_1az8O5Lw" points="[-2, 9, 1, -70]$[-2, 82, 1, 3]"/>
+      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_K4lawisdEeuJs_1az8O5Lw" points="[-28, 11, 1, -88]$[-28, 95, 1, -4]"/>
       <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_K4mB0CsdEeuJs_1az8O5Lw" id="(0.2625,0.7924528301886793)"/>
       <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_K4mB0SsdEeuJs_1az8O5Lw" id="(0.8344827586206897,0.5)"/>
     </edges>
