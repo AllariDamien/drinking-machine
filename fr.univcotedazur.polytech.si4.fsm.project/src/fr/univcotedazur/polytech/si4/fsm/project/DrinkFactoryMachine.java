@@ -154,19 +154,19 @@ public class DrinkFactoryMachine extends JFrame {
 		switch(value) {
 			case "Coffee":				
 			case "Expresso":
-				if((cbOption1Yes.isSelected()||cbOption1No.isSelected()) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()) && (cbOption3Yes.isSelected() || cbOption3No.isSelected()))
+				if((cbOption1Yes.isSelected()||cbOption1No.isSelected() || stock.getStock().get("Sirop")<1) && (cbOption2Yes.isSelected() || cbOption2No.isSelected() || stock.getStock().get("Lait")<1) && (cbOption3Yes.isSelected() || cbOption3No.isSelected() || stock.getStock().get("Glace")<1))
 					return true;
 				break;
 			case "Tea":
-				if((cbOption1Yes.isSelected()||cbOption1No.isSelected()) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()))
+				if((cbOption1Yes.isSelected()||cbOption1No.isSelected() || stock.getStock().get("Sirop")<1) && (cbOption2Yes.isSelected() || cbOption2No.isSelected()|| stock.getStock().get("Lait")<1))
 					return true;
 				break;
 			case "Soup":
-				if(cbOption4Yes.isSelected() || cbOption4No.isSelected())
+				if(cbOption4Yes.isSelected() || cbOption4No.isSelected() || stock.getStock().get("Croutons")<1)
 					return true;
 				break;
 			case "Iced Tea": 
-				if(cbOption1Yes.isSelected() || cbOption1No.isSelected())
+				if(cbOption1Yes.isSelected() || cbOption1No.isSelected() || stock.getStock().get("Sirop")<1)
 					return true;
 				break;
 		}
@@ -257,7 +257,7 @@ public class DrinkFactoryMachine extends JFrame {
 		if(theFSM.getOptionCroutons())
 			theFSM.setPrice(theFSM.getPrice() + 30);
 		
-		System.out.println("prix " + theFSM.getPrice() + "   " + theFSM.getOptionMapleSyrup() + "   " + theFSM.getOptionSplashOfMilk() + " " +  theFSM.getOptionMixedIceCream() + "  " + theFSM.getOptionCroutons());
+		System.out.println("prix " + theFSM.getPrice() + " solde  " + theFSM.getBalance());
 	}
 	
 	
@@ -471,7 +471,7 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	protected void doPressRaised() {
-		// faire en fonction de la taille
+		// En fonction de la taille
 		messagesToUser.setText(messagesToUser.getText() + "Tassage des grains pour taille ");
 		switch(sizeSliderValue) {
 		case 0:
@@ -645,7 +645,7 @@ public class DrinkFactoryMachine extends JFrame {
 		doShowOptionsRaised("");
 		doResetSliders();
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -653,7 +653,7 @@ public class DrinkFactoryMachine extends JFrame {
 		messagesToUser.setText("Machine nettoyée");
 		
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -671,8 +671,8 @@ public class DrinkFactoryMachine extends JFrame {
 			e.printStackTrace();
 		}
 				
-		messagesToUser.setText(messagesToUser.getText() + "Sirop d'érable ajouté !<br>");
 		stock.decrementStock("Sirop", 1);
+		messagesToUser.setText(messagesToUser.getText() + "Sirop d'érable ajouté !<br>");
 
 	}
 	
@@ -684,6 +684,7 @@ public class DrinkFactoryMachine extends JFrame {
 			e.printStackTrace();
 		}
 		
+		stock.decrementStock("Lait", 1);		
 		messagesToUser.setText(messagesToUser.getText() + "Nuage de lait ajouté !<br>");
 	}
 	
@@ -695,12 +696,21 @@ public class DrinkFactoryMachine extends JFrame {
 			e.printStackTrace();
 		}
 		
+		stock.decrementStock("Glace", 1);
 		messagesToUser.setText(messagesToUser.getText() + "Glace vanille ajoutée et mixée !<br>");
 		
 	}
 	
 	protected void doAddCroutonsRaised() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		stock.decrementStock("Croutons", 1);
+		messagesToUser.setText(messagesToUser.getText() + "Croutons ajoutés !<br>");
 	}
 
 
@@ -1156,25 +1166,24 @@ public class DrinkFactoryMachine extends JFrame {
 		panel_1.setBackground(Color.DARK_GRAY);
 		panel_1.setBounds(538, 154, 96, 40);
 		contentPane.add(panel_1);
-		
-		JPanel panelId = new JPanel();
-		panelId.setBackground(Color.DARK_GRAY);
-		panelId.setBounds(538, 180, 96, 40);
-		contentPane.add(panelId);
-		
-		
-
-		JTextField idCard = new JTextField();
+			
 		
 		JButton nfcBiiiipButton = new JButton("biiip");
 		nfcBiiiipButton.setForeground(Color.WHITE);
 		nfcBiiiipButton.setBackground(Color.DARK_GRAY);
 		panel_1.add(nfcBiiiipButton);
-		panelId.add(idCard);
+		
+		JTextField idCard = new JTextField();
+		idCard.setBounds(550, 190, 80, 20);		
+		contentPane.add(idCard);
+		
+		
 		nfcBiiiipButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				theFSM.raiseNFC(Long.parseLong(idCard.getText()));
+			
+				if(!idCard.getText().equals(""))
+					theFSM.raiseNFC(Long.parseLong(idCard.getText()));
 			}
 		});
 
