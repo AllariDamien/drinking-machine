@@ -76,6 +76,12 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoRemoveTeaBag();
 		
+		public boolean isRaisedDoCooling();
+		
+		public boolean isRaisedDoLockDoor();
+		
+		public boolean getDoLockDoorValue();
+		
 		public boolean isRaisedDoDrinkRetrievable();
 		
 		public boolean isRaisedDoCleanSystem();
@@ -137,6 +143,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoAddCroutonsRaised();
 		public void onDoBrewingRaised();
 		public void onDoRemoveTeaBagRaised();
+		public void onDoCoolingRaised();
+		public void onDoLockDoorRaised(boolean value);
 		public void onDoDrinkRetrievableRaised();
 		public void onDoCleanSystemRaised();
 		}

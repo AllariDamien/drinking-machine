@@ -569,6 +569,53 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doCooling;
+		
+		
+		public boolean isRaisedDoCooling() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doCooling;
+			}
+		}
+		
+		protected void raiseDoCooling() {
+			synchronized(DefaultSMStatemachine.this) {
+				doCooling = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoCoolingRaised();
+				}
+			}
+		}
+		
+		private boolean doLockDoor;
+		
+		private boolean doLockDoorValue;
+		
+		
+		public boolean isRaisedDoLockDoor() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doLockDoor;
+			}
+		}
+		
+		protected void raiseDoLockDoor(boolean value) {
+			synchronized(DefaultSMStatemachine.this) {
+				doLockDoorValue = value;
+				doLockDoor = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoLockDoorRaised(value);
+				}
+			}
+		}
+		
+		public boolean getDoLockDoorValue() {
+			synchronized(DefaultSMStatemachine.this) {
+				if (! doLockDoor ) 
+					throw new IllegalStateException("Illegal event value access. Event DoLockDoor is not raised!");
+				return doLockDoorValue;
+			}
+		}
+		
 		private boolean doDrinkRetrievable;
 		
 		
@@ -750,6 +797,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doAddCroutons = false;
 		doBrewing = false;
 		doRemoveTeaBag = false;
+		doCooling = false;
+		doLockDoor = false;
 		doDrinkRetrievable = false;
 		doCleanSystem = false;
 		}
@@ -785,6 +834,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_Boisson_r_cup_rable,
 		main_region_Ice_Cream_option,
 		main_region_Step_4_Done___Pr_paration_termin_e,
+		main_region_Drink_Cooled,
+		main_region_Door_Locked,
+		main_region_Door_Unlocked,
 		$NullState$
 	};
 	
@@ -903,6 +955,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			case main_region_Step_4_Done___Pr_paration_termin_e:
 				main_region_Step_4_Done___Pr_paration_termin_e_react(true);
 				break;
+			case main_region_Drink_Cooled:
+				main_region_Drink_Cooled_react(true);
+				break;
+			case main_region_Door_Locked:
+				main_region_Door_Locked_react(true);
+				break;
+			case main_region_Door_Unlocked:
+				main_region_Door_Unlocked_react(true);
+				break;
 			default:
 				// $NullState$
 			}
@@ -1001,6 +1062,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[0] == State.main_region_Ice_Cream_option;
 		case main_region_Step_4_Done___Pr_paration_termin_e:
 			return stateVector[0] == State.main_region_Step_4_Done___Pr_paration_termin_e;
+		case main_region_Drink_Cooled:
+			return stateVector[0] == State.main_region_Drink_Cooled;
+		case main_region_Door_Locked:
+			return stateVector[0] == State.main_region_Door_Locked;
+		case main_region_Door_Unlocked:
+			return stateVector[0] == State.main_region_Door_Unlocked;
 		default:
 			return false;
 		}
@@ -1170,6 +1237,18 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		return sCInterface.isRaisedDoRemoveTeaBag();
 	}
 	
+	public synchronized boolean isRaisedDoCooling() {
+		return sCInterface.isRaisedDoCooling();
+	}
+	
+	public synchronized boolean isRaisedDoLockDoor() {
+		return sCInterface.isRaisedDoLockDoor();
+	}
+	
+	public synchronized boolean getDoLockDoorValue() {
+		return sCInterface.getDoLockDoorValue();
+	}
+	
 	public synchronized boolean isRaisedDoDrinkRetrievable() {
 		return sCInterface.isRaisedDoDrinkRetrievable();
 	}
@@ -1243,7 +1322,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	private boolean check_main_region__choice_0_tr0_tr0() {
-		return (sCInterface.getType()== null?"Tea" ==null :sCInterface.getType().equals("Tea"));
+		return ((sCInterface.getType()== null?"Tea" ==null :sCInterface.getType().equals("Tea")) || (sCInterface.getType()== null?"Iced Tea" ==null :sCInterface.getType().equals("Iced Tea")));
 	}
 	
 	private boolean check_main_region_Put_Sugar_and_Water_r1__choice_0_tr0_tr0() {
@@ -1463,6 +1542,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[0] = State.main_region_Step_4_Done___Pr_paration_termin_e;
 	}
 	
+	/* 'default' enter sequence for state Drink Cooled */
+	private void enterSequence_main_region_Drink_Cooled_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Drink_Cooled;
+	}
+	
+	/* 'default' enter sequence for state Door Locked */
+	private void enterSequence_main_region_Door_Locked_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Door_Locked;
+	}
+	
+	/* 'default' enter sequence for state Door Unlocked */
+	private void enterSequence_main_region_Door_Unlocked_default() {
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Door_Unlocked;
+	}
+	
 	/* 'default' enter sequence for region main region */
 	private void enterSequence_main_region_default() {
 		react_main_region__entry_Default();
@@ -1660,6 +1757,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[0] = State.$NullState$;
 	}
 	
+	/* Default exit sequence for state Drink Cooled */
+	private void exitSequence_main_region_Drink_Cooled() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Door Locked */
+	private void exitSequence_main_region_Door_Locked() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
+	/* Default exit sequence for state Door Unlocked */
+	private void exitSequence_main_region_Door_Unlocked() {
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+	}
+	
 	/* Default exit sequence for region main region */
 	private void exitSequence_main_region() {
 		switch (stateVector[0]) {
@@ -1695,6 +1810,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			break;
 		case main_region_Step_4_Done___Pr_paration_termin_e:
 			exitSequence_main_region_Step_4_Done___Pr_paration_termin_e();
+			break;
+		case main_region_Drink_Cooled:
+			exitSequence_main_region_Drink_Cooled();
+			break;
+		case main_region_Door_Locked:
+			exitSequence_main_region_Door_Locked();
+			break;
+		case main_region_Door_Unlocked:
+			exitSequence_main_region_Door_Unlocked();
 			break;
 		default:
 			break;
@@ -2181,11 +2305,23 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			exitSequence_main_region_Brewed();
-			sCInterface.raiseDoRemoveTeaBag();
-			
-			enterSequence_main_region_Option_Splash_of_Milk_default();
-			react();
+			if ((sCInterface.getType()== null?"Tea" ==null :sCInterface.getType().equals("Tea"))) {
+				exitSequence_main_region_Brewed();
+				sCInterface.raiseDoRemoveTeaBag();
+				
+				enterSequence_main_region_Option_Splash_of_Milk_default();
+				react();
+			} else {
+				if ((sCInterface.getType()== null?"Iced Tea" ==null :sCInterface.getType().equals("Iced Tea"))) {
+					exitSequence_main_region_Brewed();
+					sCInterface.raiseDoLockDoor(true);
+					
+					enterSequence_main_region_Door_Locked_default();
+					react();
+				} else {
+					did_transition = false;
+				}
+			}
 		}
 		if (did_transition==false) {
 			did_transition = react();
@@ -2401,6 +2537,52 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			sCInterface.raiseDoDrinkRetrievable();
 			
 			enterSequence_main_region_Boisson_r_cup_rable_default();
+			react();
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Drink_Cooled_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			exitSequence_main_region_Drink_Cooled();
+			sCInterface.raiseDoLockDoor(false);
+			
+			enterSequence_main_region_Door_Unlocked_default();
+			react();
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Door_Locked_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			exitSequence_main_region_Door_Locked();
+			sCInterface.raiseDoCooling();
+			
+			enterSequence_main_region_Drink_Cooled_default();
+			react();
+		}
+		if (did_transition==false) {
+			did_transition = react();
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Door_Unlocked_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			exitSequence_main_region_Door_Unlocked();
+			enterSequence_main_region_Step_4_Done___Pr_paration_termin_e_default();
 			react();
 		}
 		if (did_transition==false) {

@@ -50,6 +50,7 @@ public class DrinkFactoryMachine extends JFrame {
 	
 	JLabel messagesToUser;
 	
+	Hashtable<Integer, JLabel> temperatureTable;
 	
 	JSlider sizeSlider;
 	JSlider temperatureSlider;
@@ -108,43 +109,6 @@ public class DrinkFactoryMachine extends JFrame {
 			enoughIngredients = false;
 			messagesToUser.setText("<html>Le stock de sucre est insuffisant");
 		}
-		
-//		switch(theFSM.getType()) {
-//		case "Coffee":
-//			if(stock.getStock().get("Cafe") < 1) {
-//				messagesToUser.setText("Il n'y a plus de dosette en stock");
-//				return false;
-//			}
-//				
-//			break;
-//		case "Expresso":
-//			if(stock.getStock().get("Grains") < 1) {
-//				messagesToUser.setText("Il n'y a plus de grains en stock");
-//				return false;
-//			}
-//				
-//			break;
-//		case "Tea":
-//			if(stock.getStock().get("Sachet") < 1) {
-//				messagesToUser.setText("Il n'y a plus de sachet en stock");
-//				return false;
-//			}
-//				
-//			break;
-//		case "Soup":
-//			if(stock.getStock().get("Soupe") < 1) {
-//				messagesToUser.setText("Il n'y a plus de soup en stock");
-//				return false;
-//			}
-//			break;
-//		case "Iced Tea": 
-//			if(stock.getStock().get("The") < 1) {
-//				messagesToUser.setText("Il n'y a plus de dosette de the en stock");
-//				return false;
-//			}
-//				
-//			break;
-//		}
 		
 		return enoughIngredients;
 		
@@ -213,6 +177,10 @@ public class DrinkFactoryMachine extends JFrame {
 				break;
 			case "Iced Tea": 
 				messagesToUser.setText("<html>Boisson sélectionnée : Thé glacé<br>");
+				temperatureTable.replace(0, new JLabel("2°C"));
+				temperatureTable.replace(1, new JLabel("6°C"));
+				temperatureTable.replace(2, new JLabel("10°C"));
+				temperatureTable.replace(3, new JLabel("14°C"));			
 				break;
 			default:
 				messagesToUser.setText("<html>Veuillez choisir une boisson<br>");
@@ -487,6 +455,19 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	protected void doSetTemperatureRaised() {
+		if(theFSM.getType().equals("Iced Tea")) {
+			try {
+				Thread.sleep(2500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				messagesToUser.setText(messagesToUser.getText() + "Température atteinte : hot !<br>");
+				return;
+		}
+			
+		
+		
 		switch(temperatureSliderValue) {
 			case 0:
 			try {
@@ -633,7 +614,6 @@ public class DrinkFactoryMachine extends JFrame {
 		messagesToUser.setText(messagesToUser.getText() + "Sachet de thé retiré<br>");
 	}
 	
-	
 
 	public void doDrinkRetrievableRaised() {
 		messagesToUser.setText(messagesToUser.getText() + "Vous pouvez récupérer votre boisson ! <br>");
@@ -711,6 +691,53 @@ public class DrinkFactoryMachine extends JFrame {
 		
 		stock.decrementStock("Croutons", 1);
 		messagesToUser.setText(messagesToUser.getText() + "Croutons ajoutés !<br>");
+	}
+	
+	protected void doCoolingRaised() {
+		switch(temperatureSliderValue) {
+		case 0 :
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 1 :
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 2 :
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 3 :
+			try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		}
+						
+		messagesToUser.setText(messagesToUser.getText() + "Boisson refroidie !<br>");
+	}
+	
+	protected void doLockDoorRaised(boolean value) {
+		if(value)
+			messagesToUser.setText(messagesToUser.getText() + "Porte verrouillé !<br>");
+		else
+			messagesToUser.setText(messagesToUser.getText() + "Porte déverrouillé !<br>");
+		
 	}
 
 
@@ -1073,7 +1100,7 @@ public class DrinkFactoryMachine extends JFrame {
 			}
 		});
 
-		Hashtable<Integer, JLabel> temperatureTable = new Hashtable<Integer, JLabel>();
+		temperatureTable = new Hashtable<Integer, JLabel>();
 		temperatureTable.put(0, new JLabel("20°C"));
 		temperatureTable.put(1, new JLabel("35°C"));
 		temperatureTable.put(2, new JLabel("60°C"));
