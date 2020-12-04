@@ -24,6 +24,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public void raiseSelectOption();
 		
+		public void raiseCupAdded();
+		
 		public void raiseDrinkCollected();
 		
 		public boolean isRaisedDoTypeSelection();
@@ -86,6 +88,8 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		
 		public boolean isRaisedDoCleanSystem();
 		
+		public boolean isRaisedDoAddCup();
+		
 		public long getBalance();
 		
 		public void setBalance(long value);
@@ -147,6 +151,7 @@ public interface IDefaultSMStatemachine extends ITimerCallback,IStatemachine {
 		public void onDoLockDoorRaised(boolean value);
 		public void onDoDrinkRetrievableRaised();
 		public void onDoCleanSystemRaised();
+		public void onDoAddCupRaised();
 		}
 	
 	public SCInterface getSCInterface();

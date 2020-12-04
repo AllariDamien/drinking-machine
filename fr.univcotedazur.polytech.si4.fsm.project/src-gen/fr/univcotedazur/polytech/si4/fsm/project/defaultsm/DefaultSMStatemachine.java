@@ -145,6 +145,15 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean cupAdded;
+		
+		
+		public void raiseCupAdded() {
+			synchronized(DefaultSMStatemachine.this) {
+				cupAdded = true;
+			}
+		}
+		
 		private boolean drinkCollected;
 		
 		
@@ -652,6 +661,24 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			}
 		}
 		
+		private boolean doAddCup;
+		
+		
+		public boolean isRaisedDoAddCup() {
+			synchronized(DefaultSMStatemachine.this) {
+				return doAddCup;
+			}
+		}
+		
+		protected void raiseDoAddCup() {
+			synchronized(DefaultSMStatemachine.this) {
+				doAddCup = true;
+				for (SCInterfaceListener listener : listeners) {
+					listener.onDoAddCupRaised();
+				}
+			}
+		}
+		
 		private long balance;
 		
 		public synchronized long getBalance() {
@@ -773,6 +800,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			temperatureSlider = false;
 			cancelButton = false;
 			selectOption = false;
+			cupAdded = false;
 			drinkCollected = false;
 		}
 		protected void clearOutEvents() {
@@ -801,6 +829,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		doLockDoor = false;
 		doDrinkRetrievable = false;
 		doCleanSystem = false;
+		doAddCup = false;
 		}
 		
 	}
@@ -818,6 +847,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		main_region_Cancellable_Payment_Payed,
 		main_region_Cancellable_Payment_Coins,
 		main_region_Cancellable_Timer_Timer,
+		main_region_Cancellable_AddCup_Cup,
 		main_region_Option_Splash_of_Milk,
 		main_region_Step_Bonus_1,
 		main_region_Brewed,
@@ -840,7 +870,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		$NullState$
 	};
 	
-	private final State[] stateVector = new State[3];
+	private final State[] stateVector = new State[4];
 	
 	private int nextStateIndex;
 	
@@ -857,7 +887,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		if (timer == null) {
 			throw new IllegalStateException("timer not set.");
 		}
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			stateVector[i] = State.$NullState$;
 		}
 		clearEvents();
@@ -915,6 +945,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 				break;
 			case main_region_Cancellable_Timer_Timer:
 				main_region_Cancellable_Timer_Timer_react(true);
+				break;
+			case main_region_Cancellable_AddCup_Cup:
+				main_region_Cancellable_AddCup_Cup_react(true);
 				break;
 			case main_region_Option_Splash_of_Milk:
 				main_region_Option_Splash_of_Milk_react(true);
@@ -978,7 +1011,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	 * @see IStatemachine#isActive()
 	 */
 	public synchronized boolean isActive() {
-		return stateVector[0] != State.$NullState$||stateVector[1] != State.$NullState$||stateVector[2] != State.$NullState$;
+		return stateVector[0] != State.$NullState$||stateVector[1] != State.$NullState$||stateVector[2] != State.$NullState$||stateVector[3] != State.$NullState$;
 	}
 	
 	/** 
@@ -1016,7 +1049,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[0] == State.main_region_Ready;
 		case main_region_Cancellable:
 			return stateVector[0].ordinal() >= State.
-					main_region_Cancellable.ordinal()&& stateVector[0].ordinal() <= State.main_region_Cancellable_Timer_Timer.ordinal();
+					main_region_Cancellable.ordinal()&& stateVector[0].ordinal() <= State.main_region_Cancellable_AddCup_Cup.ordinal();
 		case main_region_Cancellable_Drink_Drink_Selection:
 			return stateVector[0] == State.main_region_Cancellable_Drink_Drink_Selection;
 		case main_region_Cancellable_Payment_Payment_Selection_:
@@ -1027,6 +1060,8 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			return stateVector[1] == State.main_region_Cancellable_Payment_Coins;
 		case main_region_Cancellable_Timer_Timer:
 			return stateVector[2] == State.main_region_Cancellable_Timer_Timer;
+		case main_region_Cancellable_AddCup_Cup:
+			return stateVector[3] == State.main_region_Cancellable_AddCup_Cup;
 		case main_region_Option_Splash_of_Milk:
 			return stateVector[0] == State.main_region_Option_Splash_of_Milk;
 		case main_region_Step_Bonus_1:
@@ -1131,6 +1166,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized void raiseSelectOption() {
 		sCInterface.raiseSelectOption();
+	}
+	
+	public synchronized void raiseCupAdded() {
+		sCInterface.raiseCupAdded();
 	}
 	
 	public synchronized void raiseDrinkCollected() {
@@ -1255,6 +1294,10 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	public synchronized boolean isRaisedDoCleanSystem() {
 		return sCInterface.isRaisedDoCleanSystem();
+	}
+	
+	public synchronized boolean isRaisedDoAddCup() {
+		return sCInterface.isRaisedDoAddCup();
 	}
 	
 	public synchronized long getBalance() {
@@ -1412,6 +1455,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		enterSequence_main_region_Cancellable_Drink_default();
 		enterSequence_main_region_Cancellable_Payment_default();
 		enterSequence_main_region_Cancellable_Timer_default();
+		enterSequence_main_region_Cancellable_AddCup_default();
 	}
 	
 	/* 'default' enter sequence for state Drink Selection */
@@ -1443,6 +1487,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		entryAction_main_region_Cancellable_Timer_Timer();
 		nextStateIndex = 2;
 		stateVector[2] = State.main_region_Cancellable_Timer_Timer;
+	}
+	
+	/* 'default' enter sequence for state Cup */
+	private void enterSequence_main_region_Cancellable_AddCup_Cup_default() {
+		nextStateIndex = 3;
+		stateVector[3] = State.main_region_Cancellable_AddCup_Cup;
 	}
 	
 	/* 'default' enter sequence for state Option Splash of Milk */
@@ -1580,6 +1630,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		react_main_region_Cancellable_Timer__entry_Default();
 	}
 	
+	/* 'default' enter sequence for region AddCup */
+	private void enterSequence_main_region_Cancellable_AddCup_default() {
+		react_main_region_Cancellable_AddCup__entry_Default();
+	}
+	
 	/* 'default' enter sequence for region r1 */
 	private void enterSequence_main_region_Put_Sugar_and_Water_r1_default() {
 		react_main_region_Put_Sugar_and_Water_r1__entry_Default();
@@ -1626,6 +1681,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		exitSequence_main_region_Cancellable_Drink();
 		exitSequence_main_region_Cancellable_Payment();
 		exitSequence_main_region_Cancellable_Timer();
+		exitSequence_main_region_Cancellable_AddCup();
 	}
 	
 	/* Default exit sequence for state Drink Selection */
@@ -1658,6 +1714,12 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		stateVector[2] = State.$NullState$;
 		
 		exitAction_main_region_Cancellable_Timer_Timer();
+	}
+	
+	/* Default exit sequence for state Cup */
+	private void exitSequence_main_region_Cancellable_AddCup_Cup() {
+		nextStateIndex = 3;
+		stateVector[3] = State.$NullState$;
 	}
 	
 	/* Default exit sequence for state Option Splash of Milk */
@@ -1857,6 +1919,14 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		default:
 			break;
 		}
+		
+		switch (stateVector[3]) {
+		case main_region_Cancellable_AddCup_Cup:
+			exitSequence_main_region_Cancellable_AddCup_Cup();
+			break;
+		default:
+			break;
+		}
 	}
 	
 	/* Default exit sequence for region Drink */
@@ -1892,6 +1962,17 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		switch (stateVector[2]) {
 		case main_region_Cancellable_Timer_Timer:
 			exitSequence_main_region_Cancellable_Timer_Timer();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	/* Default exit sequence for region AddCup */
+	private void exitSequence_main_region_Cancellable_AddCup() {
+		switch (stateVector[3]) {
+		case main_region_Cancellable_AddCup_Cup:
+			exitSequence_main_region_Cancellable_AddCup_Cup();
 			break;
 		default:
 			break;
@@ -2041,6 +2122,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	}
 	
 	/* Default react sequence for initial entry  */
+	private void react_main_region_Cancellable_AddCup__entry_Default() {
+		enterSequence_main_region_Cancellable_AddCup_Cup_default();
+	}
+	
+	/* Default react sequence for initial entry  */
 	private void react_main_region_Put_Sugar_and_Water_r1__entry_Default() {
 		react_main_region_Put_Sugar_and_Water_r1__choice_0();
 	}
@@ -2123,6 +2209,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 					enterSequence_main_region_Cancellable_Drink_default();
 					enterSequence_main_region_Cancellable_Payment_Coins_default();
 					enterSequence_main_region_Cancellable_Timer_default();
+					enterSequence_main_region_Cancellable_AddCup_default();
 					react();
 				} else {
 					if (sCInterface.nFC) {
@@ -2132,6 +2219,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 						enterSequence_main_region_Cancellable_Drink_default();
 						enterSequence_main_region_Cancellable_Payment_Payed_default();
 						enterSequence_main_region_Cancellable_Timer_default();
+						enterSequence_main_region_Cancellable_AddCup_default();
 						react();
 					} else {
 						did_transition = false;
@@ -2245,7 +2333,6 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 			if ((sCInterface.selectType || (sCInterface.sugarSlider || (sCInterface.sizeSlider || (sCInterface.temperatureSlider || (sCInterface.coinSlot || (sCInterface.nFC || sCInterface.selectOption))))))) {
 				exitSequence_main_region_Cancellable_Timer_Timer();
 				enterSequence_main_region_Cancellable_Timer_Timer_default();
-				main_region_Cancellable_react(false);
 			} else {
 				if (timeEvents[0]) {
 					exitSequence_main_region_Cancellable();
@@ -2264,6 +2351,23 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 						did_transition = false;
 					}
 				}
+			}
+		}
+		return did_transition;
+	}
+	
+	private boolean main_region_Cancellable_AddCup_Cup_react(boolean try_transition) {
+		boolean did_transition = try_transition;
+		
+		if (try_transition) {
+			if (sCInterface.cupAdded) {
+				exitSequence_main_region_Cancellable_AddCup_Cup();
+				sCInterface.raiseDoAddCup();
+				
+				enterSequence_main_region_Cancellable_AddCup_Cup_default();
+				main_region_Cancellable_react(false);
+			} else {
+				did_transition = false;
 			}
 		}
 		if (did_transition==false) {

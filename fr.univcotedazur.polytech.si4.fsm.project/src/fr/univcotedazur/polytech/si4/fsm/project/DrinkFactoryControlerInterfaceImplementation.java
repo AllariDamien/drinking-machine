@@ -205,6 +205,14 @@ public class DrinkFactoryControlerInterfaceImplementation implements SCInterface
 		// TODO Auto-generated method stub
 		machine.doLockDoorRaised(value);		
 	}
+
+
+
+	@Override
+	public void onDoAddCupRaised() {
+		// TODO Auto-generated method stub
+		machine.doAddCupRaised();
+	}
 	
 	
 }

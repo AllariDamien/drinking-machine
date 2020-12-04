@@ -47,6 +47,12 @@ public class DrinkFactoryMachine extends JFrame {
 	private long temporaryId;
 	private String cardInformation = "";
 	
+	private int sizeSliderValue;
+	private int temperatureSliderValue;
+	private int sugarSliderValue;
+	
+	private boolean isCupAdded = false;
+	
 	Stock stock;
 	
 	JLabel messagesToUser;
@@ -57,16 +63,12 @@ public class DrinkFactoryMachine extends JFrame {
 	JSlider temperatureSlider;
 	JSlider sugarSlider;
 	
-	int sizeSliderValue;
-	int temperatureSliderValue;
-	int sugarSliderValue;
-	
-	JButton refuseAllOptions;
 	
 	JLabel lblOption1;
 	JLabel lblOption2;
 	JLabel lblOption3;
 	JLabel lblOption4;
+	JButton refuseAllOptions;
 	
 	JCheckBox cbOption1Yes;
 	JCheckBox cbOption1No;
@@ -239,6 +241,8 @@ public class DrinkFactoryMachine extends JFrame {
 		if(theFSM.getOptionCroutons())
 			theFSM.setPrice(theFSM.getPrice() + 30);
 		
+		if(isCupAdded)	
+			theFSM.setPrice(theFSM.getPrice() - 10);
 		
 	}
 	
@@ -367,6 +371,7 @@ public class DrinkFactoryMachine extends JFrame {
 			e.printStackTrace();
 		}
 		theFSM.setOptionsSelected(false);
+		isCupAdded = false;
 		
 		doTypeSelectionRaised(""); // reset aussi le prix à 0
 		
@@ -526,8 +531,11 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	protected void doSetCupRaised() {
+		if(isCupAdded)
+			return;
+		
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -656,6 +664,7 @@ public class DrinkFactoryMachine extends JFrame {
 			e.printStackTrace();
 		}
 		theFSM.setOptionsSelected(false);
+		isCupAdded = false;
 		doTypeSelectionRaised("");
 	}
 	
@@ -755,6 +764,14 @@ public class DrinkFactoryMachine extends JFrame {
 		else
 			messagesToUser.setText(messagesToUser.getText() + "Porte déverrouillé !<br>");
 		
+	}
+	
+	
+	
+	protected void doAddCupRaised() {
+		isCupAdded = true;
+		messagesToUser.setText(messagesToUser.getText() + "Tasse détectée !<br>");
+		doUpdatePrice();
 	}
 
 
@@ -1306,6 +1323,8 @@ public class DrinkFactoryMachine extends JFrame {
 					ee.printStackTrace();
 				}
 				labelForPictures.setIcon(new ImageIcon(myPicture));
+				
+				theFSM.raiseCupAdded();
 			}
 		});
 		
