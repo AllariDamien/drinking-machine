@@ -45,19 +45,20 @@ public class DrinkFactoryMachine extends JFrame {
 	List<Long> listeId; 
 	private long temporaryId;
 	
-	private boolean optionMilk = false;
-	private boolean optionMapleSyrup = false;
-	private boolean optionMixedIceCream = false;
-	private boolean optionCroutons = false;
-	
 	Stock stock;
 	
 	JLabel messagesToUser;
 	
-	JButton refuseAllOptions;
+	
 	JSlider sizeSlider;
 	JSlider temperatureSlider;
 	JSlider sugarSlider;
+	
+	int sizeSliderValue;
+	int temperatureSliderValue;
+	int sugarSliderValue;
+	
+	JButton refuseAllOptions;
 	
 	JLabel lblOption1;
 	JLabel lblOption2;
@@ -102,7 +103,6 @@ public class DrinkFactoryMachine extends JFrame {
 	 */
 	protected boolean hasEnoughIngredients() {
 		boolean enoughIngredients = true;
-		//System.out.println(sugarSlider.getValue() + "  " + stock.getStock().get("Sucre"));
 		if(sugarSlider.getValue() > stock.getStock().get("Sucre")) {
 			enoughIngredients = false;
 			messagesToUser.setText("<html>Le stock de sucre est insuffisant");
@@ -235,7 +235,7 @@ public class DrinkFactoryMachine extends JFrame {
 			theFSM.setPrice(75);
 			return;
 		case "Iced Tea": 
-			theFSM.setPrice((sizeSlider.getValue()==1) ? 50 : 75); // à changer une fois qu'on aura un MVP qui marche --> enlever l'option short donc sizeSlider = 0
+			theFSM.setPrice((sizeSlider.getValue()==2) ? 75 : 50); // à changer une fois qu'on aura un MVP qui marche --> enlever l'option short donc sizeSlider = 0
 			return;
 		default:
 			theFSM.setPrice(-1);
@@ -401,6 +401,11 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 
 	protected void doStartingPreparationRaised() {
+		sizeSliderValue = sizeSlider.getValue();
+		temperatureSliderValue = temperatureSlider.getValue();
+		sugarSliderValue = sugarSlider.getValue();
+		
+		
 		long value = 1;
 		long moyenne;
 		long nbCommande;
@@ -469,7 +474,7 @@ public class DrinkFactoryMachine extends JFrame {
 	protected void doPressRaised() {
 		// faire en fonction de la taille
 		messagesToUser.setText(messagesToUser.getText() + "Tassage des grains pour taille ");
-		switch(sizeSlider.getValue()) {
+		switch(sizeSliderValue) {
 		case 0:
 			messagesToUser.setText(messagesToUser.getText() + "short<br>");
 			break;
@@ -483,7 +488,7 @@ public class DrinkFactoryMachine extends JFrame {
 	}
 	
 	protected void doSetTemperatureRaised() {
-		switch(temperatureSlider.getValue()) {
+		switch(temperatureSliderValue) {
 			case 0:
 			try {
 				Thread.sleep(2500);
@@ -542,7 +547,7 @@ public class DrinkFactoryMachine extends JFrame {
 		}
 			
 		
-		switch(sugarSlider.getValue()) {
+		switch(sugarSliderValue) {
 			case 0:
 				messagesToUser.setText(messagesToUser.getText() + "Sans sucre !<br>");
 				break;
@@ -563,12 +568,12 @@ public class DrinkFactoryMachine extends JFrame {
 				//décrémenter compteur sucre
 				break;
 		}
-		stock.decrementStock("Sucre", sugarSlider.getValue());
+		stock.decrementStock("Sucre", sugarSliderValue);
 	}
 	
 	protected void doPourWaterRaised() {
 		
-		switch(sizeSlider.getValue()) {
+		switch(sizeSliderValue) {
 			case 0:
 				if(theFSM.getType().equals("Expresso"))
 					messagesToUser.setText(messagesToUser.getText() + "Ecoulement de l'eau pendant 2 secondes !<br>");
