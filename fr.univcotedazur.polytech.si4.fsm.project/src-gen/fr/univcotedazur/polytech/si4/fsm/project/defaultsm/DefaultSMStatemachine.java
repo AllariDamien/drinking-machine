@@ -1919,15 +1919,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (sCInterface.goNextStep) {
-				exitSequence_main_region_Step_Bonus_1();
-				sCInterface.raiseDoBrewing();
-				
-				enterSequence_main_region_Brewed_default();
-				react();
-			} else {
-				did_transition = false;
-			}
+			exitSequence_main_region_Step_Bonus_1();
+			sCInterface.raiseDoBrewing();
+			
+			enterSequence_main_region_Brewed_default();
+			react();
 		}
 		if (did_transition==false) {
 			did_transition = react();
@@ -1939,15 +1935,11 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (sCInterface.goNextStep) {
-				exitSequence_main_region_Brewed();
-				sCInterface.raiseDoRemoveTeaBag();
-				
-				enterSequence_main_region_Step_4_Done___Drink_available_default();
-				react();
-			} else {
-				did_transition = false;
-			}
+			exitSequence_main_region_Brewed();
+			sCInterface.raiseDoRemoveTeaBag();
+			
+			enterSequence_main_region_Step_4_Done___Drink_available_default();
+			react();
 		}
 		if (did_transition==false) {
 			did_transition = react();
@@ -1971,7 +1963,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (isStateActive(State.main_region_Put_Sugar_and_Water_r2_water)) {
+			if (((true && isStateActive(State.main_region_Put_Sugar_and_Water_r2_water)) && true)) {
 				exitSequence_main_region_Put_Sugar_and_Water();
 				sCInterface.raiseDoPutSugar();
 				
@@ -1989,7 +1981,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if (isStateActive(State.main_region_Put_Sugar_and_Water_r1_sugar)) {
+			if (((true && isStateActive(State.main_region_Put_Sugar_and_Water_r1_sugar)) && true)) {
 				exitSequence_main_region_Put_Sugar_and_Water();
 				sCInterface.raiseDoPutSugar();
 				
@@ -2022,7 +2014,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((true && isStateActive(State.main_region_Waiting_for_Preparation_r2_dosette___broyage))) {
+			if (((true && isStateActive(State.main_region_Waiting_for_Preparation_r2_dosette___broyage)) && true)) {
 				exitSequence_main_region_Waiting_for_Preparation();
 				sCInterface.raiseDoHeatingWater();
 				
@@ -2040,7 +2032,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((isStateActive(State.main_region_Waiting_for_Preparation_r1_chauffage_de_l_eau) && true)) {
+			if (((true && isStateActive(State.main_region_Waiting_for_Preparation_r1_chauffage_de_l_eau)) && true)) {
 				exitSequence_main_region_Waiting_for_Preparation();
 				sCInterface.raiseDoHeatingWater();
 				
@@ -2073,7 +2065,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((isStateActive(State.main_region_Set_Temperature_and_Cup_r2_gobelet) && isStateActive(State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains))) {
+			if ((((true && isStateActive(State.main_region_Set_Temperature_and_Cup_r2_gobelet)) && true) && isStateActive(State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains))) {
 				exitSequence_main_region_Set_Temperature_and_Cup();
 				sCInterface.raiseDoSetTemperature();
 				
@@ -2091,7 +2083,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((isStateActive(State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate) && isStateActive(State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains))) {
+			if ((((true && isStateActive(State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate)) && true) && isStateActive(State.main_region_Set_Temperature_and_Cup_expresso_only_Tassage_des_grains))) {
 				exitSequence_main_region_Set_Temperature_and_Cup();
 				sCInterface.raiseDoSetTemperature();
 				
@@ -2109,7 +2101,7 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 		boolean did_transition = try_transition;
 		
 		if (try_transition) {
-			if ((isStateActive(State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate) && isStateActive(State.main_region_Set_Temperature_and_Cup_r2_gobelet))) {
+			if ((((isStateActive(State.main_region_Set_Temperature_and_Cup_r1_attente_de_la_temp_rature_ad_quate) && true) && isStateActive(State.main_region_Set_Temperature_and_Cup_r2_gobelet)) && true)) {
 				exitSequence_main_region_Set_Temperature_and_Cup();
 				sCInterface.raiseDoSetTemperature();
 				
