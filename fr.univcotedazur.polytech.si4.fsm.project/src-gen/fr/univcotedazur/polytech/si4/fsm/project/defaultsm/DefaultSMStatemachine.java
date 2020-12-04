@@ -1953,9 +1953,9 @@ public class DefaultSMStatemachine implements IDefaultSMStatemachine {
 	
 	/* The reactions of state null. */
 	private void react_main_region__sync0() {
-		sCInterface.raiseDoRefoundMoney();
-		
 		sCInterface.raiseDoStartingPreparation();
+		
+		sCInterface.raiseDoRefoundMoney();
 		
 		enterSequence_main_region_Waiting_for_Preparation_default();
 	}

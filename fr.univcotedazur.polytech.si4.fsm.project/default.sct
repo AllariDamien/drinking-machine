@@ -51,7 +51,7 @@
         <outgoingTransitions xmi:id="_b9eh0DYjEeu9H7nUjYhXqQ" specification="always" target="_e59hEDYjEeu9H7nUjYhXqQ"/>
       </vertices>
       <vertices xsi:type="sgraph:Synchronization" xmi:id="_1zfjEBnTEeufvPJS5ggzWg" incomingTransitions="_0swSkBnVEeufvPJS5ggzWg _jQFfQA-AEeuSq4uCBX5wew">
-        <outgoingTransitions xmi:id="_Fvs2MBnWEeufvPJS5ggzWg" specification="/ raise doRefoundMoney;&#xD;&#xA;raise doStartingPreparation" target="_jEa4MCsTEeuJs_1az8O5Lw"/>
+        <outgoingTransitions xmi:id="_Fvs2MBnWEeufvPJS5ggzWg" specification="/ raise doStartingPreparation;&#xD;&#xA;raise doRefoundMoney" target="_jEa4MCsTEeuJs_1az8O5Lw"/>
       </vertices>
       <vertices xsi:type="sgraph:Choice" xmi:id="_B4W1IiQyEeuSItcuc5lipw" incomingTransitions="_e8dWICQ1EeuSItcuc5lipw">
         <outgoingTransitions xmi:id="_tEaIQCQ1EeuSItcuc5lipw" specification="[type == &quot;Tea&quot;]" target="_oFmE4CQ1EeuSItcuc5lipw"/>
